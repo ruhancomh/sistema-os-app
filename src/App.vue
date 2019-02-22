@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire" dark>
+  <v-app id="inspire">
 
     <the-drawer />
     <the-toolbar />

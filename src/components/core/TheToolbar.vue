@@ -1,6 +1,36 @@
 <template>
-    <v-toolbar app fixed clipped-left>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
+    <v-toolbar
+      color="blue-grey"
+      app fixed clipped dark>
+      <v-toolbar-side-icon @click.stop="onClickMenuBtn"></v-toolbar-side-icon>
+      <v-toolbar-title>{{ title }}</v-toolbar-title>
     </v-toolbar>
 </template>
+
+<script>
+import {
+  mapMutations
+} from 'vuex'
+
+export default {
+  data () {
+    return {
+      title: ''
+    }
+  },
+
+  watch: {
+    '$route' (val) {
+      this.title = val.name
+    }
+  },
+  
+  methods: {
+     ...mapMutations(['setDrawer', 'toggleDrawer']),
+     
+     onClickMenuBtn () {
+       this.toggleDrawer()
+     }
+  }
+}
+</script>
