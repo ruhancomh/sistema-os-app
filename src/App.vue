@@ -1,28 +1,31 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app id="inspire" dark>
+
+    <the-drawer />
+    <the-toolbar />
+    <the-view />
+    <v-footer app fixed>
+      <span>&copy; 2017</span>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+  import TheDrawer from './components/core/TheDrawer'
+  import TheToolbar from './components/core/TheToolbar'
+  import TheView from './components/core/TheView'
 
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  export default {
+    components:{
+      TheDrawer,
+      TheToolbar,
+      TheView
+    },
+    data: () => ({
+      drawer: null
+    }),
+    props: {
+      source: String
+    }
   }
-}
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
