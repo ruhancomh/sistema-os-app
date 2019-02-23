@@ -2,6 +2,19 @@
 import { set, toggle } from '@/utils/vuex'
 
 export default {
-  setDrawer: set('drawer'),
-  toggleDrawer: toggle('drawer')
+  SET_DRAWER: set('drawer'),
+  TOGGLE_DRAWER: toggle('drawer'),
+  
+  SHOW_ALERT: (state, payload) => {
+    state.alert.value = true
+    state.alert.type = payload.type ? payload.type : 'success'
+    state.alert.timeout = payload.timeout ? payload.timeout : state.alert.defaultTimeou
+    state.alert.message = payload.message
+  },
+
+  CLOSE_ALERT: (state) => {
+    state.alert.value = false
+    state.alert.type = null
+    state.alert.message = null
+  }
 }
