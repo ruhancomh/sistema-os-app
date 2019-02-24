@@ -59,10 +59,16 @@ export default {
       links: [
         {
           group: true,
-          icon: "settings",
+          icon: "assignment",
           title: "Cadastros básicos",
 
           links: [
+            {
+              group: false,
+              icon: "",
+              title: "Cidades",
+              to: "/cidades"
+            },
             {
               group: false,
               icon: "",

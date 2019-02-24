@@ -1,13 +1,13 @@
 'use strict'
-import { Estados } from '../models/Estados';
+import { Cidades } from '../models/Cidades';
 import { BaseController } from './BaseController';
 
-export class EstadoController extends BaseController {
+export class CidadesController extends BaseController {
   async create(params) {
     try {
-      let estado = new Estados(params.nome, params.uf)
-      let result = await this._request.post('estados', estado)
-      return this.response('Estado adicionado com sucesso.', result.data)
+      let cidade = new Cidades(params.nome, params.estados_id)
+      let result = await this._request.post('cidades', cidade)
+      return this.response('Cidade adicionada com sucesso.', result.data)
     } catch (error) {
       return this.response(false, false, error)
     }
@@ -16,7 +16,7 @@ export class EstadoController extends BaseController {
   async list(filter, page, limit, sortBy, descending) {
     try {
       let queryParams = this.buildQueryParams(filter, page, limit, sortBy, descending)
-      let result = await this._request.get(`estados${queryParams}`)
+      let result = await this._request.get(`cidades${queryParams}`)
       return this.response(false, result.data)
     } catch (error) {
       return this.response(false, false, error)

@@ -16,10 +16,10 @@
             <v-btn
               color="primary"
               large
-              to="estados/novo"
+              to="cidades/adicionar"
             >
               <v-icon dark>add</v-icon>
-              Adicionar estado
+              Adicionar cidade
             </v-btn>
           </v-card-title>
           <v-divider />
@@ -43,7 +43,7 @@
               </template>
               <template slot="items" slot-scope="props">
                 <td>{{ props.item.nome }}</td>
-                <td>{{ props.item.uf }}</td>
+                <td>{{ props.item.estado.uf }}</td>
               </template>
             </custom-data-table>
           </v-card-text>
@@ -56,7 +56,7 @@
 <script>
 import CustomDataTable from "./../components/shared/CustomDataTable/CustomDataTable";
 
-import { EstadoController } from "../controllers/EstadoController";
+import { CidadesController } from "../controllers/CidadesController";
 
 export default {
   components: {
@@ -95,8 +95,8 @@ methods: {
       let filters = $event.filters
       let pagination = $event.pagination
 
-      let estadosController = new EstadoController();
-      let result = await estadosController.list(
+      let cidadesController = new CidadesController();
+      let result = await cidadesController.list(
         filters,
         pagination.page,
         pagination.rowsPerPage,
@@ -105,7 +105,7 @@ methods: {
       );
 
       if (result.error) {
-        // TODO
+        this.tableData = []
       } else {
         // this.setDesserts(result.data.data)
         this.tableData = result.data
