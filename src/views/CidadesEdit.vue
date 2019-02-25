@@ -29,16 +29,17 @@
                   </v-flex>
                   <v-flex
                     xs6
-                    md2
+                    md3
                   >
-                    <v-text-field
-                      v-model="formFields.uf"
+                    <v-select
+                      v-model="formFields.estados_id"
+                      :items="estadosOptions"
                       :rules="[formRules.default.required]"
-                      :counter="2"
-                      label="UF"
-                      maxlength="2"
-                      required
-                    ></v-text-field>
+                      label="Estado"
+                      item-text="nome"
+                      item-value="id"
+                      required                      
+                    />
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -63,6 +64,7 @@
 </template>
 
 <script>
+import { CidadesController } from "../controllers/CidadesController";
 import { EstadosController } from "../controllers/EstadosController";
 
 import { mapMutations } from "vuex";
@@ -73,35 +75,60 @@ export default {
       valid: false,
       formFields: {
         nome: "",
-        uf: ""
+        estados_id: ""
       },
       formRules: {
         default: {
           required: value => !!value || "Campo obrigatório"
         }
-      }
+      },
+      estadosOptions: []
     };
   },
 
   methods: {
     ...mapMutations(["SHOW_ALERT"]),
 
-    async save() {
-      if (this.valid) {
-        let estadoController = new EstadosController();
-        let result = await estadoController.create({
-          nome: this.formFields.nome,
-          uf: this.formFields.uf
-        });
+    async loadEntity() {
+      let cidadesController = new CidadesController()
+      let result = await cidadesController.get(this.$route.params.id)
 
+
+      if (!result.error){
+        this.formFields = result.data
+      } else {
         this.SHOW_ALERT({
-          type: result.erro ? "error" : "success",
+          type: "error",
           message: result.message
         });
 
-        this.$router.push({ path: "/estados" });
+        this.$router.push({ path: "/cidades" });
       }
+    },
+
+    async save() {
+      if (this.valid) {
+        let cidadesController = new CidadesController()
+        let result = await cidadesController.update(this.formFields);
+
+        this.SHOW_ALERT({
+          type: result.error ? "error" : "success",
+          message: result.message
+        });
+      }
+    },
+
+    async loadEstados() {
+      let estadoController = new EstadosController()
+      let result = await estadoController.all()
+
+      this.estadosOptions = result.data.data
     }
+  },
+
+  mounted() {
+    this.loadEntity()
+    this.loadEstados()
   }
 };
 </script>

@@ -17,7 +17,7 @@ export class BaseController {
     if (error) {
       responseError = true
       responseData = error
-      responseMessage = error.response.data.join(', ')
+      responseMessage = Array.isArray(error.response.data) ? error.response.data.join(', ') : error.response.data
     } else {
       responseError = false
       responseData = data

@@ -2,7 +2,7 @@
 import { Estados } from '../models/Estados';
 import { BaseController } from './BaseController';
 
-export class EstadoController extends BaseController {
+export class EstadosController extends BaseController {
   async create(params) {
     try {
       let estado = new Estados(params.nome, params.uf)
@@ -17,6 +17,15 @@ export class EstadoController extends BaseController {
     try {
       let queryParams = this.buildQueryParams(filter, page, limit, sortBy, descending)
       let result = await this._request.get(`estados${queryParams}`)
+      return this.response(false, result.data)
+    } catch (error) {
+      return this.response(false, false, error)
+    }
+  }
+
+  async all () {
+    try {
+      let result = await this._request.get(`estados`)
       return this.response(false, result.data)
     } catch (error) {
       return this.response(false, false, error)

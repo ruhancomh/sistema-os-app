@@ -56,7 +56,7 @@
 <script>
 import CustomDataTable from "./../components/shared/CustomDataTable/CustomDataTable";
 
-import { EstadoController } from "../controllers/EstadoController";
+import { EstadosController } from "../controllers/EstadosController";
 
 export default {
   components: {
@@ -95,7 +95,7 @@ methods: {
       let filters = $event.filters
       let pagination = $event.pagination
 
-      let estadosController = new EstadoController();
+      let estadosController = new EstadosController();
       let result = await estadosController.list(
         filters,
         pagination.page,

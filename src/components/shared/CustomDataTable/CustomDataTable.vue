@@ -106,6 +106,9 @@
 <script>
 export default {
   props: {
+    input: {
+      default: () => {}
+    },
     filters: {
       type: Object,
       default: () => {}
@@ -178,8 +181,10 @@ export default {
   methods: {
     getData () {
       this.loading = true
-      this.firstLoad = false
-      this.$emit('getData', {
+
+      window.console.log('mandou att')
+
+      this.$emit('input', {
         filters: this.filters,
         pagination: this.pagination
       })
@@ -250,7 +255,6 @@ export default {
   },
 
   mounted() {
-    // this.getData()
     this.setDefaultPagination()
     this.setHeaders()
   }
