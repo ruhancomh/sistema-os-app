@@ -32,12 +32,31 @@
                     md3
                   >
                     <v-select
-                      v-model="formFields.estados_id"
+                      v-model="estados_id"
                       :items="estadosOptions"
                       :rules="[formRules.default.required]"
                       label="Estado"
                       item-text="nome"
                       item-value="id"
+                      :autofocus="true"
+                      :loading="estadosOptionsLoading"
+                      required                     
+                    />
+                  </v-flex>
+                  <v-flex
+                    xs6
+                    md4
+                  >
+                    <v-select
+                      v-model="formFields.cidades_id"
+                      :items="cidadesOptions"
+                      :rules="[formRules.default.required]"
+                      label="Cidade"
+                      item-text="nome"
+                      item-value="id"
+                      :loading="cidadesOptionsLoading"
+                      :autofocus="true"
+                      no-data-text="Selecione um estado"
                       required                      
                     />
                   </v-flex>
@@ -64,6 +83,7 @@
 </template>
 
 <script>
+import { BairrosController } from "../controllers/BairrosController";
 import { CidadesController } from "../controllers/CidadesController";
 import { EstadosController } from "../controllers/EstadosController";
 
@@ -75,46 +95,93 @@ export default {
       valid: false,
       formFields: {
         nome: "",
-        estados_id: ""
+        cidades_id: ""
       },
       formRules: {
         default: {
           required: value => !!value || "Campo obrigatório"
         }
       },
-      estadosOptions: []
+      estados_id: "",
+      estadosOptions: [],
+      estadosOptionsLoading:false,
+      cidadesOptions: [],
+      cidadesOptionsLoading:false
     };
   },
 
   methods: {
     ...mapMutations(["SHOW_ALERT","SET_TOOLBAR_BACK_URL"]),
 
+    async loadEntity() {
+      let bairrosController = new BairrosController()
+      let result = await bairrosController.get(this.$route.params.id)
+
+      if (!result.error){
+        this.formFields = result.data
+        this.estados_id = result.data.cidade.estado.id
+      } else {
+        this.SHOW_ALERT({
+          type: "error",
+          message: result.message
+        });
+
+        this.$router.push({ path: "/bairros" });
+      }
+    },
+
     async save() {
       if (this.valid) {
-        let cidadesController = new CidadesController();
-        let result = await cidadesController.create(this.formFields);
+        let bairrosController = new BairrosController();
+        let result = await bairrosController.update(this.formFields);
 
         this.SHOW_ALERT({
           type: result.error ? "error" : "success",
           message: result.message
         });
-
-        if (!result.error)
-          this.$router.push({ path: "/cidades" });
       }
     },
 
     async loadEstados() {
+      this.estadosOptionsLoading = true
       let estadoController = new EstadosController()
       let result = await estadoController.all()
 
       this.estadosOptions = result.data.data
+      this.estadosOptionsLoading = false
+    },
+
+    async loadCidades(estados_id, cidades_id) {
+      this.cidadesOptionsLoading = true
+      let cidadesController = new CidadesController()
+      let result = await cidadesController.listAllByEstado(estados_id)
+
+      this.cidadesOptions = result.data.data
+
+      if(!cidades_id){
+        this.formFields.cidades_id = null
+      }
+
+      this.cidadesOptionsLoading = false
     }
   },
 
-  mounted() {
-    this.SET_TOOLBAR_BACK_URL('/cidades')
+  watch: {
+    estados_id: {
+      handler (nv,ov){
+        if(ov){
+          this.loadCidades(this.estados_id)
+        }
+      },
+      deep:true
+    }
+  },
+
+  async mounted() {
+    this.SET_TOOLBAR_BACK_URL('/bairros')
+    await this.loadEntity()
     this.loadEstados()
+    this.loadCidades(this.estados_id, this.formFields.cidades_id)
   }
 };
 </script>

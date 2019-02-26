@@ -87,7 +87,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["SHOW_ALERT"]),
+    ...mapMutations(["SHOW_ALERT","SET_TOOLBAR_BACK_URL"]),
 
     async loadEntity() {
       let cidadesController = new CidadesController()
@@ -127,6 +127,7 @@ export default {
   },
 
   mounted() {
+    this.SET_TOOLBAR_BACK_URL('/cidades')
     this.loadEntity()
     this.loadEstados()
   }

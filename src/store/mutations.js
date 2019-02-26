@@ -16,5 +16,15 @@ export default {
     state.alert.value = false
     state.alert.type = null
     state.alert.message = null
+  },
+
+  SET_TOOLBAR_BACK_URL: (state, payload) => {
+    state.toolbarBackUrl = payload
+    
+  },
+
+  RESET_TOOLBAR_BACK_URL: (state) => {
+    state.toolbarBackUrl = null
+    window.console.log('resete')
   }
 }

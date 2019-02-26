@@ -66,6 +66,12 @@ export default {
             {
               group: false,
               icon: "",
+              title: "Bairros",
+              to: "/Bairros"
+            },
+            {
+              group: false,
+              icon: "",
               title: "Cidades",
               to: "/cidades"
             },

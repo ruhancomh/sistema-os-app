@@ -51,4 +51,14 @@ export class CidadesController extends BaseController {
     }
   }
 
+  async listAllByEstado(estados_id) {
+    try {
+      let queryParams = this.buildQueryParams({estados_id:estados_id}, false, -1)
+      let result = await this._request.get(`cidades${queryParams}`)
+      return this.response(false, result.data)
+    } catch (error) {
+      return this.response(false, false, error)
+    }
+  }
+
 }

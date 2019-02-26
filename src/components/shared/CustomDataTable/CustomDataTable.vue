@@ -2,7 +2,7 @@
   <div>
     <v-form v-if="filters">
       <v-container>
-        <v-layout>
+        <v-layout row>
           <slot name="filter" v-bind:filters="filters"></slot>
         </v-layout>
         <v-layout>
@@ -181,9 +181,6 @@ export default {
   methods: {
     getData () {
       this.loading = true
-
-      window.console.log('mandou att')
-
       this.$emit('input', {
         filters: this.filters,
         pagination: this.pagination

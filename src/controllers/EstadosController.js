@@ -25,7 +25,8 @@ export class EstadosController extends BaseController {
 
   async all () {
     try {
-      let result = await this._request.get(`estados`)
+      let queryParams = this.buildQueryParams(false, false, -1)
+      let result = await this._request.get(`estados${queryParams}`)
       return this.response(false, result.data)
     } catch (error) {
       return this.response(false, false, error)

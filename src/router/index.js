@@ -9,6 +9,7 @@
 // Lib imports
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from './../store'
 
 // Routes
 import paths from './paths'
@@ -38,6 +39,12 @@ const router = new Router({
     }
     return { x: 0, y: 0 }
   }
+})
+
+router.beforeEach((to, from, next) => {
+  window.console.log(store)
+  store.commit('RESET_TOOLBAR_BACK_URL')
+  next()
 })
 
 export default router
