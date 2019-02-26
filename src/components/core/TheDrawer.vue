@@ -58,6 +58,32 @@ export default {
     return {
       links: [
         {
+          group:true,
+          icon: "mdi-account-tie",
+          title: "Funcionários",
+
+          links: [
+            {
+              group: false,
+              icon: "add",
+              title: "Adicionar novo",
+              to: "/funcionarios/adicionar"
+            },
+            {
+              group: false,
+              icon: "mdi-view-list",
+              title: "Listar todos",
+              to: "/funcionarios"
+            },
+            {
+              group: false,
+              icon: "assignment",
+              title: "Cargos",
+              to: "/funcionario-cargos"
+            },
+          ]
+        },
+        {
           group: true,
           icon: "assignment",
           title: "Cadastros básicos",

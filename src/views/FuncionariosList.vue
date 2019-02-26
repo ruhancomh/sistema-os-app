@@ -16,10 +16,10 @@
             <v-btn
               color="primary"
               large
-              to="cidades/adicionar"
+              to="funcionarios/adicionar"
             >
               <v-icon dark>add</v-icon>
-              Adicionar cidade
+              Adicionar funcionário
             </v-btn>
           </v-card-title>
           <v-divider />
@@ -42,17 +42,9 @@
                   md4
                 >
                   <v-text-field
-                    label="Nome"
-                    v-model="props.filters.nome"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex
-                  xs12
-                  md2
-                >
-                  <v-text-field
-                    label="UF"
-                    v-model="props.filters.uf"
+                    label="Descricao"
+                    clearable
+                    v-model="props.filters.descricao"
                   ></v-text-field>
                 </v-flex>
               </template>
@@ -61,7 +53,7 @@
                 slot-scope="props"
               >
                 <td>{{ props.item.nome }}</td>
-                <td>{{ props.item.estado.uf }}</td>
+                <td>{{ props.item.cargo.descricao }}</td>
               </template>
             </custom-data-table>
           </v-card-text>
@@ -74,7 +66,7 @@
 <script>
 import CustomDataTable from "./../components/shared/CustomDataTable/CustomDataTable";
 
-import { CidadesController } from "../controllers/CidadesController";
+import { FuncionariosController } from "../controllers/FuncionariosController";
 
 import { mapMutations } from "vuex";
 
@@ -87,7 +79,7 @@ export default {
     return {
       filters: {
         nome: "",
-        uf: ""
+        cargo: "",
       },
 
       defaultSort: "nome",
@@ -99,10 +91,10 @@ export default {
           value: "nome"
         },
         {
-          text: "UF",
+          text: "Cargo",
           align: "left",
           sortable: true,
-          value: "uf"
+          value: "cargo"
         }
       ],
       tableData: null,
@@ -117,8 +109,8 @@ export default {
       let filters = this.tableIpunt.filters;
       let pagination = this.tableIpunt.pagination;
 
-      let cidadesController = new CidadesController();
-      let result = await cidadesController.list(
+      let funcionariosController = new FuncionariosController();
+      let result = await funcionariosController.list(
         filters,
         pagination.page,
         pagination.rowsPerPage,
@@ -136,8 +128,8 @@ export default {
 
     async onDeleteItem(item) {
       this.SHOW_LOADER()
-      let cidadesController = new CidadesController();
-      let result = await cidadesController.delete(item);
+      let funcionariosController = new FuncionariosController();
+      let result = await funcionariosController.delete(item);
       this.CLOSE_LOADER()
 
       this.SHOW_ALERT({
@@ -149,7 +141,7 @@ export default {
     },
 
     onEditItem(item) {
-      this.$router.push({ path: `/cidades/editar/${item}` });
+      this.$router.push({ path: `/funcionarios/editar/${item}` });
     }
   },
 

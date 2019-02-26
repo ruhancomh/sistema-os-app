@@ -13,7 +13,7 @@
           width="100%"
         >
           <v-card-text>
-            <v-form v-model="valid">
+            <v-form v-model="valid" @submit.prevent="">
               <v-container>
                 <v-layout>
                   <v-flex

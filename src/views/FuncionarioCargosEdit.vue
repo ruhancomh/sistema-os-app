@@ -18,29 +18,15 @@
                 <v-layout>
                   <v-flex
                     xs12
-                    md4
+                    md6
                   >
                     <v-text-field
-                      v-model="formFields.nome"
+                      v-model="formFields.descricao"
                       :rules="[formRules.default.required]"
-                      label="Nome"
+                      label="Descrição"
                       required
                     ></v-text-field>
-                  </v-flex>
-                  <v-flex
-                    xs6
-                    md3
-                  >
-                    <v-select
-                      v-model="formFields.estados_id"
-                      :items="estadosOptions"
-                      :rules="[formRules.default.required]"
-                      label="Estado"
-                      item-text="nome"
-                      item-value="id"
-                      required                      
-                    />
-                  </v-flex>
+                  </v-flex>                  
                 </v-layout>
               </v-container>
             </v-form>
@@ -52,6 +38,7 @@
               color="primary"
               flat
               large
+              :loading="loading"
               @click="save"
             >
               Salvar
@@ -64,25 +51,23 @@
 </template>
 
 <script>
-import { CidadesController } from "../controllers/CidadesController";
-import { EstadosController } from "../controllers/EstadosController";
+import { FuncionarioCargosController } from "../controllers/FuncionarioCargosController";
 
 import { mapMutations } from "vuex";
 
 export default {
   data() {
     return {
+      loading: false,
       valid: false,
       formFields: {
-        nome: "",
-        estados_id: ""
+        descricao: "",
       },
       formRules: {
         default: {
           required: value => !!value || "Campo obrigatório"
         }
-      },
-      estadosOptions: []
+      }
     };
   },
 
@@ -90,8 +75,8 @@ export default {
     ...mapMutations(["SHOW_ALERT","SET_TOOLBAR_BACK_URL"]),
 
     async loadEntity() {
-      let cidadesController = new CidadesController()
-      let result = await cidadesController.get(this.$route.params.id)
+      let funcionarioCargosController = new FuncionarioCargosController()
+      let result = await funcionarioCargosController.get(this.$route.params.id)
 
 
       if (!result.error){
@@ -102,34 +87,30 @@ export default {
           message: result.message
         });
 
-        this.$router.push({ path: "/cidades" });
+        this.$router.push({ path: "/funcionario-cargos" });
       }
     },
 
     async save() {
       if (this.valid) {
-        let cidadesController = new CidadesController()
-        let result = await cidadesController.update(this.formFields);
+        this.loading = true;
+
+        let funcionarioCargosController = new FuncionarioCargosController();
+        let result = await funcionarioCargosController.update(this.formFields);
 
         this.SHOW_ALERT({
           type: result.error ? "error" : "success",
           message: result.message
         });
+
+        this.loading = false
       }
     },
-
-    async loadEstados() {
-      let estadoController = new EstadosController()
-      let result = await estadoController.all()
-
-      this.estadosOptions = result.data.data
-    }
   },
 
   mounted() {
-    this.SET_TOOLBAR_BACK_URL('/cidades')
+    this.SET_TOOLBAR_BACK_URL('/funcionario-cargos')
     this.loadEntity()
-    this.loadEstados()
   }
 };
 </script>

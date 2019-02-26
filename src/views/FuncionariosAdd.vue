@@ -18,7 +18,7 @@
                 <v-layout>
                   <v-flex
                     xs12
-                    md4
+                    md6
                   >
                     <v-text-field
                       v-model="formFields.nome"
@@ -32,15 +32,16 @@
                     md3
                   >
                     <v-select
-                      v-model="formFields.estados_id"
-                      :items="estadosOptions"
+                      v-model="formFields.funcionario_cargos_id"
+                      :items="funcionarioCargosOptions"
                       :rules="[formRules.default.required]"
-                      label="Estado"
-                      item-text="nome"
+                      :loading="funcionarioCargosOptionsLoad"
+                      label="Cargo"
+                      item-text="descricao"
                       item-value="id"
                       required                      
                     />
-                  </v-flex>
+                  </v-flex>                  
                 </v-layout>
               </v-container>
             </v-form>
@@ -52,6 +53,7 @@
               color="primary"
               flat
               large
+              :loading="loading"
               @click="save"
             >
               Salvar
@@ -64,72 +66,68 @@
 </template>
 
 <script>
-import { CidadesController } from "../controllers/CidadesController";
-import { EstadosController } from "../controllers/EstadosController";
+import { FuncionariosController } from "../controllers/FuncionariosController";
+import { FuncionarioCargosController } from "../controllers/FuncionarioCargosController";
 
 import { mapMutations } from "vuex";
 
 export default {
   data() {
     return {
+      loading: false,
       valid: false,
       formFields: {
         nome: "",
-        estados_id: ""
+        funcionario_cargos_id: null
       },
       formRules: {
         default: {
           required: value => !!value || "Campo obrigatório"
         }
       },
-      estadosOptions: []
+
+      funcionarioCargosOptions:[],
+      funcionarioCargosOptionsLoad: false
     };
   },
 
   methods: {
     ...mapMutations(["SHOW_ALERT","SET_TOOLBAR_BACK_URL"]),
 
-    async loadEntity() {
-      let cidadesController = new CidadesController()
-      let result = await cidadesController.get(this.$route.params.id)
-
-
-      if (!result.error){
-        this.formFields = result.data
-      } else {
-        this.SHOW_ALERT({
-          type: "error",
-          message: result.message
-        });
-
-        this.$router.push({ path: "/cidades" });
-      }
-    },
-
     async save() {
       if (this.valid) {
-        let cidadesController = new CidadesController()
-        let result = await cidadesController.update(this.formFields);
+        this.loading = true;
+
+        let funcionariosController = new FuncionariosController();
+        let result = await funcionariosController.create(this.formFields);
 
         this.SHOW_ALERT({
           type: result.error ? "error" : "success",
           message: result.message
         });
+
+        if (!result.error)
+          this.$router.push({ path: "/funcionarios" });
+
+        this.loading = false
       }
     },
 
-    async loadEstados() {
-      let estadoController = new EstadosController()
-      let result = await estadoController.all()
+    async loadFuncionarioCargos() {
+      this.funcionarioCargosOptionsLoad = true
 
-      this.estadosOptions = result.data.data
+      let funcionarioCargosController = new FuncionarioCargosController()
+      let result = await funcionarioCargosController.all()
+
+      this.funcionarioCargosOptions = result.data.data
+
+      this.funcionarioCargosOptionsLoad = false
     }
   },
 
   mounted() {
-    this.SET_TOOLBAR_BACK_URL('/cidades')
-    this.loadEntity()
-    this.loadEstados()
+    this.SET_TOOLBAR_BACK_URL('/funcionarios')
+    this.loadFuncionarioCargos()
   }
 };
 </script>

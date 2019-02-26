@@ -16,10 +16,10 @@
             <v-btn
               color="primary"
               large
-              to="cidades/adicionar"
+              to="funcionario-cargos/adicionar"
             >
               <v-icon dark>add</v-icon>
-              Adicionar cidade
+              Adicionar cargo
             </v-btn>
           </v-card-title>
           <v-divider />
@@ -42,17 +42,9 @@
                   md4
                 >
                   <v-text-field
-                    label="Nome"
-                    v-model="props.filters.nome"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex
-                  xs12
-                  md2
-                >
-                  <v-text-field
-                    label="UF"
-                    v-model="props.filters.uf"
+                    label="Descricao"
+                    clearable
+                    v-model="props.filters.descricao"
                   ></v-text-field>
                 </v-flex>
               </template>
@@ -60,8 +52,7 @@
                 slot="items"
                 slot-scope="props"
               >
-                <td>{{ props.item.nome }}</td>
-                <td>{{ props.item.estado.uf }}</td>
+                <td>{{ props.item.descricao }}</td>
               </template>
             </custom-data-table>
           </v-card-text>
@@ -74,7 +65,7 @@
 <script>
 import CustomDataTable from "./../components/shared/CustomDataTable/CustomDataTable";
 
-import { CidadesController } from "../controllers/CidadesController";
+import { FuncionarioCargosController } from "../controllers/FuncionarioCargosController";
 
 import { mapMutations } from "vuex";
 
@@ -86,23 +77,16 @@ export default {
   data() {
     return {
       filters: {
-        nome: "",
-        uf: ""
+        descricao: "",
       },
 
-      defaultSort: "nome",
+      defaultSort: "descricao",
       headers: [
         {
-          text: "Nome",
+          text: "Descricao",
           align: "left",
           sortable: true,
           value: "nome"
-        },
-        {
-          text: "UF",
-          align: "left",
-          sortable: true,
-          value: "uf"
         }
       ],
       tableData: null,
@@ -117,8 +101,8 @@ export default {
       let filters = this.tableIpunt.filters;
       let pagination = this.tableIpunt.pagination;
 
-      let cidadesController = new CidadesController();
-      let result = await cidadesController.list(
+      let funcionarioCargosController = new FuncionarioCargosController();
+      let result = await funcionarioCargosController.list(
         filters,
         pagination.page,
         pagination.rowsPerPage,
@@ -136,8 +120,8 @@ export default {
 
     async onDeleteItem(item) {
       this.SHOW_LOADER()
-      let cidadesController = new CidadesController();
-      let result = await cidadesController.delete(item);
+      let funcionarioCargosController = new FuncionarioCargosController();
+      let result = await funcionarioCargosController.delete(item);
       this.CLOSE_LOADER()
 
       this.SHOW_ALERT({
@@ -149,7 +133,7 @@ export default {
     },
 
     onEditItem(item) {
-      this.$router.push({ path: `/cidades/editar/${item}` });
+      this.$router.push({ path: `/funcionario-cargos/editar/${item}` });
     }
   },
 

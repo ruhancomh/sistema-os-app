@@ -42,7 +42,6 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  window.console.log(store)
   store.commit('RESET_TOOLBAR_BACK_URL')
   next()
 })

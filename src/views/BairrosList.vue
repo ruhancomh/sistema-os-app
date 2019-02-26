@@ -111,7 +111,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["SHOW_ALERT"]),
+    ...mapMutations(["SHOW_ALERT","SHOW_LOADER","CLOSE_LOADER"]),
 
     async getData() {
       let filters = this.tableIpunt.filters;
@@ -135,8 +135,10 @@ export default {
     },
 
     async onDeleteItem(item) {
+      this.SHOW_LOADER()
       let bairrosController = new BairrosController();
       let result = await bairrosController.delete(item);
+      this.CLOSE_LOADER()
 
       this.SHOW_ALERT({
         type: result.error ? "error" : "success",

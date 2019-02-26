@@ -13,7 +13,7 @@
           width="100%"
         >
           <v-card-text>
-            <v-form v-model="valid">
+            <v-form v-model="valid" @submit.prevent="">
               <v-container>
                 <v-layout>
                   <v-flex
@@ -71,6 +71,7 @@
               color="primary"
               flat
               large
+              :loading="loading"
               @click="save"
             >
               Salvar
@@ -92,6 +93,7 @@ import { mapMutations } from "vuex";
 export default {
   data() {
     return {
+      loading: false,
       valid: false,
       formFields: {
         nome: "",
@@ -114,6 +116,8 @@ export default {
 
     async save() {
       if (this.valid) {
+        this.loading = true
+
         let bairrosController = new BairrosController();
         let result = await bairrosController.create(this.formFields);
 
@@ -121,6 +125,8 @@ export default {
           type: result.error ? "error" : "success",
           message: result.message
         });
+
+        this.loading = false
 
         if (!result.error)
           this.$router.push({ path: "/bairros" });

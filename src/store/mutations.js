@@ -18,6 +18,16 @@ export default {
     state.alert.message = null
   },
 
+  SHOW_LOADER: (state, payload) => {
+    state.loader.value = true
+    state.loader.text = (payload && payload.text) ? payload.text : null
+  },
+
+  CLOSE_LOADER: (state) => {
+    state.loader.value = false
+    state.loader.text = null
+  },
+
   SET_TOOLBAR_BACK_URL: (state, payload) => {
     state.toolbarBackUrl = payload
     
@@ -25,6 +35,5 @@ export default {
 
   RESET_TOOLBAR_BACK_URL: (state) => {
     state.toolbarBackUrl = null
-    window.console.log('resete')
   }
 }

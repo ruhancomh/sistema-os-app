@@ -12,5 +12,9 @@ export default {
     message: null,
 
     defaultTimeout: 6000
+  },
+  loader: {
+    value: false,
+    text: null
   }
 }
