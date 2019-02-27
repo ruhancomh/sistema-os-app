@@ -75,6 +75,23 @@ export default [
     view: 'FuncionariosEdit'
   },
 
+    // ClienteAtividades
+    {
+      path: '/cliente-atividades',
+      name: 'Atividades',
+      view: 'ClienteAtividadesList'
+    },
+    {
+      path: '/cliente-atividades/adicionar',
+      name: 'Adicionar nova atividade',
+      view: 'ClienteAtividadesAdd'
+    },
+    {
+      path: '/cliente-atividades/editar/:id',
+      name: 'Editar atividade',
+      view: 'ClienteAtividadesEdit'
+    },
+
   // Clientes
   {
     path: '/clientes',

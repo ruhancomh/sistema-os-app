@@ -234,6 +234,7 @@ import { ClientesController } from "../controllers/ClientesController";
 import { FuncionariosController } from "../controllers/FuncionariosController";
 
 import { mapMutations } from "vuex";
+import { ClienteAtividadesController } from '../controllers/ClienteAtividadesController';
 
 export default {
   data() {
@@ -286,6 +287,17 @@ export default {
       this.funcionariosOptions = result.data.data
 
       this.funcionariosOptionsLoad = false
+    },
+
+    async loadAtividades() {
+      this.atividadesOptionsLoad = true
+
+      let clienteAtividadesController = new ClienteAtividadesController()
+      let result = await clienteAtividadesController.all()
+
+      this.atividadesOptions = result.data.data
+
+      this.atividadesOptionsLoad = false
     }
   },
 
@@ -293,6 +305,7 @@ export default {
     this.SET_TOOLBAR_BACK_URL('/clientes')
     this.formFields = new ClientesController().getModel()
     this.loadFuncionarios()
+    this.loadAtividades()
   }
 };
 </script>

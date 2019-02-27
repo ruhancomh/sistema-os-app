@@ -75,6 +75,12 @@ export default {
               title: "Listar todos",
               to: "/clientes"
             },
+            {
+              group: false,
+              icon: "assignment",
+              title: "Atividades",
+              to: "/cliente-atividades"
+            },
           ]
         },
         {
