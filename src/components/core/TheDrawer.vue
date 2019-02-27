@@ -59,6 +59,26 @@ export default {
       links: [
         {
           group:true,
+          icon: 'mdi-account-multiple',
+          title: 'Clientes',
+
+          links: [
+            {
+              group: false,
+              icon: "add",
+              title: "Adicionar novo",
+              to: "/clientes/adicionar"
+            },
+            {
+              group: false,
+              icon: "mdi-view-list",
+              title: "Listar todos",
+              to: "/clientes"
+            },
+          ]
+        },
+        {
+          group:true,
           icon: "mdi-account-tie",
           title: "Funcionários",
 

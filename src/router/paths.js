@@ -74,4 +74,21 @@ export default [
     name: 'Editar funcionário',
     view: 'FuncionariosEdit'
   },
+
+  // Clientes
+  {
+    path: '/clientes',
+    name: 'Clientes',
+    view: 'ClientesList'
+  },
+  {
+    path: '/clientes/adicionar',
+    name: 'Adicionar novo cliente',
+    view: 'ClientesAdd'
+  },
+  {
+    path: '/clientes/editar/:id',
+    name: 'Detalhes do cliente',
+    view: 'ClientesEdit'
+  },
 ]

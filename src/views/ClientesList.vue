@@ -6,6 +6,8 @@
     <v-layout
       justify-center
       align-center
+      row
+      wrap
     >
       <v-flex>
         <v-card
@@ -16,10 +18,10 @@
             <v-btn
               color="primary"
               large
-              to="funcionarios/adicionar"
+              to="clientes/adicionar"
             >
               <v-icon dark>add</v-icon>
-              Adicionar funcionário
+              Adicionar cliente
             </v-btn>
           </v-card-title>
           <v-divider />
@@ -42,9 +44,31 @@
                   md4
                 >
                   <v-text-field
-                    label="Descricao"
+                    label="Razão Social"
                     clearable
-                    v-model="props.filters.descricao"
+                    v-model="props.filters.razao_social"
+                  ></v-text-field>
+                </v-flex>
+                <v-flex
+                  xs12
+                  md4
+                >
+                  <v-text-field
+                    label="Nome Fantasia"
+                    clearable
+                    v-model="props.filters.nome_fantasia"
+                  ></v-text-field>
+                </v-flex>
+                <v-flex
+                  xs12
+                  md3
+                >
+                  <v-text-field
+                    label="CNPJ"
+                    clearable
+                    v-model="props.filters.cnpj"
+                    mask="##.###.###/####-##"
+                    return-masked-value
                   ></v-text-field>
                 </v-flex>
               </template>
@@ -52,8 +76,11 @@
                 slot="items"
                 slot-scope="props"
               >
-                <td>{{ props.item.nome }}</td>
-                <td>{{ props.item.cargo ? props.item.cargo.descricao : '' }}</td>
+                <td>{{ props.item.razao_social }}</td>
+                <td>{{ props.item.nome_fantasia }}</td>
+                <td>{{ props.item.telefone_principal }}</td>
+                <td>{{ props.item.atividade ? props.item.atividade.descricao : '' }}</td>
+                <td>{{ props.item.cnpj ? props.item.cnpj : props.item.cpf }}</td>
               </template>
             </custom-data-table>
           </v-card-text>
@@ -66,7 +93,7 @@
 <script>
 import CustomDataTable from "./../components/shared/CustomDataTable/CustomDataTable";
 
-import { FuncionariosController } from "../controllers/FuncionariosController";
+import { ClientesController } from "../controllers/ClientesController";
 
 import { mapMutations } from "vuex";
 
@@ -78,23 +105,42 @@ export default {
   data() {
     return {
       filters: {
-        nome: "",
-        cargo: "",
+        razao_social: "",
+        nome_fantasia: "",
+        cnpj:""
       },
 
-      defaultSort: "nome",
+      defaultSort: "razao_scial",
       headers: [
         {
-          text: "Nome",
+          text: "Razão Social",
           align: "left",
           sortable: true,
-          value: "nome"
+          value: "razao_social"
         },
         {
-          text: "Cargo",
+          text: "Nome Fantasia",
           align: "left",
           sortable: true,
-          value: "cargo"
+          value: "nome_fantasia"
+        },
+        {
+          text: "Telefone",
+          align: "left",
+          sortable: false,
+          value: "telefone_principal"
+        },
+        {
+          text: "Atividade",
+          align: "left",
+          sortable: true,
+          value: "atividade"
+        },
+        {
+          text: "CNPJ/CPF",
+          align: "left",
+          sortable: false,
+          value: "cnpj"
         }
       ],
       tableData: null,
@@ -109,8 +155,8 @@ export default {
       let filters = this.tableIpunt.filters;
       let pagination = this.tableIpunt.pagination;
 
-      let funcionariosController = new FuncionariosController();
-      let result = await funcionariosController.list(
+      let clientesController = new ClientesController();
+      let result = await clientesController.list(
         filters,
         pagination.page,
         pagination.rowsPerPage,
@@ -128,8 +174,8 @@ export default {
 
     async onDeleteItem(item) {
       this.SHOW_LOADER()
-      let funcionariosController = new FuncionariosController();
-      let result = await funcionariosController.delete(item);
+      let clientesController = new ClientesController();
+      let result = await clientesController.delete(item);
       this.CLOSE_LOADER()
 
       this.SHOW_ALERT({
@@ -141,7 +187,7 @@ export default {
     },
 
     onEditItem(item) {
-      this.$router.push({ path: `/funcionarios/editar/${item}` });
+      this.$router.push({ path: `/clientes/editar/${item}` });
     }
   },
 
