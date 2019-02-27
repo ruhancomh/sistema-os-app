@@ -105,7 +105,22 @@ export default [
   },
   {
     path: '/clientes/editar/:id',
-    name: 'Detalhes do cliente',
-    view: 'ClientesEdit'
+    name: 'Editar cliente',
+    view: 'ClientesEdit',
+    
+    children: [
+      {
+        path: '',
+        view: 'ClientesEditTabInfo'
+      },
+      {
+        path: 'informacoes',
+        view: 'ClientesEditTabInfo'
+      },
+      {
+        path: 'conversas',
+        view: 'ClientesEditTabConversas'
+      }
+    ]
   },
 ]

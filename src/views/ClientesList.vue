@@ -187,7 +187,7 @@ export default {
     },
 
     onEditItem(item) {
-      this.$router.push({ path: `/clientes/editar/${item}` });
+      this.$router.push({ path: `/clientes/editar/${item}/informacoes` });
     }
   },
 
