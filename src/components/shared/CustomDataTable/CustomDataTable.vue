@@ -2,7 +2,7 @@
   <div>
     <v-form v-if="filters">
       <v-container>
-        <v-layout row>
+        <v-layout row wrap>
           <slot name="filter" v-bind:filters="filters"></slot>
         </v-layout>
         <v-layout>

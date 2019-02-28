@@ -4,10 +4,10 @@
     fill-height
   >
     <v-layout
-      row
-      wrap
+      justify-center
+      align-center
     >
-      <v-flex xs12>
+      <v-flex>
         <v-card
           color="white"
           width="100%"
@@ -16,10 +16,10 @@
             <v-btn
               color="primary"
               large
-              to="clientes/adicionar"
+              to="conversa-acoes/adicionar"
             >
               <v-icon dark>add</v-icon>
-              Adicionar cliente
+              Adicionar ação
             </v-btn>
           </v-card-title>
           <v-divider />
@@ -42,31 +42,9 @@
                   md4
                 >
                   <v-text-field
-                    label="Razão Social"
+                    label="Descricao"
                     clearable
-                    v-model="props.filters.razao_social"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex
-                  xs12
-                  md4
-                >
-                  <v-text-field
-                    label="Nome Fantasia"
-                    clearable
-                    v-model="props.filters.nome_fantasia"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex
-                  xs12
-                  md3
-                >
-                  <v-text-field
-                    label="CNPJ"
-                    clearable
-                    v-model="props.filters.cnpj"
-                    mask="##.###.###/####-##"
-                    return-masked-value
+                    v-model="props.filters.descricao"
                   ></v-text-field>
                 </v-flex>
               </template>
@@ -74,11 +52,7 @@
                 slot="items"
                 slot-scope="props"
               >
-                <td>{{ props.item.razao_social }}</td>
-                <td>{{ props.item.nome_fantasia }}</td>
-                <td>{{ props.item.telefone_principal }}</td>
-                <td>{{ props.item.atividade ? props.item.atividade.descricao : '' }}</td>
-                <td>{{ props.item.cnpj ? props.item.cnpj : props.item.cpf }}</td>
+                <td>{{ props.item.descricao }}</td>
               </template>
             </custom-data-table>
           </v-card-text>
@@ -91,7 +65,7 @@
 <script>
 import CustomDataTable from "./../components/shared/CustomDataTable/CustomDataTable";
 
-import { ClientesController } from "../controllers/ClientesController";
+import { ConversaAcoesController } from "../controllers/ConversaAcoesController";
 
 import { mapMutations } from "vuex";
 
@@ -103,42 +77,16 @@ export default {
   data() {
     return {
       filters: {
-        razao_social: "",
-        nome_fantasia: "",
-        cnpj:""
+        descricao: "",
       },
 
-      defaultSort: "razao_social",
+      defaultSort: "descricao",
       headers: [
         {
-          text: "Razão Social",
+          text: "Descricao",
           align: "left",
           sortable: true,
-          value: "razao_social"
-        },
-        {
-          text: "Nome Fantasia",
-          align: "left",
-          sortable: true,
-          value: "nome_fantasia"
-        },
-        {
-          text: "Telefone",
-          align: "left",
-          sortable: false,
-          value: "telefone_principal"
-        },
-        {
-          text: "Atividade",
-          align: "left",
-          sortable: true,
-          value: "atividade"
-        },
-        {
-          text: "CNPJ/CPF",
-          align: "left",
-          sortable: false,
-          value: "cnpj"
+          value: "nome"
         }
       ],
       tableData: null,
@@ -153,8 +101,8 @@ export default {
       let filters = this.tableIpunt.filters;
       let pagination = this.tableIpunt.pagination;
 
-      let clientesController = new ClientesController();
-      let result = await clientesController.list(
+      let conversaAcoesController = new ConversaAcoesController()
+      let result = await conversaAcoesController.list(
         filters,
         pagination.page,
         pagination.rowsPerPage,
@@ -172,8 +120,8 @@ export default {
 
     async onDeleteItem(item) {
       this.SHOW_LOADER()
-      let clientesController = new ClientesController();
-      let result = await clientesController.delete(item);
+      let conversaAcoesController = new ConversaAcoesController()
+      let result = await conversaAcoesController.delete(item);
       this.CLOSE_LOADER()
 
       this.SHOW_ALERT({
@@ -185,7 +133,7 @@ export default {
     },
 
     onEditItem(item) {
-      this.$router.push({ path: `/clientes/editar/${item}/detalhes` });
+      this.$router.push({ path: `/conversa-acoes/editar/${item}` });
     }
   },
 

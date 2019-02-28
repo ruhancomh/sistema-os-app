@@ -2,6 +2,7 @@
   <v-container
     fluid
     fill-height
+    style="padding:0px"
   >
     <v-layout
       row
@@ -16,10 +17,10 @@
             <v-btn
               color="primary"
               large
-              to="clientes/adicionar"
+              :to="`/clientes/editar/${this.getClienteID()}/conversas/adicionar`"
             >
               <v-icon dark>add</v-icon>
-              Adicionar cliente
+              Adicionar conversa
             </v-btn>
           </v-card-title>
           <v-divider />
@@ -30,6 +31,7 @@
               :table-data="tableData"
               :filters="filters"
               :default-sort="defaultSort"
+              :default-descending="defaultDescending"
               @onDeleteItem="onDeleteItem($event)"
               @onEditItem="onEditItem($event)"
             >
@@ -39,34 +41,15 @@
               >
                 <v-flex
                   xs12
-                  md4
-                >
-                  <v-text-field
-                    label="Razão Social"
-                    clearable
-                    v-model="props.filters.razao_social"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex
-                  xs12
-                  md4
-                >
-                  <v-text-field
-                    label="Nome Fantasia"
-                    clearable
-                    v-model="props.filters.nome_fantasia"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex
-                  xs12
                   md3
                 >
                   <v-text-field
-                    label="CNPJ"
-                    clearable
-                    v-model="props.filters.cnpj"
-                    mask="##.###.###/####-##"
+                    mask="##/##/####"
+                    placeholder="dd/mm/aaaa"
+                    label="Data"
                     return-masked-value
+                    clearable
+                    v-model="props.filters.data"
                   ></v-text-field>
                 </v-flex>
               </template>
@@ -74,11 +57,10 @@
                 slot="items"
                 slot-scope="props"
               >
-                <td>{{ props.item.razao_social }}</td>
-                <td>{{ props.item.nome_fantasia }}</td>
-                <td>{{ props.item.telefone_principal }}</td>
-                <td>{{ props.item.atividade ? props.item.atividade.descricao : '' }}</td>
-                <td>{{ props.item.cnpj ? props.item.cnpj : props.item.cpf }}</td>
+                <td>{{ props.item.data }}</td>
+                <td>{{ props.item.cliente ? props.item.cliente.razao_social : '' }}</td>
+                <td>{{ props.item.funcionario ? props.item.funcionario.nome : '' }}</td>
+                <td>{{ props.item.acao ? props.item.acao.descricao : '' }}</td>
               </template>
             </custom-data-table>
           </v-card-text>
@@ -91,7 +73,7 @@
 <script>
 import CustomDataTable from "./../components/shared/CustomDataTable/CustomDataTable";
 
-import { ClientesController } from "../controllers/ClientesController";
+import { ConversasController } from "../controllers/ConversasController";
 
 import { mapMutations } from "vuex";
 
@@ -103,42 +85,35 @@ export default {
   data() {
     return {
       filters: {
-        razao_social: "",
-        nome_fantasia: "",
-        cnpj:""
+        data: ''
       },
 
-      defaultSort: "razao_social",
+      defaultSort: "data",
+      defaultDescending: true,
       headers: [
         {
-          text: "Razão Social",
+          text: "Data",
           align: "left",
           sortable: true,
-          value: "razao_social"
+          value: "data"
         },
         {
-          text: "Nome Fantasia",
+          text: "Cliente",
           align: "left",
           sortable: true,
-          value: "nome_fantasia"
+          value: "cliente"
         },
         {
-          text: "Telefone",
-          align: "left",
-          sortable: false,
-          value: "telefone_principal"
-        },
-        {
-          text: "Atividade",
+          text: "Funcionario",
           align: "left",
           sortable: true,
-          value: "atividade"
+          value: "funcionario"
         },
         {
-          text: "CNPJ/CPF",
+          text: "Ação",
           align: "left",
-          sortable: false,
-          value: "cnpj"
+          sortable: true,
+          value: "acao"
         }
       ],
       tableData: null,
@@ -153,13 +128,14 @@ export default {
       let filters = this.tableIpunt.filters;
       let pagination = this.tableIpunt.pagination;
 
-      let clientesController = new ClientesController();
-      let result = await clientesController.list(
+      let conversasController = new ConversasController();
+      let result = await conversasController.list(
         filters,
         pagination.page,
         pagination.rowsPerPage,
         pagination.sortBy,
-        pagination.descending
+        pagination.descending,
+        this.getClienteID()
       );
 
       if (result.error) {
@@ -172,8 +148,8 @@ export default {
 
     async onDeleteItem(item) {
       this.SHOW_LOADER()
-      let clientesController = new ClientesController();
-      let result = await clientesController.delete(item);
+      let conversasController = new ConversasController();
+      let result = await conversasController.delete(item,this.getClienteID());
       this.CLOSE_LOADER()
 
       this.SHOW_ALERT({
@@ -185,7 +161,11 @@ export default {
     },
 
     onEditItem(item) {
-      this.$router.push({ path: `/clientes/editar/${item}/detalhes` });
+      this.$router.push({ path: `/clientes/editar/${this.getClienteID()}/conversas/editar/${item}`});
+    },
+
+    getClienteID() {
+      return this.$route.params.id
     }
   },
 

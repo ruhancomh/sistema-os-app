@@ -2,6 +2,7 @@
   <v-container
     fluid
     fill-height
+    style="padding:0px"
   >
     <v-layout
       row
@@ -16,10 +17,10 @@
             <v-btn
               color="primary"
               large
-              to="clientes/adicionar"
+              :to="`/clientes/editar/${this.getClienteID()}/contatos/adicionar`"
             >
               <v-icon dark>add</v-icon>
-              Adicionar cliente
+              Adicionar contato
             </v-btn>
           </v-card-title>
           <v-divider />
@@ -42,31 +43,9 @@
                   md4
                 >
                   <v-text-field
-                    label="Razão Social"
+                    label="Nome"
                     clearable
-                    v-model="props.filters.razao_social"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex
-                  xs12
-                  md4
-                >
-                  <v-text-field
-                    label="Nome Fantasia"
-                    clearable
-                    v-model="props.filters.nome_fantasia"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex
-                  xs12
-                  md3
-                >
-                  <v-text-field
-                    label="CNPJ"
-                    clearable
-                    v-model="props.filters.cnpj"
-                    mask="##.###.###/####-##"
-                    return-masked-value
+                    v-model="props.filters.nome"
                   ></v-text-field>
                 </v-flex>
               </template>
@@ -74,11 +53,10 @@
                 slot="items"
                 slot-scope="props"
               >
-                <td>{{ props.item.razao_social }}</td>
-                <td>{{ props.item.nome_fantasia }}</td>
-                <td>{{ props.item.telefone_principal }}</td>
-                <td>{{ props.item.atividade ? props.item.atividade.descricao : '' }}</td>
-                <td>{{ props.item.cnpj ? props.item.cnpj : props.item.cpf }}</td>
+                <td>{{ props.item.nome }}</td>
+                <td>{{ props.item.cargo }}</td>
+                <td>{{ props.item.telefone }}</td>
+                <td>{{ props.item.email }}</td>
               </template>
             </custom-data-table>
           </v-card-text>
@@ -91,7 +69,7 @@
 <script>
 import CustomDataTable from "./../components/shared/CustomDataTable/CustomDataTable";
 
-import { ClientesController } from "../controllers/ClientesController";
+import { ClienteContatosController } from "../controllers/ClienteContatosController";
 
 import { mapMutations } from "vuex";
 
@@ -103,42 +81,34 @@ export default {
   data() {
     return {
       filters: {
-        razao_social: "",
-        nome_fantasia: "",
-        cnpj:""
+        nome: ''
       },
 
-      defaultSort: "razao_social",
+      defaultSort: "nome",
       headers: [
         {
-          text: "Razão Social",
+          text: "Nome",
           align: "left",
           sortable: true,
-          value: "razao_social"
+          value: "nome"
         },
         {
-          text: "Nome Fantasia",
+          text: "Cargo",
           align: "left",
           sortable: true,
-          value: "nome_fantasia"
+          value: "cargo"
         },
         {
           text: "Telefone",
           align: "left",
           sortable: false,
-          value: "telefone_principal"
+          value: "telefone"
         },
         {
-          text: "Atividade",
+          text: "E-mail",
           align: "left",
           sortable: true,
-          value: "atividade"
-        },
-        {
-          text: "CNPJ/CPF",
-          align: "left",
-          sortable: false,
-          value: "cnpj"
+          value: "email"
         }
       ],
       tableData: null,
@@ -153,13 +123,14 @@ export default {
       let filters = this.tableIpunt.filters;
       let pagination = this.tableIpunt.pagination;
 
-      let clientesController = new ClientesController();
-      let result = await clientesController.list(
+      let clienteContatosController = new ClienteContatosController();
+      let result = await clienteContatosController.list(
         filters,
         pagination.page,
         pagination.rowsPerPage,
         pagination.sortBy,
-        pagination.descending
+        pagination.descending,
+        this.getClienteID()
       );
 
       if (result.error) {
@@ -172,8 +143,8 @@ export default {
 
     async onDeleteItem(item) {
       this.SHOW_LOADER()
-      let clientesController = new ClientesController();
-      let result = await clientesController.delete(item);
+      let clienteContatosController = new ClienteContatosController();
+      let result = await clienteContatosController.delete(item,this.getClienteID());
       this.CLOSE_LOADER()
 
       this.SHOW_ALERT({
@@ -185,7 +156,11 @@ export default {
     },
 
     onEditItem(item) {
-      this.$router.push({ path: `/clientes/editar/${item}/detalhes` });
+      this.$router.push({ path: `/clientes/editar/${this.getClienteID()}/contatos/editar/${item}`});
+    },
+
+    getClienteID() {
+      return this.$route.params.id
     }
   },
 

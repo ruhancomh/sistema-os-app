@@ -21,7 +21,7 @@ function route (path, view, name, children) {
     component: (resovle) => import(
       `@/views/${view}.vue`
     ).then(resovle),
-    children: children ? children.map(child => route(child.path, child.view)): null
+    children: children ? children.map(child => route(child.path, child.view, child.name)): null
   }
 }
 

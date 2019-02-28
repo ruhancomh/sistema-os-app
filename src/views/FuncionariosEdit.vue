@@ -13,7 +13,10 @@
           width="100%"
         >
           <v-card-text>
-            <v-form v-model="valid" @submit.prevent="">
+            <v-form
+              v-model="valid"
+              @submit.prevent=""
+            >
               <v-container>
                 <v-layout>
                   <v-flex
@@ -39,9 +42,9 @@
                       label="Cargo"
                       item-text="descricao"
                       item-value="id"
-                      required                      
+                      required
                     />
-                  </v-flex>                  
+                  </v-flex>
                 </v-layout>
               </v-container>
             </v-form>
@@ -86,31 +89,36 @@ export default {
         }
       },
 
-      funcionarioCargosOptions:[],
+      funcionarioCargosOptions: [],
       funcionarioCargosOptionsLoad: false
     };
   },
 
   methods: {
-    ...mapMutations(["SHOW_ALERT","SET_TOOLBAR_BACK_URL","SHOW_LOADER","CLOSE_LOADER"]),
+    ...mapMutations([
+      "SHOW_ALERT",
+      "SET_TOOLBAR_BACK_URL",
+      "SHOW_LOADER",
+      "CLOSE_LOADER"
+    ]),
 
     async loadEntity() {
-      this.SHOW_LOADER()
+      this.SHOW_LOADER();
 
-      let funcionariosController = new FuncionariosController()
-      let result = await funcionariosController.get(this.$route.params.id)
+      let funcionariosController = new FuncionariosController();
+      let result = await funcionariosController.get(this.$route.params.id);
 
-      this.CLOSE_LOADER()
+      this.CLOSE_LOADER();
 
-      if (!result.error){
-        this.formFields = result.data
+      if (!result.error) {
+        this.formFields = result.data;
       } else {
         this.SHOW_ALERT({
           type: "error",
           message: result.message
         });
 
-        this.$router.push({ path: "/bairros" });
+        this.$router.push({ path: "/funcionarios" });
       }
     },
 
@@ -126,26 +134,26 @@ export default {
           message: result.message
         });
 
-        this.loading = false
+        this.loading = false;
       }
     },
 
     async loadFuncionarioCargos() {
-      this.funcionarioCargosOptionsLoad = true
+      this.funcionarioCargosOptionsLoad = true;
 
-      let funcionarioCargosController = new FuncionarioCargosController()
-      let result = await funcionarioCargosController.all()
+      let funcionarioCargosController = new FuncionarioCargosController();
+      let result = await funcionarioCargosController.all();
 
-      this.funcionarioCargosOptions = result.data.data
+      this.funcionarioCargosOptions = result.data.data;
 
-      this.funcionarioCargosOptionsLoad = false
+      this.funcionarioCargosOptionsLoad = false;
     }
   },
 
   async mounted() {
-    this.SET_TOOLBAR_BACK_URL('/funcionarios')
-    await this.loadEntity()
-    this.loadFuncionarioCargos()
+    this.SET_TOOLBAR_BACK_URL("/funcionarios");
+    await this.loadEntity();
+    this.loadFuncionarioCargos();
   }
 };
 </script>

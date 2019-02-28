@@ -75,22 +75,38 @@ export default [
     view: 'FuncionariosEdit'
   },
 
-    // ClienteAtividades
-    {
-      path: '/cliente-atividades',
-      name: 'Atividades',
-      view: 'ClienteAtividadesList'
-    },
-    {
-      path: '/cliente-atividades/adicionar',
-      name: 'Adicionar nova atividade',
-      view: 'ClienteAtividadesAdd'
-    },
-    {
-      path: '/cliente-atividades/editar/:id',
-      name: 'Editar atividade',
-      view: 'ClienteAtividadesEdit'
-    },
+  // ClienteAtividades
+  {
+    path: '/cliente-atividades',
+    name: 'Atividades',
+    view: 'ClienteAtividadesList'
+  },
+  {
+    path: '/cliente-atividades/adicionar',
+    name: 'Adicionar nova atividade',
+    view: 'ClienteAtividadesAdd'
+  },
+  {
+    path: '/cliente-atividades/editar/:id',
+    name: 'Editar atividade',
+    view: 'ClienteAtividadesEdit'
+  },
+  // ConversaAcoes
+  {
+    path: '/conversa-acoes',
+    name: 'Ações de conversa',
+    view: 'ClienteConversaAcoesList'
+  },
+  {
+    path: '/conversa-acoes/adicionar',
+    name: 'Adicionar nova ação de conversa',
+    view: 'ClienteConversaAcoesAdd'
+  },
+  {
+    path: '/conversa-acoes/editar/:id',
+    name: 'Editar ação de conversa',
+    view: 'ClienteConversaAcoesEdit'
+  },
 
   // Clientes
   {
@@ -105,21 +121,51 @@ export default [
   },
   {
     path: '/clientes/editar/:id',
-    name: 'Editar cliente',
-    view: 'ClientesEdit',
+    view: 'ClientesTabview',
     
     children: [
+      // Detalhes
       {
         path: '',
-        view: 'ClientesEditTabInfo'
+        name: 'Detalhes do Cliente',
+        view: 'ClientesEdit'
       },
       {
-        path: 'informacoes',
-        view: 'ClientesEditTabInfo'
+        path: 'detalhes',
+        name: 'Detalhes do Cliente',
+        view: 'ClientesEdit'
       },
+      // ClienteContatos
+      {
+        path: 'contatos',
+        name: 'Contatos do cliente',
+        view: 'ClienteContatosList'
+      },
+      {
+        path: 'contatos/adicionar',
+        name: 'Adicionar novo contato',
+        view: 'ClienteContatosAdd'
+      },
+      {
+        path: 'contatos/editar/:cliente_contatos_id',
+        name: 'Editar contatos',
+        view: 'ClienteContatosEdit'
+      },
+      // ClienteConversas
       {
         path: 'conversas',
-        view: 'ClientesEditTabConversas'
+        name: 'Conversas do cliente',
+        view: 'ClienteConversasList'
+      },
+      {
+        path: 'conversas/adicionar',
+        name: 'Adicionar nova conversa',
+        view: 'ClienteConversasAdd'
+      },
+      {
+        path: 'conversas/editar/:conversas_id',
+        name: 'Editar conversa',
+        view: 'ClienteConversasEdit'
       }
     ]
   },

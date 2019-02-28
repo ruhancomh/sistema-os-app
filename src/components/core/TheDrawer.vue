@@ -118,6 +118,12 @@ export default {
             {
               group: false,
               icon: "",
+              title: "Ações de conversa",
+              to: "/conversa-acoes"
+            },
+            {
+              group: false,
+              icon: "",
               title: "Bairros",
               to: "/Bairros"
             },
