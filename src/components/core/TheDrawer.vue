@@ -133,20 +133,20 @@ export default {
               title: "Cidades",
               to: "/cidades"
             },
-            {
-              group: false,
-              icon: "",
-              title: "Estados",
-              to: "/estados"
-            }
+            // {
+            //   group: false,
+            //   icon: "",
+            //   title: "Estados",
+            //   to: "/estados"
+            // }
           ]
         },
-        {
-          group: false,
-          icon: "settings",
-          title: "Configurações",
-          to: "/configuracoes"
-        }
+        // {
+        //   group: false,
+        //   icon: "settings",
+        //   title: "Configurações",
+        //   to: "/configuracoes"
+        // }
       ]
     };
   },
