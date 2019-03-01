@@ -328,8 +328,6 @@ export default {
 
       this.clienteContatosOptions = result.data.data
 
-      this.formFields.bairros_id = null
-
       this.clienteContatosOptionsLoad = false
     },
 

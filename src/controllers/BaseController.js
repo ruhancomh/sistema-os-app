@@ -8,6 +8,12 @@ export class BaseController {
     baseURL: store.state.API_URL
   })
 
+  request() {
+    return axios.create({
+      baseURL: store.state.API_URL
+    })
+  }
+
   response (message, data, error = false) {
 
     let responseError = null

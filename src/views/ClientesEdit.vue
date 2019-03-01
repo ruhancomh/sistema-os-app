@@ -234,8 +234,8 @@
 import { ClientesController } from "../controllers/ClientesController";
 import { FuncionariosController } from "../controllers/FuncionariosController";
 
-import { mapMutations } from "vuex";
 import { ClienteAtividadesController } from '../controllers/ClienteAtividadesController';
+import { mapMutations } from "vuex";
 
 export default {
   data() {
