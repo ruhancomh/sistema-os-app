@@ -118,6 +118,12 @@ export default {
             {
               group: false,
               icon: "",
+              title: "Tipos de endereço",
+              to: "/endereco-tipos"
+            },
+            {
+              group: false,
+              icon: "",
               title: "Ações de conversa",
               to: "/conversa-acoes"
             },

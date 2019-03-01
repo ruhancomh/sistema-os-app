@@ -33,4 +33,14 @@ export class EstadosController extends BaseController {
     }
   }
 
+  async getCidades(estados_id)
+  {
+    try {
+      let result = await this._request.get(`estados/${estados_id}/cidades`)
+      return this.response(false, result.data)
+    } catch (error) {
+      return this.response(false, false, error)
+    }
+  }
+
 }

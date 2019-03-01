@@ -1,33 +1,39 @@
 'use strict'
 import {
-  ClienteContatos
-} from '../models/ClienteContatos';
+  ClienteEnderecos
+} from '../models/ClienteEnderecos';
 import {
   BaseController
 } from './BaseController';
 
-export class ClienteContatosController extends BaseController {
+export class ClienteEnderecosController extends BaseController {
   _baseApiUrl = ''
 
   getModel() {
-    return new ClienteContatos()
+    return new ClienteEnderecos()
   }
 
   getBaseApiUrl(clientes_id) {
-    return `clientes/${clientes_id}/contatos`
+    return `clientes/${clientes_id}/enderecos`
   }
 
   async create(params, clientes_id) {
     try {
-      let clienteContato = new ClienteContatos(
-        params.nome,
-        params.cargo,
+      let clienteEndereco = new ClienteEnderecos(
+        params.descricao,
+        params.cnpj,
+        params.logradouro,
+        params.cep,
         params.telefone,
-        params.email,
-        params.clientes_id
+        params.observacao,
+        params.clientes_id,
+        params.cliente_contatos_id,
+        params.cidades_id,
+        params.endereco_tipos_id,
+        params.bairros_id,
       )
-      let result = await this._request.post(this.getBaseApiUrl(clientes_id), clienteContato)
-      return this.response('Contato adicionado com sucesso.', result.data)
+      let result = await this._request.post(this.getBaseApiUrl(clientes_id), clienteEndereco)
+      return this.response('Endereço adicionado com sucesso.', result.data)
     } catch (error) {
       return this.response(false, false, error)
     }
@@ -35,25 +41,31 @@ export class ClienteContatosController extends BaseController {
 
   async update(params, clientes_id) {
     try {
-      let clienteContato = new ClienteContatos(
-        params.nome,
-        params.cargo,
+      let clienteEndereco = new ClienteEnderecos(
+        params.descricao,
+        params.cnpj,
+        params.logradouro,
+        params.cep,
         params.telefone,
-        params.email,
+        params.observacao,
         params.clientes_id,
+        params.cliente_contatos_id,
+        params.cidades_id,
+        params.endereco_tipos_id,
+        params.bairros_id,
         params.id
       )
-      let result = await this._request.put(`${this.getBaseApiUrl(clientes_id)}/${clienteContato.id}`, clienteContato)
-      return this.response('Contato editado com sucesso.', result.data)
+      let result = await this._request.put(`${this.getBaseApiUrl(clientes_id)}/${clienteEndereco.id}`, clienteEndereco)
+      return this.response('Endereço editado com sucesso.', result.data)
     } catch (error) {
       return this.response(false, false, error)
     }
   }
 
-  async get(id, clientes_id) {
+  async get(clientes_id, id) {
     try {
       let result = await this._request.get(`${this.getBaseApiUrl(clientes_id)}/${id}`)
-      return this.response('Contato carregado com sucesso.', result.data)
+      return this.response('Endereço carregado com sucesso.', result.data)
     } catch (error) {
       return this.response(false, false, error)
     }
@@ -72,7 +84,7 @@ export class ClienteContatosController extends BaseController {
   async all(clientes_id) {
     try {
       let queryParams = this.buildQueryParams(false, false, -1)
-      let result = await this._request.get(`${this.getBaseApiUrl(clientes_id)}${queryParams}`)
+      let result = await this._request.get(`$${this.getBaseApiUrl(clientes_id)}${queryParams}`)
       return this.response(false, result.data)
     } catch (error) {
       return this.response(false, false, error)
@@ -82,7 +94,7 @@ export class ClienteContatosController extends BaseController {
   async delete(id, clientes_id) {
     try {
       let result = await this._request.delete(`${this.getBaseApiUrl(clientes_id)}/${id}`)
-      return this.response('Contato apagado com sucesso.', result.data)
+      return this.response('Endereço apagado com sucesso.', result.data)
     } catch (error) {
       return this.response(false, false, error)
     }

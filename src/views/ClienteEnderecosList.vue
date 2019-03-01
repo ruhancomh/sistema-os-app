@@ -17,10 +17,10 @@
             <v-btn
               color="primary"
               large
-              :to="`/clientes/editar/${this.getClienteID()}/conversas/adicionar`"
+              :to="`/clientes/editar/${this.getClienteID()}/enderecos/adicionar`"
             >
               <v-icon dark>add</v-icon>
-              Adicionar conversa
+              Adicionar endereço
             </v-btn>
           </v-card-title>
           <v-divider />
@@ -31,7 +31,6 @@
               :table-data="tableData"
               :filters="filters"
               :default-sort="defaultSort"
-              :default-descending="defaultDescending"
               @onDeleteItem="onDeleteItem($event)"
               @onEditItem="onEditItem($event)"
             >
@@ -41,15 +40,12 @@
               >
                 <v-flex
                   xs12
-                  md3
+                  md4
                 >
                   <v-text-field
-                    mask="##/##/####"
-                    placeholder="dd/mm/aaaa"
-                    label="Data"
-                    return-masked-value
+                    label="Descrição"
                     clearable
-                    v-model="props.filters.data"
+                    v-model="props.filters.descricao"
                   ></v-text-field>
                 </v-flex>
               </template>
@@ -57,10 +53,14 @@
                 slot="items"
                 slot-scope="props"
               >
-                <td>{{ props.item.data }}</td>
-                <td>{{ props.item.cliente ? props.item.cliente.razao_social : '' }}</td>
-                <td>{{ props.item.funcionario ? props.item.funcionario.nome : '' }}</td>
-                <td>{{ props.item.acao ? props.item.acao.descricao : '' }}</td>
+                <td>{{ props.item.tipo.descricao ? props.item.tipo.descricao : '' }}</td>
+                <td>{{ props.item.descricao }}</td>
+                <td>{{ props.item.cnpj }}</td>
+                <td>{{ props.item.telefone }}</td>
+                <td>{{ props.item.cep }}</td>
+                <td>{{ props.item.logradouro }}</td>
+                <td>{{ props.item.bairro ? props.item.bairro.nome : '' }}</td>
+                <td>{{ props.item.cidade ? props.item.cidade.nome+'-'+props.item.cidade.estado.uf : '' }}</td>
               </template>
             </custom-data-table>
           </v-card-text>
@@ -73,7 +73,7 @@
 <script>
 import CustomDataTable from "./../components/shared/CustomDataTable/CustomDataTable";
 
-import { ConversasController } from "../controllers/ConversasController";
+import { ClienteEnderecosController } from "../controllers/ClienteEnderecosController";
 
 import { mapMutations } from "vuex";
 
@@ -85,35 +85,58 @@ export default {
   data() {
     return {
       filters: {
-        data: ''
+        nome: ''
       },
 
-      defaultSort: "data",
-      defaultDescending: true,
+      defaultSort: "nome",
       headers: [
         {
-          text: "Data",
+          text: "Tipo",
           align: "left",
           sortable: true,
-          value: "data"
+          value: "tipo"
         },
         {
-          text: "Cliente",
+          text: "Descriçao",
           align: "left",
           sortable: true,
-          value: "cliente"
+          value: "descricao"
         },
         {
-          text: "Funcionario",
+          text: "CNPJ",
           align: "left",
-          sortable: true,
-          value: "funcionario"
+          sortable: false,
+          value: "cnpj"
         },
         {
-          text: "Ação",
+          text: "Telefone",
           align: "left",
-          sortable: true,
-          value: "acao"
+          sortable: false,
+          value: "telefone"
+        },
+        {
+          text: "CEP",
+          align: "left",
+          sortable: false,
+          value: "cep"
+        },
+        {
+          text: "Logradouro",
+          align: "left",
+          sortable: false,
+          value: "logradouro"
+        },
+        {
+          text: "Bairro",
+          align: "left",
+          sortable: false,
+          value: "bairro"
+        },
+        {
+          text: "Cidade",
+          align: "left",
+          sortable: false,
+          value: "cidade"
         }
       ],
       tableData: null,
@@ -128,8 +151,8 @@ export default {
       let filters = this.tableIpunt.filters;
       let pagination = this.tableIpunt.pagination;
 
-      let conversasController = new ConversasController();
-      let result = await conversasController.list(
+      let clienteEnderecosController = new ClienteEnderecosController();
+      let result = await clienteEnderecosController.list(
         filters,
         pagination.page,
         pagination.rowsPerPage,
@@ -148,8 +171,8 @@ export default {
 
     async onDeleteItem(item) {
       this.SHOW_LOADER()
-      let conversasController = new ConversasController();
-      let result = await conversasController.delete(item,this.getClienteID());
+      let clienteEnderecosController = new ClienteEnderecosController();
+      let result = await clienteEnderecosController.delete(item,this.getClienteID());
       this.CLOSE_LOADER()
 
       this.SHOW_ALERT({
@@ -161,7 +184,7 @@ export default {
     },
 
     onEditItem(item) {
-      this.$router.push({ path: `/clientes/editar/${this.getClienteID()}/conversas/editar/${item}`});
+      this.$router.push({ path: `/clientes/editar/${this.getClienteID()}/enderecos/editar/${item}`});
     },
 
     getClienteID() {
@@ -177,7 +200,7 @@ export default {
       deep: true
     }
   },
-
+  
   created () {
     this.SET_TOOLBAR_BACK_URL('/clientes')
   }

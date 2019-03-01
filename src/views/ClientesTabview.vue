@@ -50,6 +50,10 @@ export default {
           to: `/clientes/editar/${this.getId()}/contatos`
         },
         {
+          text: 'Endereços',
+          to: `/clientes/editar/${this.getId()}/enderecos`
+        },
+        {
           text: 'Conversas',
           to: `/clientes/editar/${this.getId()}/conversas`
         },

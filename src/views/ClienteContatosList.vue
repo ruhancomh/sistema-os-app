@@ -117,7 +117,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["SHOW_ALERT","SHOW_LOADER","CLOSE_LOADER"]),
+    ...mapMutations(["SHOW_ALERT","SET_TOOLBAR_BACK_URL","SHOW_LOADER","CLOSE_LOADER"]),
 
     async getData() {
       let filters = this.tableIpunt.filters;
@@ -171,6 +171,10 @@ export default {
       },
       deep: true
     }
+  },
+
+  created () {
+    this.SET_TOOLBAR_BACK_URL('/clientes')
   }
 };
 </script>

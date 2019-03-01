@@ -61,4 +61,14 @@ export class CidadesController extends BaseController {
     }
   }
 
+  async getBairros(cidades_id)
+  {
+    try {
+      let result = await this._request.get(`cidades/${cidades_id}/bairros`)
+      return this.response(false, result.data)
+    } catch (error) {
+      return this.response(false, false, error)
+    }
+  }
+
 }

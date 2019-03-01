@@ -2,13 +2,12 @@
   <v-container
     fluid
     fill-height
-    style="padding:0px"
   >
     <v-layout
-      row
-      wrap
+      justify-center
+      align-center
     >
-      <v-flex xs12>
+      <v-flex>
         <v-card
           color="white"
           width="100%"
@@ -17,10 +16,10 @@
             <v-btn
               color="primary"
               large
-              :to="`/clientes/editar/${this.getClienteID()}/conversas/adicionar`"
+              to="endereco-tipos/adicionar"
             >
               <v-icon dark>add</v-icon>
-              Adicionar conversa
+              Adicionar tipo de endereço
             </v-btn>
           </v-card-title>
           <v-divider />
@@ -31,7 +30,6 @@
               :table-data="tableData"
               :filters="filters"
               :default-sort="defaultSort"
-              :default-descending="defaultDescending"
               @onDeleteItem="onDeleteItem($event)"
               @onEditItem="onEditItem($event)"
             >
@@ -41,15 +39,12 @@
               >
                 <v-flex
                   xs12
-                  md3
+                  md4
                 >
                   <v-text-field
-                    mask="##/##/####"
-                    placeholder="dd/mm/aaaa"
-                    label="Data"
-                    return-masked-value
+                    label="Descricao"
                     clearable
-                    v-model="props.filters.data"
+                    v-model="props.filters.descricao"
                   ></v-text-field>
                 </v-flex>
               </template>
@@ -57,10 +52,7 @@
                 slot="items"
                 slot-scope="props"
               >
-                <td>{{ props.item.data }}</td>
-                <td>{{ props.item.cliente ? props.item.cliente.razao_social : '' }}</td>
-                <td>{{ props.item.funcionario ? props.item.funcionario.nome : '' }}</td>
-                <td>{{ props.item.acao ? props.item.acao.descricao : '' }}</td>
+                <td>{{ props.item.descricao }}</td>
               </template>
             </custom-data-table>
           </v-card-text>
@@ -73,7 +65,7 @@
 <script>
 import CustomDataTable from "./../components/shared/CustomDataTable/CustomDataTable";
 
-import { ConversasController } from "../controllers/ConversasController";
+import { EnderecoTiposController } from "../controllers/EnderecoTiposController";
 
 import { mapMutations } from "vuex";
 
@@ -85,35 +77,16 @@ export default {
   data() {
     return {
       filters: {
-        data: ''
+        descricao: "",
       },
 
-      defaultSort: "data",
-      defaultDescending: true,
+      defaultSort: "descricao",
       headers: [
         {
-          text: "Data",
+          text: "Descricao",
           align: "left",
           sortable: true,
-          value: "data"
-        },
-        {
-          text: "Cliente",
-          align: "left",
-          sortable: true,
-          value: "cliente"
-        },
-        {
-          text: "Funcionario",
-          align: "left",
-          sortable: true,
-          value: "funcionario"
-        },
-        {
-          text: "Ação",
-          align: "left",
-          sortable: true,
-          value: "acao"
+          value: "nome"
         }
       ],
       tableData: null,
@@ -122,20 +95,19 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["SHOW_ALERT","SET_TOOLBAR_BACK_URL","SHOW_LOADER","CLOSE_LOADER"]),
+    ...mapMutations(["SHOW_ALERT","SHOW_LOADER","CLOSE_LOADER"]),
 
     async getData() {
       let filters = this.tableIpunt.filters;
       let pagination = this.tableIpunt.pagination;
 
-      let conversasController = new ConversasController();
-      let result = await conversasController.list(
+      let enderecoTiposController = new EnderecoTiposController();
+      let result = await enderecoTiposController.list(
         filters,
         pagination.page,
         pagination.rowsPerPage,
         pagination.sortBy,
-        pagination.descending,
-        this.getClienteID()
+        pagination.descending
       );
 
       if (result.error) {
@@ -148,8 +120,8 @@ export default {
 
     async onDeleteItem(item) {
       this.SHOW_LOADER()
-      let conversasController = new ConversasController();
-      let result = await conversasController.delete(item,this.getClienteID());
+      let enderecoTiposController = new EnderecoTiposController();
+      let result = await enderecoTiposController.delete(item);
       this.CLOSE_LOADER()
 
       this.SHOW_ALERT({
@@ -161,11 +133,7 @@ export default {
     },
 
     onEditItem(item) {
-      this.$router.push({ path: `/clientes/editar/${this.getClienteID()}/conversas/editar/${item}`});
-    },
-
-    getClienteID() {
-      return this.$route.params.id
+      this.$router.push({ path: `/endereco-tipos/editar/${item}` });
     }
   },
 
@@ -176,10 +144,6 @@ export default {
       },
       deep: true
     }
-  },
-
-  created () {
-    this.SET_TOOLBAR_BACK_URL('/clientes')
   }
 };
 </script>

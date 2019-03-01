@@ -74,6 +74,22 @@ export default [
     name: 'Editar funcionário',
     view: 'FuncionariosEdit'
   },
+  // EnderecoTipos
+  {
+    path: '/endereco-tipos',
+    name: 'Tipos de endereço',
+    view: 'EnderecoTiposList'
+  },
+  {
+    path: '/endereco-tipos/adicionar',
+    name: 'Adicionar novo tipo de endereço',
+    view: 'EnderecoTiposAdd'
+  },
+  {
+    path: '/endereco-tipos/editar/:id',
+    name: 'Editar tipo de endereço',
+    view: 'EnderecoTiposEdit'
+  },
 
   // ClienteAtividades
   {
@@ -166,6 +182,22 @@ export default [
         path: 'conversas/editar/:conversas_id',
         name: 'Editar conversa',
         view: 'ClienteConversasEdit'
+      },
+      // ClienteEnderecos
+      {
+        path: 'enderecos',
+        name: 'Endereços do cliente',
+        view: 'ClienteEnderecosList'
+      },
+      {
+        path: 'enderecos/adicionar',
+        name: 'Adicionar novo endereço',
+        view: 'ClienteEnderecosAdd'
+      },
+      {
+        path: 'enderecos/editar/:cliente_enderecos_id',
+        name: 'Editar endereço',
+        view: 'ClienteEnderecosEdit'
       }
     ]
   },
