@@ -57,6 +57,10 @@ export default {
           text: 'Conversas',
           to: `/clientes/editar/${this.getId()}/conversas`
         },
+        {
+          text: 'Cobranças',
+          to: `/clientes/editar/${this.getId()}/cobrancas`
+        },
       ],
       loading: false,
       valid: false,

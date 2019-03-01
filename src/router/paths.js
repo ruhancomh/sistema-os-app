@@ -198,6 +198,22 @@ export default [
         path: 'enderecos/editar/:cliente_enderecos_id',
         name: 'Editar endereço',
         view: 'ClienteEnderecosEdit'
+      },
+      // ClienteCobrancas
+      {
+        path: 'cobrancas',
+        name: 'Cobranças do cliente',
+        view: 'ClienteCobrancasList'
+      },
+      {
+        path: 'cobrancas/adicionar',
+        name: 'Adicionar nova cobrança',
+        view: 'ClienteCobrancasAdd'
+      },
+      {
+        path: 'cobrancas/editar/:cliente_cobrancas_id',
+        name: 'Editar cobrança',
+        view: 'ClienteCobrancasEdit'
       }
     ]
   },
