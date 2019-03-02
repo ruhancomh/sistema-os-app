@@ -25,6 +25,21 @@
                 >
                   <v-flex
                     xs12
+                    md3
+                  >
+                    <v-switch
+                      v-model="formFields.aprovado"
+                      color="primary"
+                      label="Proposta Aprovada?"
+                    ></v-switch>
+                  </v-flex>
+                </v-layout>
+                <v-layout
+                  row
+                  wrap
+                >
+                  <v-flex
+                    xs12
                     md2
                   >
                     <v-text-field
@@ -42,57 +57,8 @@
                     md2
                   >
                     <v-text-field
-                      v-model="formFields.valor"
-                      label="Valor"
-                      :rules="[formRules.default.required]"
-                      required
-                    ></v-text-field>                    
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md2
-                  >
-                    <v-text-field
-                      v-model="formFields.porcentagem"
-                      label="Porcentagem"
-                      :rules="[formRules.default.required]"
-                      required
-                    ></v-text-field>                    
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md2
-                  >
-                    <v-text-field
-                      v-model="formFields.dia"
-                      label="Dia"
-                      :rules="[formRules.default.required]"
-                      required
-                    ></v-text-field>                    
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md2
-                  >
-                    <v-text-field
-                      v-model="formFields.vencimento"
-                      label="Vencimento"
-                      :rules="[formRules.default.required]"
-                      required
-                      return-masked-value
-                      mask="##/##/####"
-                      placeholder="dd/mm/aaaa"
-                    ></v-text-field>
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md2
-                  >
-                    <v-text-field
-                      v-model="formFields.referencia"
-                      label="Referência"
-                      :rules="[formRules.default.required]"
-                      required
+                      v-model="formFields.numero"
+                      label="Numero"
                     ></v-text-field>                    
                   </v-flex>
                   <v-flex
@@ -106,6 +72,46 @@
                       label="Serviço"
                       item-text="descricao"
                       item-value="id"
+                    />
+                  </v-flex>
+                  <v-flex
+                    xs6
+                    md4
+                  >
+                    <v-select
+                      v-model="formFields.funcionarios_id"
+                      :items="funcionariosOptions"
+                      :loading="funcionariosOptionsLoad"
+                      label="Funcionário"
+                      item-text="nome"
+                      item-value="id"
+                    />
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md4
+                  >
+                    <v-textarea
+                      v-model="formFields.referencia_1"
+                      label="Referência 1"
+                    />
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md4
+                  >
+                    <v-textarea
+                      v-model="formFields.referencia_2"
+                      label="Referência 2"
+                    />
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md4
+                  >
+                    <v-textarea
+                      v-model="formFields.referencia_3"
+                      label="Referência 3"
                     />
                   </v-flex>
                   <v-flex
@@ -141,10 +147,11 @@
 </template>
 
 <script>
-import { ClienteCobrancasController } from "../controllers/ClienteCobrancasController"
+import { ClientePropostasController } from "../controllers/ClientePropostasController"
 
 import { mapMutations } from "vuex"
 import { ServicosController } from '../controllers/ServicosController';
+import { FuncionariosController } from '../controllers/FuncionariosController';
 
 export default {
   data() {
@@ -158,7 +165,10 @@ export default {
         }
       },
       servicosOptions: [],
-      servicosOptionsLoad: false
+      servicosOptionsLoad: false,
+
+      funcionariosOptions: [],
+      funcionariosOptionsLoad: false
     }
   },
 
@@ -170,12 +180,32 @@ export default {
       "CLOSE_LOADER"
     ]),
 
+    async loadEntity() {
+      this.SHOW_LOADER()
+
+      let clientePropostasController = new ClientePropostasController()
+      let result = await clientePropostasController.get(this.getEntityID(), this.getClienteID())
+
+      this.CLOSE_LOADER()
+
+      if (!result.error) {
+        this.formFields = result.data
+      } else {
+        this.SHOW_ALERT({
+          type: "error",
+          message: result.message
+        })
+
+        this.$router.push({ path: `/clientes/editar/${this.getClienteID()}/propostas` })
+      }
+    },
+
     async save() {
       if (this.valid) {
         this.loading = true
 
-        let clienteCobrancasController = new ClienteCobrancasController()
-        let result = await clienteCobrancasController.create(this.formFields, this.getClienteID())
+        let clientePropostasController = new ClientePropostasController()
+        let result = await clientePropostasController.update(this.formFields, this.getClienteID())
 
         this.SHOW_ALERT({
           type: result.error ? "error" : "success",
@@ -184,7 +214,7 @@ export default {
 
         if (!result.error)
           this.$router.push({
-            path: `/clientes/editar/${this.getClienteID()}/cobrancas`
+            path: `/clientes/editar/${this.getClienteID()}/propostas`
           })
 
         this.loading = false
@@ -202,16 +232,31 @@ export default {
       this.servicosOptionsLoad = false
     },
 
+    async loadFuncionarios() {
+      this.funcionariosOptionsLoad = true
+
+      let funcionarioController = new FuncionariosController()
+      let result = await funcionarioController.all()
+
+      this.funcionariosOptions = result.data.data
+
+      this.funcionariosOptionsLoad = false
+    },
+
     getClienteID() {
       return this.$route.params.id
+    },
+
+    getEntityID() {
+      return this.$route.params.cliente_propostas_id
     }
   },
 
-  created() {
-    this.SET_TOOLBAR_BACK_URL(`/clientes/editar/${this.getClienteID()}/cobrancas`)
-    this.formFields = new ClienteCobrancasController().getModel()
-    this.formFields.clientes_id = this.getClienteID()
+  async created() {
+    this.SET_TOOLBAR_BACK_URL(`/clientes/editar/${this.getClienteID()}/propostas`)
+    await this.loadEntity()
     this.loadServicos()
+    this.loadFuncionarios()
   }
 }
 </script>

@@ -118,6 +118,12 @@ export default {
             {
               group: false,
               icon: "",
+              title: "Serviços",
+              to: "/servicos"
+            },
+            {
+              group: false,
+              icon: "",
               title: "Tipos de endereço",
               to: "/endereco-tipos"
             },

@@ -39,22 +39,11 @@
                   </v-flex>
                   <v-flex
                     xs12
-                    md3
+                    md2
                   >
                     <v-text-field
                       v-model="formFields.valor"
                       label="Valor"
-                      :rules="[formRules.default.required]"
-                      required
-                    ></v-text-field>                    
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md3
-                  >
-                    <v-text-field
-                      v-model="formFields.referencia"
-                      label="Referência"
                       :rules="[formRules.default.required]"
                       required
                     ></v-text-field>                    
@@ -77,6 +66,31 @@
                     <v-text-field
                       v-model="formFields.dia"
                       label="Dia"
+                      :rules="[formRules.default.required]"
+                      required
+                    ></v-text-field>                    
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md2
+                  >
+                    <v-text-field
+                      v-model="formFields.vencimento"
+                      label="Vencimento"
+                      :rules="[formRules.default.required]"
+                      required
+                      return-masked-value
+                      mask="##/##/####"
+                      placeholder="dd/mm/aaaa"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md2
+                  >
+                    <v-text-field
+                      v-model="formFields.referencia"
+                      label="Referência"
                       :rules="[formRules.default.required]"
                       required
                     ></v-text-field>                    
@@ -130,6 +144,7 @@
 import { ClienteCobrancasController } from "../controllers/ClienteCobrancasController"
 
 import { mapMutations } from "vuex"
+import { ServicosController } from '../controllers/ServicosController';
 
 export default {
   data() {
@@ -180,31 +195,26 @@ export default {
         this.loading = true
 
         let clienteCobrancasController = new ClienteCobrancasController()
-        let result = await clienteCobrancasController.upate(this.formFields)
+        let result = await clienteCobrancasController.update(this.formFields, this.getClienteID())
 
         this.SHOW_ALERT({
           type: result.error ? "error" : "success",
           message: result.message
         })
 
-        if (!result.error)
-          this.$router.push({
-            path: `/clientes/editar/${this.getClienteID()}/cobrancas`
-          })
-
         this.loading = false
       }
     },
 
     async loadServicos() {
-      // this.servicosOptionsLoad = true
+      this.servicosOptionsLoad = true
 
-      // let servicosController = new ServicosController()
-      // let result = await servicosController.all()
+      let servicosController = new ServicosController()
+      let result = await servicosController.all()
 
-      // this.servicosOptions = result.data.data
+      this.servicosOptions = result.data.data
 
-      // this.servicosOptionsLoad = false
+      this.servicosOptionsLoad = false
     },
 
     getClienteID() {

@@ -90,6 +90,22 @@ export default [
     name: 'Editar tipo de endereço',
     view: 'EnderecoTiposEdit'
   },
+  // Servicos
+  {
+    path: '/servicos',
+    name: 'Serviços',
+    view: 'ServicosList'
+  },
+  {
+    path: '/servicos/adicionar',
+    name: 'Adicionar novo serviço',
+    view: 'ServicosAdd'
+  },
+  {
+    path: '/servicos/editar/:id',
+    name: 'Editar serviço',
+    view: 'ServicosEdit'
+  },
 
   // ClienteAtividades
   {
@@ -214,6 +230,22 @@ export default [
         path: 'cobrancas/editar/:cliente_cobrancas_id',
         name: 'Editar cobrança',
         view: 'ClienteCobrancasEdit'
+      },
+      // ClientePropostas
+      {
+        path: 'propostas',
+        name: 'Propostas do cliente',
+        view: 'ClientePropostasList'
+      },
+      {
+        path: 'propostas/adicionar',
+        name: 'Adicionar nova proposta',
+        view: 'ClientePropostasAdd'
+      },
+      {
+        path: 'propostas/editar/:cliente_propostas_id',
+        name: 'Editar proposta',
+        view: 'ClientePropostasEdit'
       }
     ]
   },

@@ -13,8 +13,13 @@
         <v-tabs
           v-model="activeTab"
           dark
-          slider-color="yellow"
+          color="blue-grey darken-4"
+          slider-color="amber accent-3"
+          active-class="blue-grey darken-2 v-tabs__item--active"
           fixed-tabs
+          centered
+          grow
+          icons-and-text
         >
             <v-tab
               v-for="(item,key) of tabs"
@@ -22,6 +27,7 @@
               :to="item.to"
             >
               {{ item.text }}
+              <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
             </v-tab>
         </v-tabs>
         <v-tabs-items>
@@ -43,23 +49,33 @@ export default {
       tabs: [
         {
           text: 'Detalhes',
-          to: `/clientes/editar/${this.getId()}/detalhes`
+          to: `/clientes/editar/${this.getId()}/detalhes`,
+          icon: 'mdi-account-details'
         },
         {
           text: 'Contatos',
-          to: `/clientes/editar/${this.getId()}/contatos`
+          to: `/clientes/editar/${this.getId()}/contatos`,
+          icon: 'mdi-contact-mail'
         },
         {
           text: 'Endereços',
-          to: `/clientes/editar/${this.getId()}/enderecos`
+          to: `/clientes/editar/${this.getId()}/enderecos`,
+          icon: 'mdi-home-city'
         },
         {
           text: 'Conversas',
-          to: `/clientes/editar/${this.getId()}/conversas`
+          to: `/clientes/editar/${this.getId()}/conversas`,
+          icon: 'mdi-forum'
+        },
+        {
+          text: 'Propostas',
+          to: `/clientes/editar/${this.getId()}/propostas`,
+          icon: 'mdi-ballot'
         },
         {
           text: 'Cobranças',
-          to: `/clientes/editar/${this.getId()}/cobrancas`
+          to: `/clientes/editar/${this.getId()}/cobrancas`,
+          icon: 'mdi-cash-multiple'
         },
       ],
       loading: false,
