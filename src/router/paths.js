@@ -249,4 +249,142 @@ export default [
       }
     ]
   },
+  // Transportadores
+  {
+    path: '/transportadores',
+    name: 'Transportadores',
+    view: 'TransportadoresList'
+  },
+  {
+    path: '/transportadores/adicionar',
+    name: 'Adicionar novo transportador',
+    view: 'TransportadoresAdd'
+  },
+  {
+    path: '/transportadores/editar/:id',
+    view: 'TransportadoresTabview',
+
+    children:[
+      // Detalhes
+      {
+        path: '',
+        name: 'Detalhes do Transportador',
+        view: 'TransportadoresEdit'
+      },
+      {
+        path: 'detalhes',
+        name: 'Detalhes do Transportador',
+        view: 'TransportadoresEdit'
+      },
+      // TransportadorContatos
+      {
+        path: 'contatos',
+        name: 'Contatos do transportador',
+        view: 'TransportadorContatosList'
+      },
+      {
+        path: 'contatos/adicionar',
+        name: 'Novo contato do transportador',
+        view: 'TransportadorContatosAdd'
+      },
+      {
+        path: 'contatos/editar/:transportador_contatos_id',
+        name: 'Editar contato do transportador',
+        view: 'TransportadorContatosEdit'
+      },
+    ]
+  },
+  // Receptores
+  {
+    path: '/receptores',
+    name: 'Receptores',
+    view: 'ReceptoresList'
+  },
+  {
+    path: '/receptores/adicionar',
+    name: 'Adicionar novo receptor',
+    view: 'ReceptoresAdd'
+  },
+  {
+    path: '/receptores/editar/:id',
+    view: 'ReceptoresTabview',
+
+    children:[
+      // Detalhes
+      {
+        path: '',
+        name: 'Detalhes do Receptor',
+        view: 'ReceptoresEdit'
+      },
+      {
+        path: 'detalhes',
+        name: 'Detalhes do Receptor',
+        view: 'ReceptoresEdit'
+      },
+      // ReceptorContatos
+      {
+        path: 'contatos',
+        name: 'Contatos do receptor',
+        view: 'ReceptorContatosList'
+      },
+      {
+        path: 'contatos/adicionar',
+        name: 'Novo contato do receptor',
+        view: 'ReceptorContatosAdd'
+      },
+      {
+        path: 'contatos/editar/:receptor_contatos_id',
+        name: 'Editar contato do receptor',
+        view: 'ReceptorContatosEdit'
+      },
+    ]
+  },
+  // Residus
+  {
+    path: '/residuos',
+    name: 'Residuos',
+    view: 'ResiduosList'
+  },
+  {
+    path: '/residuos/adicionar',
+    name: 'Adicionar novo residuos',
+    view: 'ResiduosAdd'
+  },
+  {
+    path: '/residuos/editar/:id',
+    name: 'Editar residuos',
+    view: 'ResiduosEdit'
+  },
+  // ResiduoTratamentos
+  {
+    path: '/residuo-tratamentos',
+    name: 'Tratamentos de residuos',
+    view: 'ResiduoTratamentosList'
+  },
+  {
+    path: '/residuo-tratamentos/adicionar',
+    name: 'Adicionar novo tratamento de residuo',
+    view: 'ResiduoTratamentosAdd'
+  },
+  {
+    path: '/residuo-tratamentos/editar/:id',
+    name: 'Editar tratamento de residuo',
+    view: 'ResiduoTratamentosEdit'
+  },
+  // ResiduoClasses
+  {
+    path: '/residuo-classes',
+    name: 'Classes de residuos',
+    view: 'ResiduoClassesList'
+  },
+  {
+    path: '/residuo-classes/adicionar',
+    name: 'Adicionar nova classe de residuo',
+    view: 'ResiduoClassesAdd'
+  },
+  {
+    path: '/residuo-classes/editar/:id',
+    name: 'Editar classe de residuo',
+    view: 'ResiduoClassesEdit'
+  },
 ]

@@ -85,6 +85,46 @@ export default {
         },
         {
           group:true,
+          icon: 'mdi-truck-delivery',
+          title: 'Transportadores',
+
+          links: [
+            {
+              group: false,
+              icon: "add",
+              title: "Adicionar novo",
+              to: "/transportadores/adicionar"
+            },
+            {
+              group: false,
+              icon: "mdi-view-list",
+              title: "Listar todos",
+              to: "/transportadores"
+            },
+          ]
+        },
+        {
+          group:true,
+          icon: 'mdi-account-arrow-left',
+          title: 'Receptores',
+
+          links: [
+            {
+              group: false,
+              icon: "add",
+              title: "Adicionar novo",
+              to: "/receptores/adicionar"
+            },
+            {
+              group: false,
+              icon: "mdi-view-list",
+              title: "Listar todos",
+              to: "/receptores"
+            },
+          ]
+        },
+        {
+          group:true,
           icon: "mdi-account-tie",
           title: "Funcionários",
 
@@ -120,6 +160,24 @@ export default {
               icon: "",
               title: "Serviços",
               to: "/servicos"
+            },
+            {
+              group: false,
+              icon: "",
+              title: "Residuos",
+              to: "/residuos"
+            },
+            {
+              group: false,
+              icon: "",
+              title: "Tratamentos de residuo",
+              to: "/residuo-tratamentos"
+            },
+            {
+              group: false,
+              icon: "",
+              title: "Classes de residuo",
+              to: "/residuo-classes"
             },
             {
               group: false,
