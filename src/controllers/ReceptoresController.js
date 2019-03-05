@@ -26,6 +26,8 @@ export class ReceptoresController extends BaseController {
         params.numero_licenca,
         params.vencimento_licenca,
         params.observacao,
+        params.residuos,
+        params.receptorResiduos,
       )
       let result = await this._request.post(this._baseApiUrl, receptor)
       return this.response('Receptor adicionado com sucesso.', result.data)
@@ -51,6 +53,8 @@ export class ReceptoresController extends BaseController {
         params.numero_licenca,
         params.vencimento_licenca,
         params.observacao,
+        params.residuos,
+        params.receptorResiduos,
         params.id
       )
       let result = await this._request.put(`${this._baseApiUrl}/${receptor.id}`, receptor)
@@ -63,6 +67,8 @@ export class ReceptoresController extends BaseController {
   async get(id) {
     try {
       let result = await this._request.get(`${this._baseApiUrl}/${id}`)
+
+      result.data.residuos = result.data.receptor_residuos ? result.data.receptor_residuos.map(item => item.residuos_id):[];
       return this.response('Receptor carregado com sucesso.', result.data)
     } catch (error) {
       return this.response(false, false, error)

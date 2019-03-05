@@ -17,6 +17,8 @@ export class Receptores {
     numero_licenca = null,
     vencimento_licenca = null,
     observacao = null,
+    residuos = null,
+    receptorResiduos = null,
     id = null
   ) {
     this.razao_social = razao_social
@@ -33,6 +35,8 @@ export class Receptores {
     this.numero_licenca = numero_licenca
     this.vencimento_licenca = vencimento_licenca
     this.observacao = observacao
+    this.residuos = residuos
+    this.receptorResiduos = receptorResiduos
     this.id = id
   }
 }

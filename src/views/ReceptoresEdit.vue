@@ -108,6 +108,34 @@
                       label="Vencimento da licença"
                     ></v-text-field>
                   </v-flex>
+                  <v-flex
+                    xs12
+                    md12
+                  >
+                    <v-autocomplete
+                      v-model="formFields.residuos"
+                      label="Residuos"
+                      :items="residuosOptions"
+                      :loading="residuosOptionsLoad"
+                      :search-input.sync="residuosOptionsSearch"
+                      item-text="grupo"
+                      item-value="id"
+                      multiple
+                      chips
+                      deletable-chips
+                      :autocomplete="true"
+                    >
+                      <template v-slot:no-data>
+                        <v-list-tile>
+                          <v-list-tile-content>
+                            <v-list-tile-title>
+                              Nenhum resultado encontrado para o termo "<strong>{{ residuosOptionsSearch }}</strong>".
+                            </v-list-tile-title>
+                          </v-list-tile-content>
+                        </v-list-tile>
+                      </template>
+                    </v-autocomplete>
+                  </v-flex>
                 </v-layout>
                 <v-layout row wrap>
                   <v-flex
@@ -209,6 +237,7 @@
 import { ReceptoresController } from "../controllers/ReceptoresController";
 import { EstadosController } from '../controllers/EstadosController';
 import { CidadesController } from '../controllers/CidadesController';
+import { ResiduosController } from '../controllers/ResiduosController';
 
 import { mapMutations } from "vuex";
 
@@ -233,6 +262,10 @@ export default {
 
       bairrosOptions:[],
       bairrosOptionsLoad: false,
+
+      residuosOptionsSearch: '',
+      residuosOptions:[],
+      residuosOptionsLoad: false,
     };
   },
 
@@ -279,6 +312,17 @@ export default {
 
         this.loading = false
       }
+    },
+
+    async loadResiduos() {
+      this.residuosOptionsLoad = true
+
+      let residuosController = new ResiduosController()
+      let result = await residuosController.all()
+
+      this.residuosOptions = result.data.data
+
+      this.residuosOptionsLoad = false
     },
 
     async loadEstados() {
@@ -350,6 +394,7 @@ export default {
   async created() {
     this.SET_TOOLBAR_BACK_URL('/receptores')
     await this.loadEntity()
+    this.loadResiduos()
     this.loadEstados()
     this.loadCidades(this.estados_id, this.formFields.cidades_id)
     this.loadBairros(this.formFields.cidades_id, this.formFields.bairros_id)
