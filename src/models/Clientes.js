@@ -15,6 +15,7 @@ export class Clientes {
     prospeccao = 2,
     porcentagem_comissao_vendedor = null,
     pendencia = false,
+    pendencia_motivo = null,
     observacao = null,
     informacao_faturamento = null,
     rastreabilidade_mri = false,
@@ -36,6 +37,7 @@ export class Clientes {
     this.prospeccao = prospeccao
     this.porcentagem_comissao_vendedor = porcentagem_comissao_vendedor
     this.pendencia = pendencia
+    this.pendencia_motivo = pendencia_motivo
     this.observacao = observacao
     this.informacao_faturamento = informacao_faturamento
     this.rastreabilidade_mri = rastreabilidade_mri

@@ -75,12 +75,6 @@ export default {
               title: "Listar todos",
               to: "/clientes"
             },
-            {
-              group: false,
-              icon: "assignment",
-              title: "Atividades",
-              to: "/cliente-atividades"
-            },
           ]
         },
         {
@@ -178,6 +172,12 @@ export default {
               icon: "",
               title: "Classes de residuo",
               to: "/residuo-classes"
+            },
+            {
+              group: false,
+              icon: "",
+              title: "Atividades dos clientes",
+              to: "/cliente-atividades"
             },
             {
               group: false,

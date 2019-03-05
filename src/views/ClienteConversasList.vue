@@ -44,14 +44,41 @@
                   md3
                 >
                   <v-text-field
+                    v-model="props.filters.data"
                     mask="##/##/####"
                     placeholder="dd/mm/aaaa"
                     label="Data"
                     return-masked-value
                     clearable
-                    v-model="props.filters.data"
                   ></v-text-field>
                 </v-flex>
+                <v-flex
+                    xs6
+                    md4
+                  >
+                    <v-select
+                      v-model="props.filters.funcionario"
+                      :items="funcionariosOptions"
+                      label="Funcionário"
+                      item-text="nome"
+                      item-value="id"
+                      clearable
+                    />
+                  </v-flex>
+                  <v-flex
+                    xs6
+                    md3
+                  >
+                    <v-select
+                      v-model="props.filters.acao"
+                      :items="acaoOptions"
+                      :loading="acaoOptionsLoad"
+                      label="Ação"
+                      item-text="descricao"
+                      item-value="id"
+                      clearable
+                    />
+                  </v-flex>
               </template>
               <template
                 slot="items"
@@ -71,9 +98,11 @@
 </template>
 
 <script>
-import CustomDataTable from "./../components/shared/CustomDataTable/CustomDataTable";
-
 import { ConversasController } from "../controllers/ConversasController";
+import { FuncionariosController } from "../controllers/FuncionariosController"
+import { ConversaAcoesController } from '../controllers/ConversaAcoesController'
+
+import CustomDataTable from "./../components/shared/CustomDataTable/CustomDataTable";
 
 import { mapMutations } from "vuex";
 
@@ -85,7 +114,9 @@ export default {
   data() {
     return {
       filters: {
-        data: ''
+        data: '',
+        acao: '',
+        funcionario: '',
       },
 
       defaultSort: "data",
@@ -117,7 +148,13 @@ export default {
         }
       ],
       tableData: null,
-      tableIpunt: {}
+      tableIpunt: {},
+
+      acaoOptions: [],
+      acaoOptionsLoad: false,
+
+      funcionariosOptions: [],
+      funcionariosOptionsLoad: false
     };
   },
 
@@ -166,7 +203,29 @@ export default {
 
     getClienteID() {
       return this.$route.params.id
-    }
+    },
+
+    async loadFuncionarios() {
+      this.funcionariosOptionsLoad = true
+
+      let funcionarioController = new FuncionariosController()
+      let result = await funcionarioController.all()
+
+      this.funcionariosOptions = result.data.data
+
+      this.funcionariosOptionsLoad = false
+    },
+
+    async loadAcoes() {
+      this.acaoOptionsLoad = true
+
+      let conversaAcoesController = new ConversaAcoesController()
+      let result = await conversaAcoesController.all()
+
+      this.acaoOptions = result.data.data
+
+      this.acaoOptionsLoad = false
+    },
   },
 
   watch: {
@@ -180,6 +239,8 @@ export default {
 
   created () {
     this.SET_TOOLBAR_BACK_URL('/clientes')
+    this.loadFuncionarios()
+    this.loadAcoes()
   }
 };
 </script>

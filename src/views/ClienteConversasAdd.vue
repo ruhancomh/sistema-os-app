@@ -95,11 +95,11 @@
 </template>
 
 <script>
-import { FuncionariosController } from "../controllers/FuncionariosController"
 import { ConversasController } from "../controllers/ConversasController"
+import { FuncionariosController } from "../controllers/FuncionariosController"
+import { ConversaAcoesController } from '../controllers/ConversaAcoesController'
 
 import { mapMutations } from "vuex"
-import { ConversaAcoesController } from '../controllers/ConversaAcoesController'
 
 export default {
   data() {

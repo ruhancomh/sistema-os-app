@@ -58,7 +58,7 @@ export default {
           icon: 'mdi-contact-mail'
         },
         {
-          text: 'Endereços',
+          text: 'Endereços / Unidades',
           to: `/clientes/editar/${this.getId()}/enderecos`,
           icon: 'mdi-home-city'
         },

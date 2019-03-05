@@ -1,6 +1,6 @@
 <template>
   <v-toolbar
-    color="#2c2c2c"
+    color="teal darken-4"
     app
     fixed
     clipped

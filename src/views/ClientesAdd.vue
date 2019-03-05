@@ -26,16 +26,6 @@
                       label="Cadastro Ativo?"
                     ></v-switch>
                   </v-flex>
-                  <v-flex
-                    xs12
-                    md3
-                  >
-                    <v-switch
-                      v-model="formFields.pendencia"
-                      color="primary"
-                      label="Possui pendência?"
-                    ></v-switch>
-                  </v-flex>
                 </v-layout>
                 <v-layout row wrap>
                   <v-flex
@@ -172,6 +162,25 @@
                     <v-textarea
                       v-model="formFields.informacao_faturamento"
                       label="Informações de faturamento"
+                    />
+                  </v-flex>                  
+                  <v-flex
+                    xs12
+                    md3
+                  >
+                    <v-switch
+                      v-model="formFields.pendencia"
+                      color="primary"
+                      label="Possui pendência?"
+                    ></v-switch>
+                  </v-flex>
+                  <v-flex
+                    xs6
+                    md6
+                  >
+                    <v-textarea
+                      v-model="formFields.pendencia_motivo"
+                      label="Motivo da pendência"
                     />
                   </v-flex>  
                 </v-layout>
