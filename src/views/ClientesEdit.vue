@@ -140,11 +140,12 @@
                     xs12
                     md2
                   >
-                    <v-text-field
+                    <custom-decimal-field
                       v-model="formFields.porcentagem_comissao_vendedor"
                       label="Comissão (%)"
-                    ></v-text-field>
-                  </v-flex>                  
+                      suffix="%"
+                    />
+                  </v-flex>                 
                 </v-layout>
                 <v-layout row wrap>
                   <v-flex
@@ -245,13 +246,19 @@ import { FuncionariosController } from "../controllers/FuncionariosController";
 
 import { ClienteAtividadesController } from '../controllers/ClienteAtividadesController';
 import { mapMutations } from "vuex";
+import {VMoney} from 'v-money'
+import CustomDecimalField from '../components/shared/CustomDecimalField/CustomDecimalField'
 
 export default {
+  directives: {money: VMoney},
+  components: {
+    CustomDecimalField
+  },
   data() {
     return {
       loading: false,
       valid: false,
-      formFields:{},
+      formFields:false,
       formRules: {
         default: {
           required: value => !!value || "Campo obrigatório"
@@ -262,7 +269,7 @@ export default {
       atividadesOptionsLoad: false,
 
       funcionariosOptions:[],
-      funcionariosOptionsLoad: false
+      funcionariosOptionsLoad: false,
     };
   },
 
@@ -330,7 +337,6 @@ export default {
 
   async created() {
     this.SET_TOOLBAR_BACK_URL('/clientes')
-    this.formFields = new ClientesController().getModel()
     await this.loadEntity()
     this.loadFuncionarios()
     this.loadAtividades()

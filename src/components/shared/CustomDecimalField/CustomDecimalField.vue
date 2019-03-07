@@ -1,36 +1,47 @@
 <template>
   <v-text-field
+    v-if="ready"
     ref='field'
-    :prefix='prefix'
     v-model.lazy="numberValue"
-    :error-messages="errorMessages"
-    v-money="config"
+    v-money="money"
     v-bind="$attrs"
   />
-  
+
 </template>
 
 <script>
-import {VMoney} from 'v-money'
+import { VMoney } from 'v-money'
 export default {
-directives: {money: VMoney},
+  directives: { money: VMoney },
   props: {
     value: null,
-    'error-messages': null,
-    allowNegative: {
-      type: Boolean,
-      default: false
+    inputPrefix: {
+      type: String,
+      default:''
     },
-    prefix: {
-      type: String
+    inputSuffix: {
+      type: String,
+      default:''
     },
-    thousandsSeparator: {
+    thousands: {
       type: String,
       default: '.'
     },
-    decimalSeparator: {
+    decimal: {
       type: String,
       default: ','
+    },
+    precision: {
+      type: Number,
+      default: 2
+    },
+    returnMask: {
+      type: Boolean,
+      default: false
+    },
+    returnPrefix: {
+      type: Boolean,
+      default: false
     },
     languageCode: {
       type: String,
@@ -42,34 +53,52 @@ directives: {money: VMoney},
       numberValue: null,
       inputValue: 0,
       isMasked: true,
-      config: {
-          decimal: ',',
-          thousands: '.',
-          masked: false,
-          precision: 2
-        }
+      ready: false,
+    }
+  },
+  computed: {
+    money() {
+      return {
+        prefix: this.inputPrefix,
+        suffix: this.inputSuffix,
+        decimal: this.decimal,
+        thousands: this.thousands,
+        precision: this.precision,
+        masked: false
+      }
     }
   },
   methods: {
-      umask(v) {
-          if(typeof v == 'string'){
-              return parseFloat(v.replace('.','').replace(',','.'))
-          } else {
-              return v
-          }
+    umask (v) {
+      if(this.returnMask || this.inputPrefix || this.inputSuffix) {
+        return v
+      } else {
+        if (typeof v == 'string') {
+          return parseFloat(v.replace('.', '').replace(',', '.'))
+        } else {
+          return v
+        }
       }
+    }
   },
   watch: {
     numberValue (v) {
       this.$emit('input', this.umask(v))
     },
-    value (nv,ov) {
-        if(this.umask(this.numberValue) != nv){
-            this.numberValue = nv
-        }
+    value (nv, ov) {
+      if (this.umask(this.numberValue) != nv) {
+        this.numberValue = nv
+      }
+
+      if (nv !== undefined) {
+        this.ready = true
+      }
     }
   },
   created () {
+    if(this.value !== undefined){
+      this.ready = true
+    }
   }
 }
 </script>

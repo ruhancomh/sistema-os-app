@@ -139,10 +139,11 @@
                     xs12
                     md2
                   >
-                    <v-text-field
+                    <custom-decimal-field
                       v-model="formFields.porcentagem_comissao_vendedor"
                       label="Comissão (%)"
-                    ></v-text-field>
+                      suffix="%"
+                    />
                   </v-flex>                  
                 </v-layout>
                 <v-layout row wrap>
@@ -241,11 +242,17 @@
 <script>
 import { ClientesController } from "../controllers/ClientesController";
 import { FuncionariosController } from "../controllers/FuncionariosController";
-
-import { mapMutations } from "vuex";
 import { ClienteAtividadesController } from '../controllers/ClienteAtividadesController';
 
+import {VMoney} from 'v-money'
+import CustomDecimalField from '../components/shared/CustomDecimalField/CustomDecimalField'
+import { mapMutations } from "vuex";
+
 export default {
+  directives: {money: VMoney},
+  components: {
+    CustomDecimalField
+  },
   data() {
     return {
       loading: false,
@@ -261,7 +268,7 @@ export default {
       atividadesOptionsLoad: false,
 
       funcionariosOptions:[],
-      funcionariosOptionsLoad: false
+      funcionariosOptionsLoad: false,
     };
   },
 
