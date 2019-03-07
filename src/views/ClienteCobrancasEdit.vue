@@ -41,23 +41,25 @@
                     xs12
                     md2
                   >
-                    <v-text-field
+                    <custom-decimal-field
                       v-model="formFields.valor"
                       label="Valor"
-                      :rules="[formRules.default.required]"
+                      prefix="R$"
                       required
-                    ></v-text-field>                    
+                      :rules="[formRules.default.required]"
+                    />                    
                   </v-flex>
                   <v-flex
                     xs12
                     md2
                   >
-                    <v-text-field
+                    <custom-decimal-field
                       v-model="formFields.porcentagem"
                       label="Porcentagem"
                       :rules="[formRules.default.required]"
                       required
-                    ></v-text-field>                    
+                      suffix="%"
+                    />                    
                   </v-flex>
                   <v-flex
                     xs12
@@ -68,6 +70,7 @@
                       label="Dia"
                       :rules="[formRules.default.required]"
                       required
+                      type="number"
                     ></v-text-field>                    
                   </v-flex>
                   <v-flex
@@ -106,6 +109,8 @@
                       label="Serviço"
                       item-text="descricao"
                       item-value="id"
+                      :rules="[formRules.default.required]"
+                      required
                     />
                   </v-flex>
                   <v-flex
@@ -145,8 +150,12 @@ import { ClienteCobrancasController } from "../controllers/ClienteCobrancasContr
 
 import { mapMutations } from "vuex"
 import { ServicosController } from '../controllers/ServicosController';
+import CustomDecimalField from '../components/shared/CustomDecimalField/CustomDecimalField'
 
 export default {
+  components: {
+    CustomDecimalField
+  },
   data() {
     return {
       loading: false,
