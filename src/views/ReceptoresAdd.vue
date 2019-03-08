@@ -13,7 +13,7 @@
           width="100%"
         >
           <v-card-text>
-            <v-form v-model="valid" @submit.prevent="">
+            <v-form v-model="valid" @submit.prevent="" ref="form">
               <v-container>
                 <v-layout row wrap>
                   <v-flex
@@ -287,6 +287,8 @@ export default {
           this.$router.push({ path: `/receptores/editar/${result.data.id}` });
 
         this.loading = false
+      }else {
+        this.$refs.form.validate()
       }
     },
 
@@ -344,7 +346,7 @@ export default {
       this.loadCidades(this.estados_id)
     },
     'formFields.cidades_id': {
-      handler (nv) {
+      handler () {
         this.loadBairros(this.formFields.cidades_id)
       },
       deep:true

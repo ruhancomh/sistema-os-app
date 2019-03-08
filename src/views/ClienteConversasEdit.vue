@@ -17,6 +17,7 @@
             <v-form
               v-model="valid"
               @submit.prevent=""
+              ref="form"
             >
               <v-container>
                 <v-layout
@@ -47,6 +48,8 @@
                       label="Funcionário"
                       item-text="nome"
                       item-value="id"
+                      :rules="[formRules.default.required]"
+                      required
                     />
                   </v-flex>
                   <v-flex
@@ -69,6 +72,8 @@
                     <v-textarea
                       v-model="formFields.descricao"
                       label="Descrição da conversa"
+                      :rules="[formRules.default.required]"
+                      required
                     />
                   </v-flex>
                 </v-layout>
@@ -162,6 +167,8 @@ export default {
         })
 
         this.loading = false
+      }else {
+        this.$refs.form.validate()
       }
     },
 

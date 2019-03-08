@@ -53,7 +53,7 @@
                 slot="items"
                 slot-scope="props"
               >
-                <td>{{ props.item.tipo.descricao ? props.item.tipo.descricao : '' }}</td>
+                <td>{{ props.item.tipo ? props.item.tipo.descricao : '' }}</td>
                 <td>{{ props.item.descricao }}</td>
                 <td>{{ props.item.cnpj }}</td>
                 <td>{{ props.item.telefone }}</td>

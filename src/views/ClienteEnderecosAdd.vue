@@ -17,6 +17,7 @@
             <v-form
               v-model="valid"
               @submit.prevent=""
+              ref="form"
             >
               <v-container>
                 <v-layout
@@ -40,6 +41,8 @@
                       v-model="formFields.cnpj"
                       mask="##.###.###/####-##"
                       label="CNPJ"
+                      :rules="[formRules.default.required]"
+                      required
                       return-masked-value
                     ></v-text-field>
                   </v-flex>                  
@@ -76,6 +79,8 @@
                       label="CEP"
                       return-masked-value
                       mask="##.###-###"
+                      :rules="[formRules.default.required]"
+                      required
                     ></v-text-field>
                   </v-flex>
                   <v-flex
@@ -113,7 +118,9 @@
                       label="Cidade"
                       item-text="nome"
                       item-value="id"   
-                      no-data-text="Selecione um estado"                 
+                      no-data-text="Selecione um estado"
+                      :rules="[formRules.default.required]"
+                      required                 
                     />
                   </v-flex>
                   <v-flex
@@ -240,6 +247,8 @@ export default {
           })
 
         this.loading = false
+      } else {
+        this.$refs.form.validate()
       }
     },
 
@@ -314,7 +323,7 @@ export default {
       this.loadCidades(this.estados_id)
     },
     'formFields.cidades_id': {
-      handler (nv) {
+      handler () {
         this.loadBairros(this.formFields.cidades_id)
       },
       deep:true

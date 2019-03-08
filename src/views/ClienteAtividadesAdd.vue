@@ -13,7 +13,7 @@
           width="100%"
         >
           <v-card-text>
-            <v-form v-model="valid" @submit.prevent="">
+            <v-form v-model="valid" @submit.prevent="" ref="form">
               <v-container>
                 <v-layout>
                   <v-flex
@@ -88,6 +88,8 @@ export default {
           this.$router.push({ path: "/cliente-atividades" });
 
         this.loading = false
+      }else {
+        this.$refs.form.validate()
       }
     },
   },

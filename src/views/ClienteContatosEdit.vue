@@ -17,6 +17,7 @@
             <v-form
               v-model="valid"
               @submit.prevent=""
+              ref="form"
             >
               <v-container>
                 <v-layout
@@ -151,6 +152,8 @@ export default {
           })
 
         this.loading = false
+      }else {
+        this.$refs.form.validate()
       }
     },
 
