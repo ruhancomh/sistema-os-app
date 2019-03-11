@@ -4,15 +4,14 @@ import store from './../store'
 
 export class BaseController {
   _request = axios.create({
-    // baseURL: 'http://127.0.0.1:8000/api/'
     baseURL: store.state.API_URL
   })
 
-  request() {
-    return axios.create({
-      baseURL: store.state.API_URL
-    })
-  }
+  // request() {
+  //   return axios.create({
+  //     baseURL: store.state.API_URL
+  //   })
+  // }
 
   response (message, data, error = false) {
 

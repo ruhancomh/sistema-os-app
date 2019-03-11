@@ -64,7 +64,7 @@ export class ClienteEnderecosController extends BaseController {
 
   async get(clientes_id, id) {
     try {
-      let result = await this.request().get(`${this.getBaseApiUrl(clientes_id)}/${id}`)
+      let result = await this._request.get(`${this.getBaseApiUrl(clientes_id)}/${id}`)
 
       // let self = this
 
