@@ -4,7 +4,10 @@ import store from './../store'
 
 export class BaseController {
   _request = axios.create({
-    baseURL: store.state.API_URL
+    baseURL: store.state.API_URL,
+    headers: {
+      'Authorization': `Bearer ${store.getters.GET_ACCESS_TOKEN}`
+    }
   })
 
   // request() {

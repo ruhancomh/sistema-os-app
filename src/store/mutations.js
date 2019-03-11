@@ -35,5 +35,13 @@ export default {
 
   RESET_TOOLBAR_BACK_URL: (state) => {
     state.toolbarBackUrl = null
+  },
+
+  SET_ACCESS_TOKEN: (state, payload) => {
+    state.access_token = payload.access_token
+  },
+
+  SET_USER: (state, payload) => {
+    state.user = payload.user
   }
 }

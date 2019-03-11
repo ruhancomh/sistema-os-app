@@ -1,4 +1,9 @@
 export default [
+  {
+    path: '/login',
+    view: 'Login'
+  },
+
   // Estados
   {
     path: '/estados',

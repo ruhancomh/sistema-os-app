@@ -17,5 +17,8 @@ export default {
   loader: {
     value: false,
     text: null
-  }
+  },
+
+  access_token: null,
+  user: null
 }

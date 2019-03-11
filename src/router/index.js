@@ -44,7 +44,18 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   store.commit('RESET_TOOLBAR_BACK_URL')
-  next()
+
+  const publicPages = ['/login']
+
+  const authRequired = !publicPages.includes(to.path)
+
+  if (authRequired && !store.getters.IS_USER_LOGGED) {
+    window.console.log('aqui')
+    next('/login')
+  } else {
+    next()
+  }
+
 })
 
 export default router
