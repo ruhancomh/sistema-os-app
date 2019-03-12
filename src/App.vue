@@ -1,28 +1,25 @@
 <template>
   <v-app id="inspire">
-
-    <the-drawer />
-    <the-toolbar />
-    <the-view />
-    <the-alert />
-    <the-loader />
+    <component :is="layout"></component>
   </v-app>
 </template>
 
 <script>
-import TheDrawer from "./components/core/TheDrawer";
-import TheToolbar from "./components/core/TheToolbar";
-import TheView from "./components/core/TheView";
-import TheAlert from "./components/core/TheAlert";
-import TheLoader from "./components/core/TheLoader";
+import TheLayoutDefault from "./components/core/TheLayoutDefault";
+import TheLayoutEmpty from "./components/core/TheLayoutEmpty";
+
+const default_layout = 'the-layout-empty'
 
 export default {
   components: {
-    TheDrawer,
-    TheToolbar,
-    TheView,
-    TheAlert,
-    TheLoader
+    TheLayoutDefault,
+    TheLayoutEmpty,
+  },
+  computed: {
+    layout () {
+      window.console.log(this.$route.meta)
+      return this.$route.meta.layout || default_layout
+    }
   }
 };
 </script>

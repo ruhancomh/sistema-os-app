@@ -1,7 +1,16 @@
 export default [
   {
     path: '/login',
-    view: 'Login'
+    view: 'Login',
+    meta: {
+      layout: 'the-layout-empty'
+    }
+  },
+
+  {
+    path: '/',
+    name: 'Clientes',
+    view: 'ClientesList',
   },
 
   // Estados
