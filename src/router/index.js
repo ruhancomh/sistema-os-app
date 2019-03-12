@@ -14,14 +14,18 @@ import store from './../store'
 // Routes
 import paths from './paths'
 
-function route (path, view, name, children) {
+function route (path, view, name, children, meta) {
   return {
     name: name || view,
     path,
+    meta: (meta && meta.layout) ? meta : {
+      layout: 'the-layout-default',
+      ...meta
+    },
     component: (resovle) => import(
       `@/views/${view}.vue`
     ).then(resovle),
-    children: children ? children.map(child => route(child.path, child.view, child.name)): null
+    children: children ? children.map(child => route(child.path, child.view, child.name, child.children, child.meta)): null
   }
 }
 
@@ -30,7 +34,7 @@ Vue.use(Router)
 // Create a new router
 const router = new Router({
   mode: 'history',
-  routes: paths.map(path => route(path.path, path.view, path.name, path.children)),
+  routes: paths.map(path => route(path.path, path.view, path.name, path.children, path.meta)),
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
