@@ -16,7 +16,7 @@ import paths from './paths'
 
 function route (path, view, name, children, meta) {
   return {
-    name: name || view,
+    name: name,
     path,
     meta: (meta && meta.layout) ? meta : {
       layout: 'the-layout-default',
@@ -54,7 +54,6 @@ router.beforeEach((to, from, next) => {
   const authRequired = !publicPages.includes(to.path)
 
   if (authRequired && !store.getters.IS_USER_LOGGED) {
-    window.console.log('aqui')
     next('/login')
   } else {
     next()

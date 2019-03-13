@@ -10,6 +10,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VuexPersistence from 'vuex-persist'
+import router from './../router'
 
 // Store functionality
 import actions from './actions'

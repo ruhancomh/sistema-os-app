@@ -9,270 +9,368 @@ export default [
 
   {
     path: '/',
-    name: 'Clientes',
+    name: 'Dashboard',
     view: 'ClientesList',
+    meta: {
+      title: 'Dashboard',
+    },
   },
 
   // Estados
   {
     path: '/estados',
-    name: 'Estados',
-    view: 'Estados'
+    view: 'Estados',
+    meta: {
+      title: 'Estados',
+    },
   },
   {
     path: '/estados/novo',
-    name: 'Adicionar Estado',
-    view: 'EstadosAdd'
+    view: 'EstadosAdd',
+    meta: {
+      title: 'Adicionar Estado',
+    },
   },
   // Cidades
   {
     path: '/cidades',
-    name: 'Cidades',
-    view: 'CidadesList'
+    view: 'CidadesList',
+    meta: {
+      title: 'Cidades',
+    },
   },
   {
     path: '/cidades/adicionar',
-    name: 'Adicionar nova cidade',
-    view: 'CidadesAdd'
+    view: 'CidadesAdd',
+    meta: {
+      title: 'Adicionar nova cidade',
+    },
   },
   {
     path: '/cidades/editar/:id',
-    name: 'Editar cidade',
-    view: 'CidadesEdit'
+    view: 'CidadesEdit',
+    meta: {
+      title: 'Editar cidade',
+    },
   },
   // Bairros
   {
     path: '/bairros',
-    name: 'Bairros',
-    view: 'BairrosList'
+    view: 'BairrosList',
+    meta: {
+      title: 'Bairros',
+    },
   },
   {
     path: '/bairros/adicionar',
-    name: 'Adicionar novo bairro',
-    view: 'BairrosAdd'
+    view: 'BairrosAdd',
+    meta: {
+      title: 'Adicionar novo bairro',
+    },
   },
   {
     path: '/bairros/editar/:id',
-    name: 'Editar bairro',
-    view: 'BairrosEdit'
+    view: 'BairrosEdit',
+    meta: {
+      title: 'Editar bairro',
+    },
   },
   // FuncionarioCargos
   {
     path: '/funcionario-cargos',
-    name: 'Cargos',
-    view: 'FuncionarioCargosList'
+    view: 'FuncionarioCargosList',
+    meta: {
+      title: 'Cargos',
+    },
   },
   {
     path: '/funcionario-cargos/adicionar',
-    name: 'Adicionar novo cargo',
-    view: 'FuncionarioCargosAdd'
+    view: 'FuncionarioCargosAdd',
+    meta: {
+      title: 'Adicionar novo cargo',
+    },
   },
   {
     path: '/funcionario-cargos/editar/:id',
-    name: 'Editar cargo',
-    view: 'FuncionarioCargosEdit'
+    view: 'FuncionarioCargosEdit',
+    meta: {
+      title: 'Editar cargo',
+    },
   },
   // Funcionarios
   {
     path: '/funcionarios',
-    name: 'Funcionários',
-    view: 'FuncionariosList'
+    view: 'FuncionariosList',
+    meta: {
+      title: 'Funcionários',
+    },
   },
   {
     path: '/funcionarios/adicionar',
-    name: 'Adicionar novo funcionário',
-    view: 'FuncionariosAdd'
+    view: 'FuncionariosAdd',
+    meta: {
+      title: 'Adicionar novo funcionário',
+    },
   },
   {
     path: '/funcionarios/editar/:id',
-    name: 'Editar funcionário',
-    view: 'FuncionariosEdit'
+    view: 'FuncionariosEdit',
+    meta: {
+      title: 'Editar funcionário',
+    },
   },
   // EnderecoTipos
   {
     path: '/endereco-tipos',
-    name: 'Tipos de endereço',
-    view: 'EnderecoTiposList'
+    view: 'EnderecoTiposList',
+    meta: {
+      title: 'Tipos de endereço',
+    },
   },
   {
     path: '/endereco-tipos/adicionar',
-    name: 'Adicionar novo tipo de endereço',
-    view: 'EnderecoTiposAdd'
+    view: 'EnderecoTiposAdd',
+    meta: {
+      title: 'Adicionar novo tipo de endereço',
+    },
   },
   {
     path: '/endereco-tipos/editar/:id',
-    name: 'Editar tipo de endereço',
-    view: 'EnderecoTiposEdit'
+    view: 'EnderecoTiposEdit',
+    meta: {
+      title: 'Editar tipo de endereço',
+    },
   },
   // Servicos
   {
     path: '/servicos',
-    name: 'Serviços',
-    view: 'ServicosList'
+    view: 'ServicosList',
+    meta: {
+      title: 'Serviços',
+    },
   },
   {
     path: '/servicos/adicionar',
-    name: 'Adicionar novo serviço',
-    view: 'ServicosAdd'
+    view: 'ServicosAdd',
+    meta: {
+      title: 'Adicionar novo serviço',
+    },
   },
   {
     path: '/servicos/editar/:id',
-    name: 'Editar serviço',
-    view: 'ServicosEdit'
+    view: 'ServicosEdit',
+    meta: {
+      title: 'Editar serviço',
+    },
   },
 
   // ClienteAtividades
   {
     path: '/cliente-atividades',
-    name: 'Atividades',
-    view: 'ClienteAtividadesList'
+    view: 'ClienteAtividadesList',
+    meta: {
+      title: 'Atividades',
+    },
   },
   {
     path: '/cliente-atividades/adicionar',
-    name: 'Adicionar nova atividade',
-    view: 'ClienteAtividadesAdd'
+    view: 'ClienteAtividadesAdd',
+    meta: {
+      title: 'Adicionar nova atividade',
+    },
   },
   {
     path: '/cliente-atividades/editar/:id',
-    name: 'Editar atividade',
-    view: 'ClienteAtividadesEdit'
+    view: 'ClienteAtividadesEdit',
+    meta: {
+      title: 'Editar atividade',
+    },
   },
   // ConversaAcoes
   {
     path: '/conversa-acoes',
-    name: 'Ações de conversa',
-    view: 'ClienteConversaAcoesList'
+    view: 'ClienteConversaAcoesList',
+    meta: {
+      title: 'Ações de conversa',
+    },
   },
   {
     path: '/conversa-acoes/adicionar',
-    name: 'Adicionar nova ação de conversa',
-    view: 'ClienteConversaAcoesAdd'
+    view: 'ClienteConversaAcoesAdd',
+    meta: {
+      title: 'Adicionar nova ação de conversa',
+    },
   },
   {
     path: '/conversa-acoes/editar/:id',
-    name: 'Editar ação de conversa',
-    view: 'ClienteConversaAcoesEdit'
+    view: 'ClienteConversaAcoesEdit',
+    meta: {
+      title: 'Editar ação de conversa',
+    },
   },
 
   // Clientes
   {
     path: '/clientes',
-    name: 'Clientes',
-    view: 'ClientesList'
+    view: 'ClientesList',
+    meta: {
+      title: 'Clientes',
+    },
   },
   {
     path: '/clientes/adicionar',
-    name: 'Adicionar novo cliente',
-    view: 'ClientesAdd'
+    view: 'ClientesAdd',
+    meta: {
+      title: 'Adicionar novo cliente',
+    },
   },
   {
     path: '/clientes/editar/:id',
+    name: '',
     view: 'ClientesTabview',
     
     children: [
       // Detalhes
       {
         path: '',
-        name: 'Detalhes do Cliente',
-        view: 'ClientesEdit'
+        view: 'ClientesEdit',
+        meta: {
+          title: 'Detalhes do Cliente',
+        },
       },
       {
         path: 'detalhes',
-        name: 'Detalhes do Cliente',
-        view: 'ClientesEdit'
+        view: 'ClientesEdit',
+        meta: {
+          title: 'Detalhes do Cliente',
+        },
       },
       // ClienteContatos
       {
         path: 'contatos',
-        name: 'Contatos do cliente',
-        view: 'ClienteContatosList'
+        view: 'ClienteContatosList',
+        meta: {
+          title: 'Contatos do cliente',
+        },
       },
       {
         path: 'contatos/adicionar',
-        name: 'Adicionar novo contato',
-        view: 'ClienteContatosAdd'
+        view: 'ClienteContatosAdd',
+        meta: {
+          title: 'Adicionar novo contato',
+        },
       },
       {
         path: 'contatos/editar/:cliente_contatos_id',
-        name: 'Editar contatos',
-        view: 'ClienteContatosEdit'
+        view: 'ClienteContatosEdit',
+        meta: {
+          title: 'Editar contatos',
+        },
       },
       // ClienteConversas
       {
         path: 'conversas',
-        name: 'Conversas do cliente',
-        view: 'ClienteConversasList'
+        view: 'ClienteConversasList',
+        meta: {
+          title: 'Conversas do cliente',
+        },
       },
       {
         path: 'conversas/adicionar',
-        name: 'Adicionar nova conversa',
-        view: 'ClienteConversasAdd'
+        view: 'ClienteConversasAdd',
+        meta: {
+          title: 'Adicionar nova conversa',
+        },
       },
       {
         path: 'conversas/editar/:conversas_id',
-        name: 'Editar conversa',
-        view: 'ClienteConversasEdit'
+        view: 'ClienteConversasEdit',
+        meta: {
+          title: 'Editar conversa',
+        },
       },
       // ClienteEnderecos
       {
         path: 'enderecos',
-        name: 'Endereços do cliente',
-        view: 'ClienteEnderecosList'
+        view: 'ClienteEnderecosList',
+        meta: {
+          title: 'Endereços do cliente',
+        },
       },
       {
         path: 'enderecos/adicionar',
-        name: 'Adicionar novo endereço',
-        view: 'ClienteEnderecosAdd'
+        view: 'ClienteEnderecosAdd',
+        meta: {
+          title: 'Adicionar novo endereço',
+        },
       },
       {
         path: 'enderecos/editar/:cliente_enderecos_id',
-        name: 'Editar endereço',
-        view: 'ClienteEnderecosEdit'
+        view: 'ClienteEnderecosEdit',
+        meta: {
+          title: 'Editar endereço',
+        },
       },
       // ClienteCobrancas
       {
         path: 'cobrancas',
-        name: 'Cobranças do cliente',
-        view: 'ClienteCobrancasList'
+        view: 'ClienteCobrancasList',
+        meta: {
+          title: 'Cobranças do cliente',
+        },
       },
       {
         path: 'cobrancas/adicionar',
-        name: 'Adicionar nova cobrança',
-        view: 'ClienteCobrancasAdd'
+        view: 'ClienteCobrancasAdd',
+        meta: {
+          title: 'Adicionar nova cobrança',
+        },
       },
       {
         path: 'cobrancas/editar/:cliente_cobrancas_id',
-        name: 'Editar cobrança',
-        view: 'ClienteCobrancasEdit'
+        view: 'ClienteCobrancasEdit',
+        meta: {
+          title: 'Editar cobrança',
+        },
       },
       // ClientePropostas
       {
         path: 'propostas',
-        name: 'Propostas do cliente',
-        view: 'ClientePropostasList'
+        view: 'ClientePropostasList',
+        meta: {
+          title: 'Propostas do cliente',
+        },
       },
       {
         path: 'propostas/adicionar',
-        name: 'Adicionar nova proposta',
-        view: 'ClientePropostasAdd'
+        view: 'ClientePropostasAdd',
+        meta: {
+          title: 'Adicionar nova proposta',
+        },
       },
       {
         path: 'propostas/editar/:cliente_propostas_id',
-        name: 'Editar proposta',
-        view: 'ClientePropostasEdit'
+        view: 'ClientePropostasEdit',
+        meta: {
+          title: 'Editar proposta',
+        },
       }
     ]
   },
   // Transportadores
   {
     path: '/transportadores',
-    name: 'Transportadores',
-    view: 'TransportadoresList'
+    view: 'TransportadoresList',
+    meta: {
+      title: 'Transportadores',
+    },
   },
   {
     path: '/transportadores/adicionar',
-    name: 'Adicionar novo transportador',
-    view: 'TransportadoresAdd'
+    view: 'TransportadoresAdd',
+    meta: {
+      title: 'Adicionar novo transportador',
+    },
   },
   {
     path: '/transportadores/editar/:id',
@@ -282,42 +380,56 @@ export default [
       // Detalhes
       {
         path: '',
-        name: 'Detalhes do Transportador',
-        view: 'TransportadoresEdit'
+        view: 'TransportadoresEdit',
+        meta: {
+          title: 'Detalhes do Transportador',
+        },
       },
       {
         path: 'detalhes',
-        name: 'Detalhes do Transportador',
-        view: 'TransportadoresEdit'
+        view: 'TransportadoresEdit',
+        meta: {
+          title: 'Detalhes do Transportador',
+        },
       },
       // TransportadorContatos
       {
         path: 'contatos',
-        name: 'Contatos do transportador',
-        view: 'TransportadorContatosList'
+        view: 'TransportadorContatosList',
+        meta: {
+          title: 'Contatos do transportador',
+        },
       },
       {
         path: 'contatos/adicionar',
-        name: 'Novo contato do transportador',
-        view: 'TransportadorContatosAdd'
+        view: 'TransportadorContatosAdd',
+        meta: {
+          title: 'Novo contato do transportador',
+        },
       },
       {
         path: 'contatos/editar/:transportador_contatos_id',
-        name: 'Editar contato do transportador',
-        view: 'TransportadorContatosEdit'
+        view: 'TransportadorContatosEdit',
+        meta: {
+          title: 'Editar contato do transportador',
+        },
       },
     ]
   },
   // Receptores
   {
     path: '/receptores',
-    name: 'Receptores',
-    view: 'ReceptoresList'
+    view: 'ReceptoresList',
+    meta: {
+      title: 'Receptores',
+    },
   },
   {
     path: '/receptores/adicionar',
-    name: 'Adicionar novo receptor',
-    view: 'ReceptoresAdd'
+    view: 'ReceptoresAdd',
+    meta: {
+      title: 'Adicionar novo receptor',
+    },
   },
   {
     path: '/receptores/editar/:id',
@@ -327,78 +439,106 @@ export default [
       // Detalhes
       {
         path: '',
-        name: 'Detalhes do Receptor',
-        view: 'ReceptoresEdit'
+        view: 'ReceptoresEdit',
+        meta: {
+          title: 'Detalhes do Receptor',
+        },
       },
       {
         path: 'detalhes',
-        name: 'Detalhes do Receptor',
-        view: 'ReceptoresEdit'
+        view: 'ReceptoresEdit',
+        meta: {
+          title: 'Detalhes do Receptor',
+        },
       },
       // ReceptorContatos
       {
         path: 'contatos',
-        name: 'Contatos do receptor',
-        view: 'ReceptorContatosList'
+        view: 'ReceptorContatosList',
+        meta: {
+          title: 'Contatos do receptor',
+        },
       },
       {
         path: 'contatos/adicionar',
-        name: 'Novo contato do receptor',
-        view: 'ReceptorContatosAdd'
+        view: 'ReceptorContatosAdd',
+        meta: {
+          title: 'Novo contato do receptor',
+        },
       },
       {
         path: 'contatos/editar/:receptor_contatos_id',
-        name: 'Editar contato do receptor',
-        view: 'ReceptorContatosEdit'
+        view: 'ReceptorContatosEdit',
+        meta: {
+          title: 'Editar contato do receptor',
+        },
       },
     ]
   },
   // Residus
   {
     path: '/residuos',
-    name: 'Residuos',
-    view: 'ResiduosList'
+    view: 'ResiduosList',
+    meta: {
+      title: 'Residuos',
+    },
   },
   {
     path: '/residuos/adicionar',
-    name: 'Adicionar novo residuos',
-    view: 'ResiduosAdd'
+    view: 'ResiduosAdd',
+    meta: {
+      title: 'Adicionar novo residuos',
+    },
   },
   {
     path: '/residuos/editar/:id',
-    name: 'Editar residuos',
-    view: 'ResiduosEdit'
+    view: 'ResiduosEdit',
+    meta: {
+      title: 'Editar residuos',
+    },
   },
   // ResiduoTratamentos
   {
     path: '/residuo-tratamentos',
-    name: 'Tratamentos de residuos',
-    view: 'ResiduoTratamentosList'
+    view: 'ResiduoTratamentosList',
+    meta: {
+      title: 'Tratamentos de residuos',
+    },
   },
   {
     path: '/residuo-tratamentos/adicionar',
-    name: 'Adicionar novo tratamento de residuo',
-    view: 'ResiduoTratamentosAdd'
+    view: 'ResiduoTratamentosAdd',
+    meta: {
+      title: 'Adicionar novo tratamento de residuo',
+    },
   },
   {
     path: '/residuo-tratamentos/editar/:id',
-    name: 'Editar tratamento de residuo',
-    view: 'ResiduoTratamentosEdit'
+    view: 'ResiduoTratamentosEdit',
+    meta: {
+      title: 'Editar tratamento de residuo',
+    },
   },
   // ResiduoClasses
   {
     path: '/residuo-classes',
-    name: 'Classes de residuos',
-    view: 'ResiduoClassesList'
+    view: 'ResiduoClassesList',
+    meta: {
+      title: 'Classes de residuos',
+    },
   },
   {
     path: '/residuo-classes/adicionar',
-    name: 'Adicionar nova classe de residuo',
-    view: 'ResiduoClassesAdd'
+    view: 'ResiduoClassesAdd',
+    meta: {
+      title: 'Adicionar nova classe de residuo',
+    },
   },
   {
     path: '/residuo-classes/editar/:id',
-    name: 'Editar classe de residuo',
-    view: 'ResiduoClassesEdit'
+    view: 'ResiduoClassesEdit',
+    meta: {
+      title: 'Editar classe de residuo',
+    },
   },
 ]

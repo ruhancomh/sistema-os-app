@@ -2,6 +2,7 @@
 import axios from 'axios'
 import store from './../store'
 
+
 export class BaseController {
   _request = axios.create({
     baseURL: store.state.API_URL,
@@ -18,11 +19,24 @@ export class BaseController {
 
   response (message, data, error = false) {
 
+    window.console.log('error',error.response)
+
     let responseError = null
     let responseData = null
     let responseMessage = null
 
     if (error) {
+      if (error.response) {
+        if (error.response.status == 401) {
+          if (error.response.data && error.response.data.error_type && error.response.data.error_type == 'TOKEN_ERROR') {
+            store.dispatch('FORCE_USER_LOGOUT', {
+              message: 'Sua seção expirou, refaça o seu login.'
+            })
+            // router.push({ path: '/login' })
+          }
+        }
+      }
+
       responseError = true
       responseData = error
       responseMessage = Array.isArray(error.response.data) ? error.response.data.join(', ') : error.response.data

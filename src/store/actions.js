@@ -1,3 +1,5 @@
+import router from "../router";
+
 // https://vuex.vuejs.org/en/actions.html
 
 export default {
@@ -18,6 +20,15 @@ export default {
 
     context.commit('SET_USER', {
       user: null
+    })
+  },
+
+  FORCE_USER_LOGOUT: (context, payload) => {
+    router.push({ path: '/login' })
+    context.dispatch('USER_LOGOUT')
+    context.commit('SHOW_ALERT',{
+      type: 'error',
+      message: payload.message
     })
   }
 }
