@@ -55,13 +55,20 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <the-alert />
   </v-container>
 </template>
 
 <script>
 import { LoginController } from "../controllers/LoginController";
+import TheAlert from "./../components/core/TheAlert";
+
+import { mapMutations } from "vuex";
 
 export default {
+  components: {
+    TheAlert
+  },
   data () {
     return {
       e1: true,
@@ -79,6 +86,8 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(["SHOW_ALERT"]),
+
     async login () {
       if (this.$refs.form.validate()){
         this.loading = true
@@ -86,11 +95,14 @@ export default {
         let result = await loginController.login(this.email, this.password)
 
         this.loading = false
+
+        this.SHOW_ALERT({
+          type: result.error ? "error" : "success",
+          message: result.message
+        });
         
         if(!result.error) {
           this.$router.push({ path: '/' })
-        } else {
-          window.console.log(result)
         }
       }
     }
