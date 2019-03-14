@@ -22,7 +22,11 @@ import state from './state'
 Vue.use(Vuex)
 
 const vuexLocal = new VuexPersistence({
-  storage: window.localStorage
+  storage: window.localStorage,
+  reducer: state => ({
+    access_token: state.access_token,
+    user: state.user
+  })
 })
 
 // Create a new store
