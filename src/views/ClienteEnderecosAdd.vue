@@ -127,15 +127,38 @@
                     xs12
                     md4
                   >
-                    <v-select
-                      v-model="formFields.bairros_id"
-                      :items="bairrosOptions"
-                      :loading="bairrosOptionsLoad"
-                      label="Bairro"
-                      item-text="nome"
-                      item-value="id" 
-                      no-data-text="Seleciona uma cidade"                   
-                    />
+                    <v-layout>
+                      <v-select
+                        v-model="formFields.bairros_id"
+                        :items="bairrosOptions"
+                        :loading="bairrosOptionsLoad"
+                        label="Bairro"
+                        item-text="nome"
+                        item-value="id" 
+                        no-data-text="Seleciona uma cidade"                   
+                      />
+                      <v-light-form
+                        title="Adicionar bairro"
+                        :fields="bairroFields"
+                        :rules="{required:formRules.default.required}"
+                      >
+                        <template
+                          slot="form"
+                          slot-scope="props"
+                        >
+                          {{ props.teste }}
+                          <v-flex
+                            xs12
+                          >
+                            <v-text-field
+                              v-model="props.fields.descricao"
+                              :rules="[props.rules.required]"
+                              label="Descrição"
+                            ></v-text-field>
+                          </v-flex>
+                        </template>
+                      </v-light-form>
+                    </v-layout>
                   </v-flex>
                   <v-flex
                     xs12
@@ -183,17 +206,25 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex"
+import VLightForm from "../components/shared/VLightForm/VLightForm"
+
 import { ClienteEnderecosController } from "../controllers/ClienteEnderecosController"
 
-import { mapMutations } from "vuex"
 import { EnderecoTiposController } from '../controllers/EnderecoTiposController';
 import { EstadosController } from '../controllers/EstadosController';
 import { CidadesController } from '../controllers/CidadesController';
 import { ClienteContatosController } from '../controllers/ClienteContatosController';
 
 export default {
-  data() {
+  components: {
+    VLightForm
+  },
+  data(){
     return {
+      bairroFields:{
+        descricao: ''
+      },
       loading: false,
       valid: false,
       formFields: {},

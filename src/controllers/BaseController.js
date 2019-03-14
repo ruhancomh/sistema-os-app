@@ -18,9 +18,6 @@ export class BaseController {
   // }
 
   response (message, data, error = false) {
-
-    window.console.log('error',error.response)
-
     let responseError = null
     let responseData = null
     let responseMessage = null

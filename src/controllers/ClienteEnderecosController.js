@@ -66,19 +66,6 @@ export class ClienteEnderecosController extends BaseController {
     try {
       let result = await this._request.get(`${this.getBaseApiUrl(clientes_id)}/${id}`)
 
-      // let self = this
-
-      // this._request.get(`${this.getBaseApiUrl(clientes_id)}/${id}`)
-      // .then(function (result) {
-      //   window.console.log
-      //   return self.response('Endereço carregado com sucesso.', result.data)
-      // })
-      // .catch(function (error) {
-      //   window.console.log(error);
-      // });
-
-      window.console.log('edenreco',result)
-
       return this.response('Endereço carregado com sucesso.', result.data)
       
     } catch (error) {
