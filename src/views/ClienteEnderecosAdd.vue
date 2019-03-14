@@ -288,16 +288,21 @@ export default {
     },
 
     async loadBairros(cidades_id) {
-      this.bairrosOptionsLoad = true
+      if(cidades_id){
 
-      let cidadeController = new CidadesController()
-      let result = await cidadeController.getBairros(cidades_id)
+          this.bairrosOptionsLoad = true
 
-      this.bairrosOptions = result.data
+          let cidadeController = new CidadesController()
+          let result = await cidadeController.getBairros(cidades_id)
 
+          this.bairrosOptions = result.data
+
+
+          this.bairrosOptionsLoad = false
+      } else {
+        this.bairrosOptions = []
+      }
       this.formFields.bairros_id = null
-
-      this.bairrosOptionsLoad = false
     },
 
     async loadContatos() {

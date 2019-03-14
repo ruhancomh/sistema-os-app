@@ -72,7 +72,7 @@ export class ReceptorContatosController extends BaseController {
   async all(receptores_id) {
     try {
       let queryParams = this.buildQueryParams(false, false, -1)
-      let result = await this.request().get(`${this.getBaseApiUrl(receptores_id)}${queryParams}`)
+      let result = await this._request.get(`${this.getBaseApiUrl(receptores_id)}${queryParams}`)
       window.console.log('contato',result)
       return this.response(false, result.data)
     } catch (error) {
