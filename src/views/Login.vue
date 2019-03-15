@@ -4,9 +4,7 @@
       <v-flex xs12 sm4 elevation-2 style="border-top:4px solid #1976d2;">
         <v-card>
           <v-card-title primary-title class="justify-center">
-            <div>
-              <div class="font-weight-medium display-1" style="color:#546E7A">Login</div>
-            </div>
+            <v-img :src="logo" contain height="150"/>
           </v-card-title>
           <v-card-text>
             <v-container>
@@ -83,6 +81,11 @@ export default {
         (v) => !!v || 'E-mail é obrigatório',
         (v) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Informe um e-mail valido'
       ],
+    }
+  },
+  computed: {
+    logo () {
+      return require('../assets/logo-clean.png')
     }
   },
   methods: {

@@ -5,6 +5,7 @@
     left
     app
   >
+    <v-img :src="logo" contain height="100"/>
     <v-list dense>
       <template v-for="(item, i) in links">
         <v-list-group
@@ -230,6 +231,10 @@ export default {
       set(val) {
         this.SET_DRAWER(val);
       }
+    },
+
+    logo () {
+      return require('../../assets/logo-clean.png')
     }
   },
 

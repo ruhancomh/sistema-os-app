@@ -137,27 +137,10 @@
                         item-value="id" 
                         no-data-text="Seleciona uma cidade"                   
                       />
-                      <v-light-form
-                        title="Adicionar bairro"
-                        :fields="bairroFields"
-                        :rules="{required:formRules.default.required}"
-                      >
-                        <template
-                          slot="form"
-                          slot-scope="props"
-                        >
-                          {{ props.teste }}
-                          <v-flex
-                            xs12
-                          >
-                            <v-text-field
-                              v-model="props.fields.descricao"
-                              :rules="[props.rules.required]"
-                              label="Descrição"
-                            ></v-text-field>
-                          </v-flex>
-                        </template>
-                      </v-light-form>
+                      <bairro-light-form 
+                        :cidades-id="this.formFields.cidades_id"
+                        @success="bairroAddSuccess($event)"
+                      />
                     </v-layout>
                   </v-flex>
                   <v-flex
@@ -207,7 +190,7 @@
 
 <script>
 import { mapMutations } from "vuex"
-import VLightForm from "../components/shared/VLightForm/VLightForm"
+import BairroLightForm from "../components/shared/BairroLightForm/BairroLightForm"
 
 import { ClienteEnderecosController } from "../controllers/ClienteEnderecosController"
 
@@ -218,13 +201,10 @@ import { ClienteContatosController } from '../controllers/ClienteContatosControl
 
 export default {
   components: {
-    VLightForm
+    BairroLightForm
   },
   data(){
     return {
-      bairroFields:{
-        descricao: ''
-      },
       loading: false,
       valid: false,
       formFields: {},
@@ -334,6 +314,11 @@ export default {
         this.bairrosOptions = []
       }
       this.formFields.bairros_id = null
+    },
+
+    async bairroAddSuccess(bairro) {
+      await this.loadBairros(this.formFields.cidades_id)
+      this.formFields.bairros_id = bairro.id
     },
 
     async loadContatos() {
