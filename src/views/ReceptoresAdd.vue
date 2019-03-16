@@ -188,15 +188,21 @@
                     xs12
                     md4
                   >
-                    <v-select
-                      v-model="formFields.bairros_id"
-                      :items="bairrosOptions"
-                      :loading="bairrosOptionsLoad"
-                      label="Bairro"
-                      item-text="nome"
-                      item-value="id" 
-                      no-data-text="Seleciona uma cidade"                   
-                    />
+                    <v-layout>
+                      <v-select
+                        v-model="formFields.bairros_id"
+                        :items="bairrosOptions"
+                        :loading="bairrosOptionsLoad"
+                        label="Bairro"
+                        item-text="nome"
+                        item-value="id" 
+                        no-data-text="Seleciona uma cidade"                   
+                      />
+                      <bairro-light-form 
+                        :cidades-id="this.formFields.cidades_id"
+                        @success="bairroAddSuccess($event)"
+                      />
+                    </v-layout>
                   </v-flex>
                 </v-layout>
                 <v-layout row wrap>
@@ -233,6 +239,7 @@
 </template>
 
 <script>
+import BairroLightForm from "../components/shared/BairroLightForm/BairroLightForm"
 import { ReceptoresController } from "../controllers/ReceptoresController";
 import { EstadosController } from '../controllers/EstadosController';
 import { CidadesController } from '../controllers/CidadesController';
@@ -241,6 +248,9 @@ import { ResiduosController } from '../controllers/ResiduosController';
 import { mapMutations } from "vuex";
 
 export default {
+  components: {
+    BairroLightForm
+  },
   data() {
     return {
       loading: false,
@@ -338,6 +348,10 @@ export default {
       this.formFields.bairros_id = null
 
       this.bairrosOptionsLoad = false
+    },
+    async bairroAddSuccess(bairro) {
+      await this.loadBairros(this.formFields.cidades_id)
+      this.formFields.bairros_id = bairro.id
     },
   },
 

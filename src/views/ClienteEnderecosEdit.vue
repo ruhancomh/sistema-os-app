@@ -127,15 +127,21 @@
                     xs12
                     md4
                   >
-                    <v-select
-                      v-model="formFields.bairros_id"
-                      :items="bairrosOptions"
-                      :loading="bairrosOptionsLoad"
-                      label="Bairro"
-                      item-text="nome"
-                      item-value="id" 
-                      no-data-text="Seleciona uma cidade"                   
-                    />
+                    <v-layout>
+                      <v-select
+                        v-model="formFields.bairros_id"
+                        :items="bairrosOptions"
+                        :loading="bairrosOptionsLoad"
+                        label="Bairro"
+                        item-text="nome"
+                        item-value="id" 
+                        no-data-text="Seleciona uma cidade"                   
+                      />
+                      <bairro-light-form 
+                        :cidades-id="this.formFields.cidades_id"
+                        @success="bairroAddSuccess($event)"
+                      />
+                    </v-layout>
                   </v-flex>
                   <v-flex
                     xs12
@@ -183,15 +189,19 @@
 </template>
 
 <script>
-import { ClienteEnderecosController } from "../controllers/ClienteEnderecosController"
-
+import BairroLightForm from "../components/shared/BairroLightForm/BairroLightForm"
 import { mapMutations } from "vuex"
+
+import { ClienteEnderecosController } from "../controllers/ClienteEnderecosController"
 import { EnderecoTiposController } from '../controllers/EnderecoTiposController';
 import { EstadosController } from '../controllers/EstadosController';
 import { CidadesController } from '../controllers/CidadesController';
 import { ClienteContatosController } from '../controllers/ClienteContatosController';
 
 export default {
+  components: {
+    BairroLightForm
+  },
   data() {
     return {
       loading: false,
@@ -346,7 +356,11 @@ export default {
 
     getEntityID() {
       return this.$route.params.cliente_enderecos_id
-    }
+    },
+    async bairroAddSuccess(bairro) {
+      await this.loadBairros(this.formFields.cidades_id)
+      this.formFields.bairros_id = bairro.id
+    },
   },
 
   watch: {
