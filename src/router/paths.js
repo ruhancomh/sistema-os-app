@@ -164,6 +164,52 @@ export default [
     },
   },
 
+  // Veiculos
+  {
+    path: '/veiculos',
+    view: 'VeiculosList',
+    meta: {
+      title: 'Veículos',
+    },
+  },
+  {
+    path: '/veiculos/adicionar',
+    view: 'VeiculosAdd',
+    meta: {
+      title: 'Adicionar novo veículo',
+    },
+  },
+  {
+    path: '/veiculos/editar/:id',
+    view: 'VeiculosEdit',
+    meta: {
+      title: 'Editar veículo',
+    },
+  },
+
+  // Equipamentos
+  {
+    path: '/equipamentos',
+    view: 'EquipamentosList',
+    meta: {
+      title: 'Equipamentos',
+    },
+  },
+  {
+    path: '/equipamentos/adicionar',
+    view: 'EquipamentosAdd',
+    meta: {
+      title: 'Adicionar novo equipamento',
+    },
+  },
+  {
+    path: '/equipamentos/editar/:id',
+    view: 'EquipamentosEdit',
+    meta: {
+      title: 'Editar equipamento',
+    },
+  },
+
   // ClienteAtividades
   {
     path: '/cliente-atividades',

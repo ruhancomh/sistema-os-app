@@ -159,6 +159,18 @@ export default {
             {
               group: false,
               icon: "",
+              title: "Veículos",
+              to: "/veiculos"
+            },
+            {
+              group: false,
+              icon: "",
+              title: "Equipamentos",
+              to: "/equipamentos"
+            },
+            {
+              group: false,
+              icon: "",
               title: "Residuos",
               to: "/residuos"
             },
