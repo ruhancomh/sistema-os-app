@@ -104,6 +104,8 @@
 </template>
 
 <script>
+import { debounce } from "debounce";
+
 export default {
   props: {
     input: {

@@ -59,6 +59,26 @@ export default {
     return {
       links: [
         {
+          group: true,
+          icon: 'mdi-clipboard-text',
+          title: 'Ordens de Serviço',
+
+          links: [
+            {
+              group: false,
+              icon: "add",
+              title: "Adicionar novo",
+              to: "/ordens-servico/adicionar"
+            },
+            {
+              group: false,
+              icon: "mdi-view-list",
+              title: "Listar todos",
+              to: "/ordens-servico"
+            },
+          ]
+        },
+        {
           group:true,
           icon: 'mdi-account-multiple',
           title: 'Clientes',

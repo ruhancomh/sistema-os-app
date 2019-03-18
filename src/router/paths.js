@@ -587,4 +587,51 @@ export default [
       title: 'Editar classe de residuo',
     },
   },
+
+  // Ordens de Serviço
+  {
+    path: '/ordens-servico',
+    view: 'OrdensServicoList',
+    meta: {
+      title: 'Ordens de Servico',
+    },
+  },
+  {
+    path: '/ordens-servico/adicionar',
+    view: 'OrdensServicoAdd',
+    meta: {
+      title: 'Adicionar nova ordem de serviço',
+    },
+  },
+  {
+    path: '/ordens-servico/editar/:id',
+    name: '',
+    view: 'OrdensServicoTabview',
+    
+    children: [
+      // Detalhes
+      {
+        path: '',
+        view: 'OrdensServicoEdit',
+        meta: {
+          title: 'Detalhes da O.S',
+        },
+      },
+      {
+        path: 'detalhes',
+        view: 'OrdensServicoEdit',
+        meta: {
+          title: 'Detalhes da O.S',
+        },
+      },
+      // Balança
+      {
+        path: 'balanca',
+        view: 'OrdensServicoBalancaEdit',
+        meta: {
+          title: 'Dados da balança',
+        },
+      }
+    ]
+  }
 ]

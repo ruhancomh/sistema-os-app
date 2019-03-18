@@ -14,10 +14,11 @@ export class ClienteEnderecosController extends BaseController {
   }
 
   getBaseApiUrl(clientes_id) {
-    return `clientes/${clientes_id}/enderecos`
+    window.console.log('id cliente', clientes_id)
+    return clientes_id ? `clientes/${clientes_id}/enderecos` : `clientes/enderecos`
   }
 
-  async create(params, clientes_id) {
+  async create(params) {
     try {
       let clienteEndereco = new ClienteEnderecos(
         params.descricao,
@@ -32,14 +33,14 @@ export class ClienteEnderecosController extends BaseController {
         params.endereco_tipos_id,
         params.bairros_id,
       )
-      let result = await this._request.post(this.getBaseApiUrl(clientes_id), clienteEndereco)
+      let result = await this._request.post(this.getBaseApiUrl(params.clientes_id), clienteEndereco)
       return this.response('Endereço adicionado com sucesso.', result.data)
     } catch (error) {
       return this.response(false, false, error)
     }
   }
 
-  async update(params, clientes_id) {
+  async update(params) {
     try {
       let clienteEndereco = new ClienteEnderecos(
         params.descricao,
@@ -55,7 +56,7 @@ export class ClienteEnderecosController extends BaseController {
         params.bairros_id,
         params.id
       )
-      let result = await this._request.put(`${this.getBaseApiUrl(clientes_id)}/${clienteEndereco.id}`, clienteEndereco)
+      let result = await this._request.put(`${this.getBaseApiUrl(params.clientes_id)}/${clienteEndereco.id}`, clienteEndereco)
       return this.response('Endereço editado com sucesso.', result.data)
     } catch (error) {
       return this.response(false, false, error)
@@ -86,7 +87,7 @@ export class ClienteEnderecosController extends BaseController {
   async all(clientes_id) {
     try {
       let queryParams = this.buildQueryParams(false, false, -1)
-      let result = await this._request.get(`$${this.getBaseApiUrl(clientes_id)}${queryParams}`)
+      let result = await this._request.get(`${this.getBaseApiUrl(clientes_id)}${queryParams}`)
       return this.response(false, result.data)
     } catch (error) {
       return this.response(false, false, error)
