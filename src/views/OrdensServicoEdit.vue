@@ -2,6 +2,7 @@
   <v-container
     fluid
     fill-height
+    style="padding:0px"
   >
     <v-layout
       justify-center
@@ -84,9 +85,9 @@
                       persistent-hint
                       hide-no-data
                       clearable
-                      no-filter
                       :rules="[formRules.default.required]"
                       required
+                      no-filter
                     >
                     </v-autocomplete>
                   </v-flex>
@@ -106,6 +107,7 @@
                     md6
                   >
                     <cliente-enderecos-select
+                      
                       v-model="formFields.gerador_id" 
                       label="Gerador"
                       :rules="[formRules.default.required]"
@@ -351,6 +353,7 @@ export default {
     return {
       loading: false,
       valid: false,
+      dataLoaded: false,
       formFields:{},
       formRules: {
         default: {
@@ -399,22 +402,44 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["SHOW_ALERT","SET_TOOLBAR_BACK_URL"]),
+    ...mapMutations(["SHOW_ALERT","SET_TOOLBAR_BACK_URL","SHOW_LOADER","CLOSE_LOADER"]),
+
+    async loadEntity() {
+      this.SHOW_LOADER()
+
+      let ordensServicoController = new OrdensServicoController()
+      let result = await ordensServicoController.get(this.getID())
+
+      this.CLOSE_LOADER()
+
+      if (!result.error){
+        this.formFields = result.data
+        this.dataLoaded = true
+      } else {
+        this.SHOW_ALERT({
+          type: "error",
+          message: result.message
+        });
+
+        this.$router.push({ path: "/ordens-servico" });
+      }
+    },
+
+    getID () {
+      return this.$route.params.id
+    },
 
     async save() {
       if (this.valid) {
         this.loading = true;
 
         let ordensServicoController = new OrdensServicoController();
-        let result = await ordensServicoController.create(this.formFields);
+        let result = await ordensServicoController.update(this.formFields);
 
         this.SHOW_ALERT({
           type: result.error ? "error" : "success",
           message: result.message
         });
-
-        if (!result.error)
-          this.$router.push({ path: `/ordens-servico/editar/${result.data.id}` });
 
         this.loading = false
       }else {
@@ -433,6 +458,21 @@ export default {
       this.clientesOptionsLoad = false
     },
 
+    async loadClientesPreload(id) {
+      this.clientesOptionsLoad = true
+
+      if (id) {
+        let clientesController = new ClientesController()
+        let result = await clientesController.get(id)
+
+        if (!result.error){
+          this.clientesOptions.push(result.data)
+        }
+      }
+
+      this.clientesOptionsLoad = false
+    },
+
     async loadAtracacoes() {
       this.atracacaoOptionsLoad = true
 
@@ -440,6 +480,21 @@ export default {
       let result = await clientesController.list({search: this.atracacaoOptionsSearch})
 
       this.atracacaoOptions = result.data.data
+
+      this.atracacaoOptionsLoad = false
+    },
+
+    async loadAtracacoesPreload(id) {
+      this.atracacaoOptionsLoad = true
+
+      if (id) {
+        let clientesController = new ClientesController()
+        let result = await clientesController.get(id)
+
+        if (!result.error){
+          this.atracacaoOptions.push(result.data)
+        }
+      }
 
       this.atracacaoOptionsLoad = false
     },
@@ -466,6 +521,21 @@ export default {
       this.receptoresOptionsLoad = false
     },
 
+    async loadReceptoresPreload(id) {
+      this.receptoresOptionsLoad = true
+
+      if (id) {
+        let receptoresController = new ReceptoresController()
+        let result = await receptoresController.get(id)
+
+        if (!result.error){
+          this.receptoresOptions.push(result.data)
+        }
+      }
+
+      this.receptoresOptionsLoad = false
+    },
+
     async loadResiduos() {
       this.residuosOptionsLoad = true
 
@@ -473,6 +543,21 @@ export default {
       let result = await residuosController.list({search: this.residuosOptionsSearch})
 
       this.residuosOptions = result.data.data
+
+      this.residuosOptionsLoad = false
+    },
+
+    async loadResiduosPreload(id) {
+      this.residuosOptionsLoad = true
+
+      if (id) {
+        let residuosController = new ResiduosController()
+        let result = await residuosController.get(id)
+
+        if (!result.error){
+          this.residuosOptions.push(result.data)
+        }
+      }
 
       this.residuosOptionsLoad = false
     },
@@ -569,7 +654,12 @@ export default {
 
   async created() {
     this.SET_TOOLBAR_BACK_URL('/ordens-servico')
-    this.formFields = new OrdensServicoController().getModel()
+    await this.loadEntity()
+    this.loadClientesPreload(this.formFields.clientes_id)
+    this.loadAtracacoesPreload(this.formFields.atracacao_id)
+    this.loadReceptoresPreload(this.formFields.receptores_id)
+    this.loadResiduosPreload(this.formFields.residuos_id)
+
     this.loadFuncionarios()
     this.loadTiposOS()
     this.loadVeiculos()

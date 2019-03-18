@@ -82,6 +82,7 @@ export default {
       options:[],
       optionsLoad: false,
       optionsSearch: '',
+      preLoaded: false
     }
   },
 
@@ -93,6 +94,22 @@ export default {
       let result = await controller.list({search: this.optionsSearch})
 
       this.options = result.data.data
+
+      this.optionsLoad = false
+    },
+
+    async preload(id) {
+      window.console.log('rodando preload')
+      this.optionsLoad = true
+
+      if (id) {
+        let controller = new ClienteEnderecosController()
+        let result = await controller.get(false,id)
+
+        if (!result.error){
+          this.options.push(result.data)
+        }
+      }
 
       this.optionsLoad = false
     },
@@ -118,8 +135,18 @@ export default {
     },
 
     value (nv) {
+      window.console.log('value',nv)
+      window.console.log('input', this.inputValue)
+      if(nv && !this.inputValue){
+        this.preload(nv)
+      }
+
       this.inputValue = nv
-    }
+    },
+  },
+
+  created () {
+    window.console.log(this.value)
   }
 }
 </script>
