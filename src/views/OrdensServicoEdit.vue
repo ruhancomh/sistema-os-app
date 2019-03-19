@@ -93,11 +93,20 @@
                   </v-flex>
                   <v-flex
                     xs12
-                    md4
+                    md3
                   >
                     <v-text-field
                       v-model="formFields.empresa_terceirizada"
                       label="Empresa Terceirizada"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md3
+                  >
+                    <v-text-field
+                      v-model="formFields.nota_fiscal_numero"
+                      label="Nº Nota Fiscal"
                     ></v-text-field>
                   </v-flex>
                 </v-layout>
@@ -207,7 +216,14 @@
                       label="Veículo"
                       item-text="placa"
                       item-value="id"                  
-                    />
+                    >
+                      <template v-slot:item="data">
+                        <v-list-tile-content v-if="data.item">
+                          <v-list-tile-title v-html="data.item.placa"></v-list-tile-title>
+                          <v-list-tile-sub-title v-html="data.item.descricao"></v-list-tile-sub-title>
+                        </v-list-tile-content>
+                      </template>
+                    </v-select>
                   </v-flex>
                   <v-flex
                     xs12

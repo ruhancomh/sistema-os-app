@@ -1,5 +1,5 @@
 'use strict'
-import { OrdensServico } from '../models/OrdensServico';
+import { OrdensServico, OrdensServicoBalanca } from '../models/OrdensServico';
 import { BaseController } from './BaseController';
 
 export class OrdensServicoController extends BaseController {
@@ -33,16 +33,8 @@ export class OrdensServicoController extends BaseController {
         params.receptor_observacao,
         params.servico_observacao,
         params.empresa_terceirizada,
-        params.comentarios,
-        params.balanca_data_entrada,
-        params.balanca_data_saida,
-        params.balanca_hora_entrada,
-        params.balanca_hora_saida,
-        params.balanca_peso_entrada,
-        params.balanca_peso_saida,
-        params.balanca_unidade,
-        params.balanca_peso_calculado,
         params.nota_fiscal_numero,
+        params.comentarios,
       )
       let result = await this._request.post(this._baseApiUrl, ordemServico)
       return this.response('Ordem de serviço adicionada com sucesso.', result.data)
@@ -76,14 +68,6 @@ export class OrdensServicoController extends BaseController {
         params.servico_observacao,
         params.empresa_terceirizada,
         params.comentarios,
-        params.balanca_data_entrada,
-        params.balanca_data_saida,
-        params.balanca_hora_entrada,
-        params.balanca_hora_saida,
-        params.balanca_peso_entrada,
-        params.balanca_peso_saida,
-        params.balanca_unidade,
-        params.balanca_peso_calculado,
         params.nota_fiscal_numero,
         params.id
       )
@@ -94,7 +78,36 @@ export class OrdensServicoController extends BaseController {
     }
   }
 
+  async updateBlanca(params) {
+    try {
+      let ordemServico = new OrdensServicoBalanca(
+        params.balanca_data_entrada,
+        params.balanca_data_saida,
+        params.balanca_hora_entrada,
+        params.balanca_hora_saida,
+        params.balanca_peso_entrada,
+        params.balanca_peso_saida,
+        params.balanca_unidade,
+        params.balanca_peso_calculado,
+        params.id
+      )
+      let result = await this._request.put(`${this._baseApiUrl}/${ordemServico.id}`, ordemServico)
+      return this.response('Ordem de serviço editada com sucesso.', result.data)
+    } catch (error) {
+      return this.response(false, false, error)
+    }
+  }
+
   async get(id) {
+    try {
+      let result = await this._request.get(`${this._baseApiUrl}/${id}`)
+      return this.response('Ordem de serviço carregada com sucesso.', result.data)
+    } catch (error) {
+      return this.response(false, false, error)
+    }
+  }
+
+  async getBalanca(id) {
     try {
       let result = await this._request.get(`${this._baseApiUrl}/${id}`)
       return this.response('Ordem de serviço carregada com sucesso.', result.data)

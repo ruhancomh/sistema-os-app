@@ -75,9 +75,20 @@ export default {
       } else {
         if (typeof v == 'string') {
           return parseFloat(v.replace('.', '').replace(',', '.'))
+        }else if(Number.isInteger(v)){
+          return v.toFixed(this.precision)
         } else {
           return v
         }
+      }
+    },
+
+    mask(v) {
+      if(Number.isInteger(v)){
+        window.console.log('inteiro',v.toFixed(this.precision))
+        return v.toFixed(this.precision)
+      } else {
+        return v
       }
     }
   },
@@ -87,7 +98,7 @@ export default {
     },
     value (nv, ov) {
       if (this.umask(this.numberValue) != nv) {
-        this.numberValue = nv
+        this.numberValue = this.mask(nv)
       }
 
       if (nv !== undefined) {

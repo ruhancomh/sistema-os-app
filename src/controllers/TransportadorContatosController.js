@@ -73,7 +73,6 @@ export class TransportadorContatosController extends BaseController {
     try {
       let queryParams = this.buildQueryParams(false, false, -1)
       let result = await this._request.get(`${this.getBaseApiUrl(transportadores_id)}${queryParams}`)
-      window.console.log('contato',result)
       return this.response(false, result.data)
     } catch (error) {
       return this.response(false, false, error)

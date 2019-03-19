@@ -14,7 +14,6 @@ export class ClienteEnderecosController extends BaseController {
   }
 
   getBaseApiUrl(clientes_id) {
-    window.console.log('id cliente', clientes_id)
     return clientes_id ? `clientes/${clientes_id}/enderecos` : `clientes/enderecos`
   }
 

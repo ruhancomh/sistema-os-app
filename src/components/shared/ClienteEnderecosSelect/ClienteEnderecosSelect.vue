@@ -99,7 +99,6 @@ export default {
     },
 
     async preload(id) {
-      window.console.log('rodando preload')
       this.optionsLoad = true
 
       if (id) {
@@ -135,8 +134,6 @@ export default {
     },
 
     value (nv) {
-      window.console.log('value',nv)
-      window.console.log('input', this.inputValue)
       if(nv && !this.inputValue){
         this.preload(nv)
       }
@@ -144,10 +141,6 @@ export default {
       this.inputValue = nv
     },
   },
-
-  created () {
-    window.console.log(this.value)
-  }
 }
 </script>
 

@@ -64,12 +64,14 @@
                 slot="items"
                 slot-scope="props"
               >
-                <td>{{ props.item.id }}</td>
                 <td>{{ props.item.data_criacao }}</td>
+                <td>{{ props.item.id }}</td>
                 <td>{{ props.item.tipo ? props.item.tipo.descricao : '' }}</td>
                 <td>{{ props.item.cliente ? props.item.cliente.razao_social : '' }}</td>
-                <td>{{ props.item.cliente ? props.item.cliente.cnpj : '' }}</td>
+                <td>{{ props.item.gerador ? props.item.gerador.cliente.razao_social : '' }}</td>
                 <td>{{ props.item.receptor ? props.item.receptor.razao_social : '' }}</td>
+                <td>{{ props.item.residuo ? props.item.residuo.grupo : '' }}</td>
+                <td>{{ props.item.veiculo ? props.item.veiculo.placa : '' }}</td>
               </template>
             </custom-data-table>
           </v-card-text>
@@ -102,16 +104,16 @@ export default {
       defaultDescending: true,
       headers: [
         {
-          text: "Numero",
-          align: "left",
-          sortable: true,
-          value: "numero"
-        },
-        {
           text: "Data",
           align: "left",
           sortable: true,
           value: "data_criacao"
+        },
+        {
+          text: "Numero",
+          align: "left",
+          sortable: true,
+          value: "numero"
         },
         {
           text: "Tipo",
@@ -126,16 +128,28 @@ export default {
           value: "cliente_nome"
         },
         {
-          text: "CNPJ",
+          text: "Gerador",
           align: "left",
           sortable: true,
-          value: "cliente_cnpj"
+          value: "gerador_nome"
         },
         {
           text: "Receptor",
           align: "left",
           sortable: false,
           value: "receptor_nome"
+        },
+        {
+          text: "Resíduo",
+          align: "left",
+          sortable: false,
+          value: "residuo"
+        },
+        {
+          text: "Veículo",
+          align: "left",
+          sortable: false,
+          value: "veiculo"
         }
       ],
       tableData: null,

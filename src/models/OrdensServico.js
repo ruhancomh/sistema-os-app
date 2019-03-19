@@ -25,15 +25,15 @@ export class OrdensServico {
     servico_observacao = null,
     empresa_terceirizada = null,
     comentarios = null,
-    balanca_data_entrada = null,
-    balanca_data_saida = null,
-    balanca_hora_entrada = null,
-    balanca_hora_saida = null,
-    balanca_peso_entrada = null,
-    balanca_peso_saida = null,
-    balanca_unidade = null,
-    balanca_peso_calculado = null,
     nota_fiscal_numero = null,
+    // balanca_data_entrada = null,
+    // balanca_data_saida = null,
+    // balanca_hora_entrada = null,
+    // balanca_hora_saida = null,
+    // balanca_peso_entrada = null,
+    // balanca_peso_saida = null,
+    // balanca_unidade = null,
+    // balanca_peso_calculado = null,
     id = null
   ) {
     this.codigo_os = codigo_os,
@@ -58,6 +58,31 @@ export class OrdensServico {
     this.servico_observacao = servico_observacao,
     this.empresa_terceirizada = empresa_terceirizada,
     this.comentarios = comentarios,
+    this.nota_fiscal_numero = nota_fiscal_numero,
+    // this.balanca_data_entrada = balanca_data_entrada,
+    // this.balanca_data_saida = balanca_data_saida,
+    // this.balanca_hora_entrada = balanca_hora_entrada,
+    // this.balanca_hora_saida = balanca_hora_saida,
+    // this.balanca_peso_entrada = balanca_peso_entrada,
+    // this.balanca_peso_saida = balanca_peso_saida,
+    // this.balanca_unidade = balanca_unidade,
+    // this.balanca_peso_calculado = balanca_peso_calculado,
+    this.id = id
+  }
+}
+
+export class OrdensServicoBalanca {
+  constructor (
+    balanca_data_entrada = null,
+    balanca_data_saida = null,
+    balanca_hora_entrada = null,
+    balanca_hora_saida = null,
+    balanca_peso_entrada = null,
+    balanca_peso_saida = null,
+    balanca_unidade = null,
+    balanca_peso_calculado = null,
+    id = null
+  ){
     this.balanca_data_entrada = balanca_data_entrada,
     this.balanca_data_saida = balanca_data_saida,
     this.balanca_hora_entrada = balanca_hora_entrada,
@@ -66,7 +91,6 @@ export class OrdensServico {
     this.balanca_peso_saida = balanca_peso_saida,
     this.balanca_unidade = balanca_unidade,
     this.balanca_peso_calculado = balanca_peso_calculado,
-    this.nota_fiscal_numero = nota_fiscal_numero,
     this.id = id
   }
 }

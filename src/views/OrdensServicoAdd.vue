@@ -205,7 +205,14 @@
                       label="Veículo"
                       item-text="placa"
                       item-value="id"                  
-                    />
+                    >
+                      <template v-slot:item="data">
+                        <v-list-tile-content v-if="data.item">
+                          <v-list-tile-title v-html="data.item.placa"></v-list-tile-title>
+                          <v-list-tile-sub-title v-html="data.item.descricao"></v-list-tile-sub-title>
+                        </v-list-tile-content>
+                      </template>
+                    </v-select>
                   </v-flex>
                   <v-flex
                     xs12

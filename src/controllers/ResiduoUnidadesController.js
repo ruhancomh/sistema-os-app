@@ -8,16 +8,16 @@ export class ResiduoUnidadesController extends BaseController {
     return {
       data : [
         {
+          'descricao': 'M3'
+        },
+        {
           'descricao': 'L'
         },
         {
-          'descricao': 'Kg'
+          'descricao': 'TON'
         },
         {
-          'descricao': 'g'
-        },
-        {
-          'descricao': 'm'
+          'descricao': 'KG'
         },
       ]
     }
