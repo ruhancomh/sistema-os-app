@@ -50,52 +50,80 @@
                   :key="key"
                   row
                   wrap
-
+                  style="background-color:#eee; margin-bottom: 10px;"
+                  align-center
                 >
                   <v-flex
                     xs12
-                    md6
+                    md11
                   >
-                    <v-text-field
-                      v-model="oSServico.servico.descricao"
-                      label="Servico"
-                      disabled
-                    ></v-text-field>
+                    <v-layout row wrap>
+                      <v-flex
+                        xs12
+                        md6
+                      >
+                        <v-text-field
+                          v-model="oSServico.servico.descricao"
+                          label="Servico"
+                          disabled
+                        ></v-text-field>
+                      </v-flex>
+                      <v-flex
+                        xs12
+                        md2
+                      >
+                        <custom-decimal-field
+                          v-model="oSServico.valor_unitario"
+                          label="Valor Unit."
+                          prefix="R$"
+                          disabled
+                        />
+                      </v-flex>
+                      <v-flex
+                        xs12
+                        md2
+                      >
+                        <v-text-field
+                          v-model="oSServico.quantidade"
+                          label="Quantidade"
+                          :rules="[formRules.default.required]"
+                          required
+                          type="number"
+                          @keyup="updateValorTotal(oSServico)"
+                        />
+                      </v-flex>
+                      <v-flex
+                        xs12
+                        md2
+                      >
+                        <v-text-field
+                          v-model="oSServico.valor_total"
+                          label="Valor Total"
+                          prefix="R$"
+                          disabled
+                        />
+                      </v-flex> 
+                      <v-flex
+                        xs12
+                        md12
+                      >
+                        <v-textarea
+                          v-model="oSServico.observacao"
+                          label="Observações"
+                          rows="1"
+                          auto-grow
+                        />
+                      </v-flex>
+                    </v-layout>
                   </v-flex>
                   <v-flex
                     xs12
-                    md2
+                    md1
                   >
-                    <custom-decimal-field
-                      v-model="oSServico.valor_unitario"
-                      label="Valor Unit."
-                      prefix="R$"
-                      disabled
-                    />
+                    <v-btn color="error" fab small dark @click="removeItem(key)" title="Remover item">
+                      <v-icon>delete</v-icon>
+                    </v-btn>
                   </v-flex>
-                  <v-flex
-                    xs12
-                    md2
-                  >
-                    <v-text-field
-                      v-model="oSServico.quantidade"
-                      label="Quantidade"
-                      :rules="[formRules.default.integer]"
-                      type="number"
-                      @keyup="updateValorTotal(oSServico)"
-                    />
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md2
-                  >
-                    <custom-decimal-field
-                      v-model="oSServico.valor_total"
-                      label="Valor Total"
-                      prefix="R$"
-                      disabled
-                    />
-                  </v-flex> 
                 </v-layout>
               </v-container>
             </v-form>
@@ -152,12 +180,14 @@ export default {
 
   computed: {
     getClienteServicosOptions () {
-      let self = this
-      return this.clienteServicosOptions.filter(clienteServico => {
-        return !self.formFields.servicos.find(servico => {
-          return clienteServico.id == servico.cliente_servico_id
-        })
-      })
+      // let self = this
+      // return this.clienteServicosOptions.filter(clienteServico => {
+      //   return !self.formFields.servicos.find(servico => {
+      //     return clienteServico.id == servico.cliente_servico_id
+      //   })
+      // })
+
+      return this.clienteServicosOptions
     }
   },
 
@@ -165,24 +195,24 @@ export default {
     ...mapMutations(["SHOW_ALERT","SET_TOOLBAR_BACK_URL","SHOW_LOADER","CLOSE_LOADER"]),
 
     async loadEntity() {
-      // this.SHOW_LOADER()
+      this.SHOW_LOADER()
 
-      // let OrdemServicoServicosController = new OrdemServicoServicosController()
-      // let result = await OrdemServicoServicosController.getBalanca(this.getOSID())
+      let controller = new OrdemServicoServicosController()
+      let result = await controller.all(this.getOSID())
 
-      // this.CLOSE_LOADER()
+      this.CLOSE_LOADER()
 
-      // if (!result.error){
-      //   this.formFields = result.data
-      //   this.dataLoaded = true
-      // } else {
-      //   this.SHOW_ALERT({
-      //     type: "error",
-      //     message: result.message
-      //   });
+      if (!result.error){
+        this.formFields.servicos = result.data.data
+        this.dataLoaded = true
+      } else {
+        this.SHOW_ALERT({
+          type: "error",
+          message: result.message
+        });
 
-      //   this.$router.push({ path: "/ordens-servico" });
-      // }
+        this.$router.push({ path: "/ordens-servico" });
+      }
     },
 
     getOSID () {
@@ -193,8 +223,8 @@ export default {
       if (this.valid) {
         this.loading = true;
 
-        let OrdemServicoServicosController = new OrdemServicoServicosController();
-        let result = await OrdemServicoServicosController.updateBlanca(this.formFields);
+        let controller = new OrdemServicoServicosController();
+        let result = await controller.update(this.formFields, this.getOSID());
 
         this.SHOW_ALERT({
           type: result.error ? "error" : "success",
@@ -216,7 +246,7 @@ export default {
         let self = this
         let OSServico = new OrdemServicoServicosController().getModel()
         let clienteServico = this.clienteServicosOptions.find(function(item){
-          return item.id = self.servicoToAdd
+          return item.id == self.servicoToAdd
         })
 
         OSServico.ordens_servico_id = this.getOSID()
@@ -229,6 +259,10 @@ export default {
         this.formFields.servicos.push(OSServico)
         this.servicoToAdd = null
       }
+    },
+
+    removeItem(key) {
+      this.formFields.servicos.splice(key,1)
     },
 
     async loadClienteServicos() {
