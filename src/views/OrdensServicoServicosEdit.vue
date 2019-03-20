@@ -231,6 +231,9 @@ export default {
           message: result.message
         });
 
+        if(!result.error)
+          this.formFields.servicos = result.data
+
         this.loading = false
       }else {
         this.$refs.form.validate()

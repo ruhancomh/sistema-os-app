@@ -119,6 +119,8 @@
                     <v-textarea
                       v-model="formFields.gerador_observacao"
                       label="Observações do gerador"
+                      rows="1"
+                      auto-grow
                     />
                   </v-flex>
                 </v-layout>
@@ -148,6 +150,8 @@
                     <v-textarea
                       v-model="formFields.atracacao_observacao"
                       label="Observações da atracação"
+                      rows="1"
+                      auto-grow
                     />
                   </v-flex>
                 </v-layout>
@@ -177,6 +181,8 @@
                     <v-textarea
                       v-model="formFields.receptor_observacao"
                       label="Observações do receptor"
+                      rows="1"
+                      auto-grow
                     />
                   </v-flex>
                 </v-layout>
@@ -299,6 +305,8 @@
                     <v-textarea
                       v-model="formFields.servico_observacao"
                       label="Observações do serviço"
+                      rows="1"
+                      auto-grow
                     />
                   </v-flex>
                   <v-flex
@@ -308,6 +316,8 @@
                     <v-textarea
                       v-model="formFields.comentarios"
                       label="Comentários"
+                      rows="1"
+                      auto-grow
                     />
                   </v-flex>
                 </v-layout>

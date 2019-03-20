@@ -50,12 +50,12 @@ export default {
         {
           text: 'Detalhes',
           to: `/ordens-servico/editar/${this.getId()}/detalhes`,
-          icon: 'mdi-account-details'
+          icon: 'mdi-clipboard-check'
         },
         {
           text: 'Balança',
           to: `/ordens-servico/editar/${this.getId()}/balanca`,
-          icon: 'mdi-contact-mail'
+          icon: 'mdi-scale-balance'
         },
         {
           text: 'Serviços',
