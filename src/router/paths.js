@@ -631,6 +631,14 @@ export default [
         meta: {
           title: 'Dados da balança',
         },
+      },
+      // Serviços
+      {
+        path: 'servicos',
+        view: 'OrdensServicoServicosEdit',
+        meta: {
+          title: 'Serviços da OS',
+        },
       }
     ]
   }

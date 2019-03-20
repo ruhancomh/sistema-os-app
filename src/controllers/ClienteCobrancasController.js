@@ -14,7 +14,7 @@ export class ClienteCobrancasController extends BaseController {
   }
 
   getBaseApiUrl(clientes_id) {
-    return `clientes/${clientes_id}/cobrancas`
+    return clientes_id ? `clientes/${clientes_id}/cobrancas` : `clientes/cobrancas`
   }
 
   async create(params, clientes_id) {
@@ -81,6 +81,16 @@ export class ClienteCobrancasController extends BaseController {
     try {
       let queryParams = this.buildQueryParams(false, false, -1)
       let result = await this._request.get(`${this.getBaseApiUrl(clientes_id)}${queryParams}`)
+      return this.response(false, result.data)
+    } catch (error) {
+      return this.response(false, false, error)
+    }
+  }
+
+  async allByOrdemServico(ordens_servico_id) {
+    try {
+      let queryParams = this.buildQueryParams({ordens_servico_id: ordens_servico_id}, false, -1)
+      let result = await this._request.get(`${this.getBaseApiUrl()}${queryParams}`)
       return this.response(false, result.data)
     } catch (error) {
       return this.response(false, false, error)

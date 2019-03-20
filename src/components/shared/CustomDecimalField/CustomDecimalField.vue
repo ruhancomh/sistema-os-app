@@ -104,9 +104,11 @@ export default {
       if (nv !== undefined) {
         this.ready = true
       }
+      
     }
   },
   created () {
+    this.numberValue = this.mask(this.value)
     if(this.value !== undefined){
       this.ready = true
     }

@@ -58,8 +58,8 @@ export default {
           icon: 'mdi-contact-mail'
         },
         {
-          text: 'Pagamentos',
-          to: `/ordens-servico/editar/${this.getId()}/pagamentos`,
+          text: 'Serviços',
+          to: `/ordens-servico/editar/${this.getId()}/servicos`,
           icon: 'mdi-ballot'
         },
       ],
