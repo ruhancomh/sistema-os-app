@@ -85,7 +85,6 @@ export default {
 
     mask(v) {
       if(Number.isInteger(v)){
-        window.console.log('inteiro',v.toFixed(this.precision))
         return v.toFixed(this.precision)
       } else {
         return v
