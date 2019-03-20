@@ -89,7 +89,7 @@
                           :rules="[formRules.default.required]"
                           required
                           type="number"
-                          @keyup="updateValorTotal(oSServico)"
+                          @input="updateValorTotal(oSServico)"
                         />
                       </v-flex>
                       <v-flex
@@ -97,7 +97,7 @@
                         md2
                       >
                         <v-text-field
-                          v-model="oSServico.valor_total"
+                          v-model="oSServico.valor_total_formated"
                           label="Valor Total"
                           prefix="R$"
                           disabled
@@ -243,6 +243,24 @@ export default {
     updateValorTotal (oSServico) {
       window.console.log('total',oSServico.valor_unitario * oSServico.quantidade)
       oSServico.valor_total = oSServico.valor_unitario * oSServico.quantidade
+      oSServico.valor_total_formated = this.$options.filters.currency(oSServico.valor_total,{
+        symbol:'',
+        thousandsSeparator: '.',
+        fractionCount: 2,
+        fractionSeparator: ','
+      })
+    },
+
+    updateAllValorTotal () {
+      let self = this
+      this.formFields.servicos.forEach(function(item){
+        item.valor_total_formated = self.$options.filters.currency(item.valor_total,{
+          symbol:'',
+          thousandsSeparator: '.',
+          fractionCount: 2,
+          fractionSeparator: ','
+        })
+      });
     },
     addServico() {
       if(this.servicoToAdd){
@@ -285,7 +303,10 @@ export default {
   },
 
   watch: {
-  
+    'formFields.servicos': function () {
+      window.console.log('aqui')
+      this.updateAllValorTotal()
+    }
   },
 
   async created() {
