@@ -4,12 +4,21 @@ import store from './../store'
 
 
 export class BaseController {
-  _request = axios.create({
-    baseURL: store.state.API_URL,
-    headers: {
-      'Authorization': `Bearer ${store.getters.GET_ACCESS_TOKEN}`
-    }
-  })
+  _request = null
+
+  constructor(){
+    this._request = this.getRequest()
+  }
+
+  getRequest(){
+    return axios.create({
+      baseURL: store.state.API_URL,
+      headers: {
+        'Authorization': `Bearer ${store.getters.GET_ACCESS_TOKEN}`
+      }
+    })
+  }
+  
 
   // request() {
   //   return axios.create({
@@ -23,6 +32,9 @@ export class BaseController {
     let responseMessage = null
 
     if (error) {
+      responseError = true
+      responseData = error
+
       if (error.response) {
         if (error.response.status == 401) {
           if (error.response.data && error.response.data.error_type && error.response.data.error_type == 'TOKEN_ERROR') {
@@ -32,11 +44,19 @@ export class BaseController {
             // router.push({ path: '/login' })
           }
         }
+
+        if (message) {
+          responseMessage = message
+        } else {
+          responseMessage = Array.isArray(error.response.data) ? error.response.data.join(', ') : error.response.data
+        }
+
+      } else if (error.message == 'Network Error'){
+        responseMessage = 'Não foi possível conectar com o servidor, aguarde alguns instantes e tente novamente. Se o problema persistir, entrete em contato com a administração do sistema.'
+      } else {
+        responseMessage = message
       }
 
-      responseError = true
-      responseData = error
-      responseMessage = Array.isArray(error.response.data) ? error.response.data.join(', ') : error.response.data
     } else {
       responseError = false
       responseData = data

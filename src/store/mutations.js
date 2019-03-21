@@ -8,7 +8,11 @@ export default {
   SHOW_ALERT: (state, payload) => {
     state.alert.value = true
     state.alert.type = payload.type ? payload.type : 'success'
-    state.alert.timeout = payload.timeout ? payload.timeout : state.alert.defaultTimeou
+    if(payload.type == 'error' && !payload.timeout) {
+      state.alert.timeout = 0
+    } else {
+      state.alert.timeout = payload.timeout ? payload.timeout : state.alert.defaultTimeout
+    }
     state.alert.message = payload.message
   },
 
@@ -43,5 +47,9 @@ export default {
 
   SET_USER: (state, payload) => {
     state.user = payload.user
+  },
+
+  SET_USER_PERMISSIONS: (state, payload) => {
+    state.user_permissions = payload
   }
 }

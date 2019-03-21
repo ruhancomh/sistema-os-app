@@ -22,5 +22,6 @@ export default {
   },
 
   access_token: null,
-  user: null
+  user: null,
+  user_permissions: null
 }

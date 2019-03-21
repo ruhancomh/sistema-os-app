@@ -11,5 +11,9 @@ export default {
 
   GET_ACCESS_TOKEN: (state) => {
     return state.access_token
+  },
+
+  GET_USER_PERMISSIONS: (state) => {
+    return state.user_permissions
   }
 }
