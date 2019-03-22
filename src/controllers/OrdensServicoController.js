@@ -4,9 +4,14 @@ import { BaseController } from './BaseController';
 
 export class OrdensServicoController extends BaseController {
   _baseApiUrl = 'ordens-servico'
+  defaultValues = {
+    transportadores_id: 1
+  }
 
   getModel() {
-    return new OrdensServico()
+    let model = new OrdensServico()
+    model.transportadores_id = this.defaultValues.transportadores_id
+    return model
   }
 
   async create(params) {
@@ -17,6 +22,7 @@ export class OrdensServicoController extends BaseController {
         params.ordem_servico_tipos_id,
         params.funcionarios_id,
         params.clientes_id,
+        params.transportadores_id,
         params.atracacao_id,
         params.atracacao_observacao,
         params.equipamentos_id,
@@ -47,6 +53,7 @@ export class OrdensServicoController extends BaseController {
         params.ordem_servico_tipos_id,
         params.funcionarios_id,
         params.clientes_id,
+        params.transportadores_id,
         params.atracacao_id,
         params.atracacao_observacao,
         params.equipamentos_id,

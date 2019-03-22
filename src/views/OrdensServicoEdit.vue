@@ -187,6 +187,21 @@
                       auto-grow
                     />
                   </v-flex>
+                  <v-flex
+                      xs12
+                      md4
+                    >
+                    <v-select
+                      v-model="formFields.transportadores_id"
+                      :items="transportadoresOptions"
+                      :loading="transportadoresOptionsLoad"
+                      label="Transportador"
+                      item-text="razao_social"
+                      item-value="id"
+                      :rules="[formRules.default.required]"
+                      required                  
+                    />
+                  </v-flex>
                 </v-layout>
                 <v-layout row wrap>
                   <v-flex
@@ -338,6 +353,7 @@ import { ResiduoUnidadesController } from "../controllers/ResiduoUnidadesControl
 import { ReceptoresController } from "../controllers/ReceptoresController";
 import { OrdemServicoTiposController } from "../controllers/OrdemServicoTiposController";
 import { FuncionariosController } from "../controllers/FuncionariosController";
+import { TransportadoresController } from "../controllers/TransportadoresController";
 
 import FuncionarioLightForm from "../components/shared/FuncionarioLightForm/FuncionarioLightForm"
 import VeiculoLightForm from "../components/shared/VeiculoLightForm/VeiculoLightForm"
@@ -372,6 +388,9 @@ export default {
 
       funcionariosOptions:null,
       funcionariosOptionsLoad: false,
+
+      transportadoresOptions:null,
+      transportadoresOptionsLoad: false,
 
       motoristasOptions:null,
       motoristasOptionsLoad: false,
@@ -488,6 +507,17 @@ export default {
       this.atracacaoOptions = result.data.data
 
       this.atracacaoOptionsLoad = false
+    },
+
+    async loadTransportadores() {
+      this.transportadoresOptionsLoad = true
+
+      let transportadoresController = new TransportadoresController()
+      let result = await transportadoresController.all()
+
+      this.transportadoresOptions = result.data.data
+
+      this.transportadoresOptionsLoad = false
     },
 
     async loadAtracacoesPreload(id) {
@@ -680,8 +710,9 @@ export default {
     this.loadAtracacoesPreload(this.formFields.atracacao_id)
     this.loadReceptoresPreload(this.formFields.receptores_id)
     this.loadResiduosPreload(this.formFields.residuos_id)
-
+    
     this.loadFuncionarios()
+    this.loadTransportadores()
     this.loadTiposOS()
     this.loadVeiculos()
     this.loadMotoristas()

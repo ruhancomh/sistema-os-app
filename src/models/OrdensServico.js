@@ -8,13 +8,12 @@ export class OrdensServico {
     ordem_servico_tipos_id = null,
     funcionarios_id = null,
     clientes_id = null,
+    transportadores_id = null,
     atracacao_id = null,
     atracacao_observacao = null,
     equipamentos_id = null,
     motorista_id = null,
     veiculos_id = null,
-    // km_inicial = null,
-    // km_final = null,
     residuos_id = null,
     residuo_quantidade = null,
     residuo_unidade = null,
@@ -24,8 +23,6 @@ export class OrdensServico {
     receptor_observacao = null,
     servico_observacao = null,
     empresa_terceirizada = null,
-    // comentarios = null,
-    // nota_fiscal_numero = null,
     id = null
   ) {
     this.codigo_os = codigo_os,
@@ -33,13 +30,12 @@ export class OrdensServico {
     this.ordem_servico_tipos_id = ordem_servico_tipos_id,
     this.funcionarios_id = funcionarios_id,
     this.clientes_id = clientes_id,
+    this.transportadores_id = transportadores_id,
     this.atracacao_id = atracacao_id,
     this.atracacao_observacao = atracacao_observacao,
     this.equipamentos_id = equipamentos_id,
     this.motorista_id = motorista_id,
     this.veiculos_id = veiculos_id,
-    // this.km_inicial = km_inicial,
-    // this.km_final = km_final,
     this.residuos_id = residuos_id,
     this.residuo_quantidade = residuo_quantidade,
     this.residuo_unidade = residuo_unidade,
@@ -49,8 +45,6 @@ export class OrdensServico {
     this.receptor_observacao = receptor_observacao,
     this.servico_observacao = servico_observacao,
     this.empresa_terceirizada = empresa_terceirizada,
-    // this.comentarios = comentarios,
-    // this.nota_fiscal_numero = nota_fiscal_numero,
     this.id = id
   }
 }
