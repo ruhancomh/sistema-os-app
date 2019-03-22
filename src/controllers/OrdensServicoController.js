@@ -1,5 +1,5 @@
 'use strict'
-import { OrdensServico, OrdensServicoBalanca } from '../models/OrdensServico';
+import { OrdensServico, OrdensServicoBalanca, OrdensServicoPosExecucao } from '../models/OrdensServico';
 import { BaseController } from './BaseController';
 
 export class OrdensServicoController extends BaseController {
@@ -22,8 +22,6 @@ export class OrdensServicoController extends BaseController {
         params.equipamentos_id,
         params.motorista_id,
         params.veiculos_id,
-        params.km_inicial,
-        params.km_final,
         params.residuos_id,
         params.residuo_quantidade,
         params.residuo_unidade,
@@ -33,8 +31,6 @@ export class OrdensServicoController extends BaseController {
         params.receptor_observacao,
         params.servico_observacao,
         params.empresa_terceirizada,
-        params.nota_fiscal_numero,
-        params.comentarios,
       )
       let result = await this._request.post(this._baseApiUrl, ordemServico)
       return this.response('Ordem de serviço adicionada com sucesso.', result.data)
@@ -56,8 +52,6 @@ export class OrdensServicoController extends BaseController {
         params.equipamentos_id,
         params.motorista_id,
         params.veiculos_id,
-        params.km_inicial,
-        params.km_final,
         params.residuos_id,
         params.residuo_quantidade,
         params.residuo_unidade,
@@ -67,8 +61,6 @@ export class OrdensServicoController extends BaseController {
         params.receptor_observacao,
         params.servico_observacao,
         params.empresa_terceirizada,
-        params.comentarios,
-        params.nota_fiscal_numero,
         params.id
       )
       let result = await this._request.put(`${this._baseApiUrl}/${ordemServico.id}`, ordemServico)
@@ -98,6 +90,24 @@ export class OrdensServicoController extends BaseController {
     }
   }
 
+  async updatePosExecucao(params) {
+    try {
+      let ordemServico = new OrdensServicoPosExecucao(
+        params.km_inicial,
+        params.km_final,
+        params.hora_inicio,
+        params.hora_fim,
+        params.comentarios,
+        params.nota_fiscal_numero,
+        params.id
+      )
+      let result = await this._request.put(`${this._baseApiUrl}/${ordemServico.id}`, ordemServico)
+      return this.response('Ordem de serviço editada com sucesso.', result.data)
+    } catch (error) {
+      return this.response(false, false, error)
+    }
+  }
+
   async get(id) {
     try {
       let result = await this._request.get(`${this._baseApiUrl}/${id}`)
@@ -108,6 +118,15 @@ export class OrdensServicoController extends BaseController {
   }
 
   async getBalanca(id) {
+    try {
+      let result = await this._request.get(`${this._baseApiUrl}/${id}`)
+      return this.response('Ordem de serviço carregada com sucesso.', result.data)
+    } catch (error) {
+      return this.response(false, false, error)
+    }
+  }
+
+  async getPosExecucao(id) {
     try {
       let result = await this._request.get(`${this._baseApiUrl}/${id}`)
       return this.response('Ordem de serviço carregada com sucesso.', result.data)

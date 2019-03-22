@@ -19,6 +19,9 @@ export class ResiduoUnidadesController extends BaseController {
         {
           'descricao': 'KG'
         },
+        {
+          'descricao': 'UNID.'
+        }
       ]
     }
   }

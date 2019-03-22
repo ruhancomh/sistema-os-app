@@ -5,6 +5,10 @@ import { BaseController } from './BaseController';
 export class FuncionariosController extends BaseController {
   _baseApiUrl = 'funcionarios'
 
+  defaultCargos = {
+    motorista: 1
+  }
+
   async create(params) {
     try {
       let funcionario = new Funcionarios(params.nome, params.funcionario_cargos_id)
@@ -44,9 +48,19 @@ export class FuncionariosController extends BaseController {
     }
   }
 
-  async all () {
+  async all (filter = false) {
     try {
-      let queryParams = this.buildQueryParams(false, false, -1)
+      let queryParams = this.buildQueryParams(filter, false, -1)
+      let result = await this._request.get(`${this._baseApiUrl}${queryParams}`)
+      return this.response(false, result.data)
+    } catch (error) {
+      return this.response(false, false, error)
+    }
+  }
+
+  async allMotoristas () {
+    try {
+      let queryParams = this.buildQueryParams({cargo:this.defaultCargos.motorista}, false, -1)
       let result = await this._request.get(`${this._baseApiUrl}${queryParams}`)
       return this.response(false, result.data)
     } catch (error) {

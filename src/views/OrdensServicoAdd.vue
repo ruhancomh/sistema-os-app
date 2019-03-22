@@ -92,7 +92,7 @@
                   </v-flex>
                   <v-flex
                     xs12
-                    md4
+                    md6
                   >
                     <v-text-field
                       v-model="formFields.empresa_terceirizada"
@@ -191,69 +191,63 @@
                       xs12
                       md5
                     >
-                    <v-select
-                      v-model="formFields.motorista_id"
-                      :items="motoristasOptions"
-                      :loading="motoristasOptionsLoad"
-                      label="Motorista"
-                      item-text="nome"
-                      item-value="id"                  
-                    />
+                    <v-layout>
+                      <v-select
+                        v-model="formFields.motorista_id"
+                        :items="motoristasOptions"
+                        :loading="motoristasOptionsLoad"
+                        label="Motorista"
+                        item-text="nome"
+                        item-value="id"                  
+                      />
+                      <funcionario-light-form
+                        cargo="MOTORISTA" 
+                        @success="motoristaAddSuccess($event)"
+                      />
+                    </v-layout>
                   </v-flex>
                   <v-flex
                       xs12
                       md3
                     >
-                    <v-select
-                      v-model="formFields.veiculos_id"
-                      :items="veiculosOptions"
-                      :loading="veiculosOptionsLoad"
-                      label="Veículo"
-                      item-text="placa"
-                      item-value="id"                  
-                    >
-                      <template v-slot:item="data">
-                        <v-list-tile-content v-if="data.item">
-                          <v-list-tile-title v-html="data.item.placa"></v-list-tile-title>
-                          <v-list-tile-sub-title v-html="data.item.descricao"></v-list-tile-sub-title>
-                        </v-list-tile-content>
-                      </template>
-                    </v-select>
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md2
-                  >
-                    <custom-decimal-field
-                      v-model="formFields.km_inicial"
-                      label="KM Inicial"
-                      suffix="Km"
-                      :precision="3"
-                    />
-                  </v-flex> 
-                  <v-flex
-                    xs12
-                    md2
-                  >
-                    <custom-decimal-field
-                      v-model="formFields.km_final"
-                      label="KM Final"
-                      suffix="Km"
-                      :precision="3"
-                    />
+                    <v-layout>
+                      <v-select
+                        v-model="formFields.veiculos_id"
+                        :items="veiculosOptions"
+                        :loading="veiculosOptionsLoad"
+                        label="Veículo"
+                        item-text="placa"
+                        item-value="id"                  
+                      >
+                        <template v-slot:item="data">
+                          <v-list-tile-content v-if="data.item">
+                            <v-list-tile-title v-html="data.item.placa"></v-list-tile-title>
+                            <v-list-tile-sub-title v-html="data.item.descricao"></v-list-tile-sub-title>
+                          </v-list-tile-content>
+                        </template>
+                      </v-select>
+                      <veiculo-light-form 
+                        @success="veiculoAddSuccess($event)"
+                      />
+                    </v-layout>
                   </v-flex>
                   <v-flex
                       xs12
                       md4
                     >
-                    <v-select
-                      v-model="formFields.equipamentos_id"
-                      :items="equipamentosOptions"
-                      :loading="equipamentosOptionsLoad"
-                      label="Equipamento"
-                      item-text="descricao"
-                      item-value="id"                  
-                    />
+                    <v-layout>
+                      <v-select
+                        v-model="formFields.equipamentos_id"
+                        :items="equipamentosOptions"
+                        :loading="equipamentosOptionsLoad"
+                        label="Equipamento"
+                        item-text="descricao"
+                        item-value="id"                  
+                      />
+                      <equipamento-light-form 
+                        @success="equipamentoAddSuccess($event)"
+                      />
+                    </v-layout>
                   </v-flex>
                   <v-flex xs12 md4>
                     <v-autocomplete
@@ -300,22 +294,11 @@
                 <v-layout row wrap>
                   <v-flex
                     xs12
-                    md6
+                    md12
                   >
                     <v-textarea
                       v-model="formFields.servico_observacao"
                       label="Observações do serviço"
-                      rows="1"
-                      auto-grow
-                    />
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md6
-                  >
-                    <v-textarea
-                      v-model="formFields.comentarios"
-                      label="Comentários"
                       rows="1"
                       auto-grow
                     />
@@ -354,6 +337,9 @@ import { ReceptoresController } from "../controllers/ReceptoresController";
 import { OrdemServicoTiposController } from "../controllers/OrdemServicoTiposController";
 import { FuncionariosController } from "../controllers/FuncionariosController";
 
+import FuncionarioLightForm from "../components/shared/FuncionarioLightForm/FuncionarioLightForm"
+import VeiculoLightForm from "../components/shared/VeiculoLightForm/VeiculoLightForm"
+import EquipamentoLightForm from "../components/shared/EquipamentoLightForm/EquipamentoLightForm"
 import CustomDecimalField from '../components/shared/CustomDecimalField/CustomDecimalField'
 import { mapMutations } from "vuex";
 import { debounce } from "debounce";
@@ -362,7 +348,10 @@ import ClienteEnderecosSelect from "../components/shared/ClienteEnderecosSelect/
 export default {
   components: {
     ClienteEnderecosSelect,
-    CustomDecimalField
+    CustomDecimalField,
+    EquipamentoLightForm,
+    VeiculoLightForm,
+    FuncionarioLightForm
   },
   data() {
     return {
@@ -531,7 +520,7 @@ export default {
       this.motoristasOptionsLoad = true
 
       let funcionarioController = new FuncionariosController()
-      let result = await funcionarioController.all()
+      let result = await funcionarioController.allMotoristas()
 
       this.motoristasOptions = result.data.data
 
@@ -547,6 +536,21 @@ export default {
       this.veiculosOptions = result.data.data
 
       this.veiculosOptionsLoad = false
+    },
+
+    async equipamentoAddSuccess(equipamento) {
+      await this.loadEquipamentos()
+      this.formFields.equipamentos_id = equipamento.id
+    },
+
+    async veiculoAddSuccess(veiculo) {
+      await this.loadVeiculos()
+      this.formFields.veiculos_id = veiculo.id
+    },
+
+    async motoristaAddSuccess(motorista) {
+      await this.loadMotoristas()
+      this.formFields.motorista_id = motorista.id
     },
   },
 

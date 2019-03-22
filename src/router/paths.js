@@ -639,6 +639,14 @@ export default [
         meta: {
           title: 'Serviços da OS',
         },
+      },
+      // Pos Serviço
+      {
+        path: 'pos-execucao',
+        view: 'OrdensServicoPosExecucaoEdit',
+        meta: {
+          title: 'Pós Execução',
+        },
       }
     ]
   }

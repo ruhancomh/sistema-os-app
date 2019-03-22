@@ -50,7 +50,7 @@ export default {
         {
           text: 'Detalhes',
           to: `/ordens-servico/editar/${this.getId()}/detalhes`,
-          icon: 'mdi-clipboard-check'
+          icon: 'mdi-checkbook'
         },
         {
           text: 'Balança',
@@ -61,6 +61,11 @@ export default {
           text: 'Serviços',
           to: `/ordens-servico/editar/${this.getId()}/servicos`,
           icon: 'mdi-ballot'
+        },
+        {
+          text: 'Pós Execução',
+          to: `/ordens-servico/editar/${this.getId()}/pos-execucao`,
+          icon: 'mdi-clipboard-check'
         },
       ],
     };

@@ -1,12 +1,10 @@
 <template>
   <v-light-form
     ref="lightForm"
-    title="Adicionar bairro"
-    tooltip-text="Adicionar novo bairro"
+    :title="config.lightFormTitle"
+    :tooltip-text="config.lightFormTooltipText"
     :loading="loading"
     :rules="{required:formRules.default.required}"
-    :required-data-empty="isRequiredDataEmpty"
-    :required-data-empty-text="'Selecione uma <b>Cidade</b> para adicionar um novo bairro.'"
     @confirm="save($event)"
   >
     <template
@@ -21,7 +19,7 @@
           :rules="[props.rules.required]"
           label="Nome"
         ></v-text-field>
-      </v-flex>
+      </v-flex>  
     </template>
   </v-light-form>
 </template>
@@ -29,14 +27,15 @@
 <script>
 import { mapMutations } from "vuex"
 import VLightForm from "../VLightForm/VLightForm"
-import { BairrosController } from '../../../controllers/BairrosController';
+import { FuncionariosController } from '../../../controllers/FuncionariosController';
 
 export default {
   components:{
     VLightForm
   },
   props: {
-    cidadesId: {
+    cargo: {
+      type: String,
       required: true
     }
   },
@@ -48,11 +47,32 @@ export default {
           required: value => !!value || "Campo obrigatório"
         }
       },
+      configurations:[
+        {
+          code: 'MOTORISTA',
+          defaultValue: 1,
+          lightFormTitle: 'Adicionar motorista',
+          lightFormTooltipText: 'Adicionar novo motorista'
+        }
+      ],
     }
   },
   computed: {
     isRequiredDataEmpty () {
       return this.cidadesId ? false : true
+    },
+
+    config() {
+      return {
+          code: 'MOTORISTA',
+          cargoID: 1,
+          lightFormTitle: 'Adicionar motorista',
+          lightFormTooltipText: 'Adicionar novo motorista'
+        }
+      // let self = this
+      // return this.config.find( item => {
+      //   return item.code == self.cargo
+      // })
     }
   },
   methods: {
@@ -63,10 +83,10 @@ export default {
     async save(fields) {
       this.loading = true
 
-      fields['cidades_id'] = this.cidadesId
+      fields.funcionario_cargos_id = this.config.cargoID
 
-      let bairrosController = new BairrosController()
-      let result = await bairrosController.create(fields)
+      let funcionariosController = new FuncionariosController()
+      let result = await funcionariosController.create(fields)
 
       this.SHOW_ALERT({
         type: result.error ? "error" : "success",

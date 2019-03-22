@@ -1,12 +1,10 @@
 <template>
   <v-light-form
     ref="lightForm"
-    title="Adicionar bairro"
-    tooltip-text="Adicionar novo bairro"
+    title="Adicionar equipamento"
+    tooltip-text="Adicionar novo equipamento"
     :loading="loading"
     :rules="{required:formRules.default.required}"
-    :required-data-empty="isRequiredDataEmpty"
-    :required-data-empty-text="'Selecione uma <b>Cidade</b> para adicionar um novo bairro.'"
     @confirm="save($event)"
   >
     <template
@@ -17,9 +15,9 @@
         xs12
       >
         <v-text-field
-          v-model="props.fields.nome"
+          v-model="props.fields.descricao"
           :rules="[props.rules.required]"
-          label="Nome"
+          label="Descrição"
         ></v-text-field>
       </v-flex>
     </template>
@@ -29,16 +27,11 @@
 <script>
 import { mapMutations } from "vuex"
 import VLightForm from "../VLightForm/VLightForm"
-import { BairrosController } from '../../../controllers/BairrosController';
+import { EquipamentosController } from '../../../controllers/EquipamentosController';
 
 export default {
   components:{
     VLightForm
-  },
-  props: {
-    cidadesId: {
-      required: true
-    }
   },
   data () {
     return {
@@ -63,10 +56,8 @@ export default {
     async save(fields) {
       this.loading = true
 
-      fields['cidades_id'] = this.cidadesId
-
-      let bairrosController = new BairrosController()
-      let result = await bairrosController.create(fields)
+      let equipamentosController = new EquipamentosController()
+      let result = await equipamentosController.create(fields)
 
       this.SHOW_ALERT({
         type: result.error ? "error" : "success",

@@ -13,8 +13,8 @@ export class OrdensServico {
     equipamentos_id = null,
     motorista_id = null,
     veiculos_id = null,
-    km_inicial = null,
-    km_final = null,
+    // km_inicial = null,
+    // km_final = null,
     residuos_id = null,
     residuo_quantidade = null,
     residuo_unidade = null,
@@ -24,16 +24,8 @@ export class OrdensServico {
     receptor_observacao = null,
     servico_observacao = null,
     empresa_terceirizada = null,
-    comentarios = null,
-    nota_fiscal_numero = null,
-    // balanca_data_entrada = null,
-    // balanca_data_saida = null,
-    // balanca_hora_entrada = null,
-    // balanca_hora_saida = null,
-    // balanca_peso_entrada = null,
-    // balanca_peso_saida = null,
-    // balanca_unidade = null,
-    // balanca_peso_calculado = null,
+    // comentarios = null,
+    // nota_fiscal_numero = null,
     id = null
   ) {
     this.codigo_os = codigo_os,
@@ -46,8 +38,8 @@ export class OrdensServico {
     this.equipamentos_id = equipamentos_id,
     this.motorista_id = motorista_id,
     this.veiculos_id = veiculos_id,
-    this.km_inicial = km_inicial,
-    this.km_final = km_final,
+    // this.km_inicial = km_inicial,
+    // this.km_final = km_final,
     this.residuos_id = residuos_id,
     this.residuo_quantidade = residuo_quantidade,
     this.residuo_unidade = residuo_unidade,
@@ -57,16 +49,8 @@ export class OrdensServico {
     this.receptor_observacao = receptor_observacao,
     this.servico_observacao = servico_observacao,
     this.empresa_terceirizada = empresa_terceirizada,
-    this.comentarios = comentarios,
-    this.nota_fiscal_numero = nota_fiscal_numero,
-    // this.balanca_data_entrada = balanca_data_entrada,
-    // this.balanca_data_saida = balanca_data_saida,
-    // this.balanca_hora_entrada = balanca_hora_entrada,
-    // this.balanca_hora_saida = balanca_hora_saida,
-    // this.balanca_peso_entrada = balanca_peso_entrada,
-    // this.balanca_peso_saida = balanca_peso_saida,
-    // this.balanca_unidade = balanca_unidade,
-    // this.balanca_peso_calculado = balanca_peso_calculado,
+    // this.comentarios = comentarios,
+    // this.nota_fiscal_numero = nota_fiscal_numero,
     this.id = id
   }
 }
@@ -91,6 +75,26 @@ export class OrdensServicoBalanca {
     this.balanca_peso_saida = balanca_peso_saida,
     this.balanca_unidade = balanca_unidade,
     this.balanca_peso_calculado = balanca_peso_calculado,
+    this.id = id
+  }
+}
+
+export class OrdensServicoPosExecucao {
+  constructor (
+    km_inicial = null,
+    km_final = null,
+    hora_inicio = null,
+    hora_fim = null,
+    comentarios = null,
+    nota_fiscal_numero = null,
+    id = null
+  ) {
+    this.km_inicial = km_inicial,
+    this.km_final = km_final,
+    this.hora_inicio = hora_inicio,
+    this.hora_fim = hora_fim,
+    this.comentarios = comentarios,
+    this.nota_fiscal_numero = nota_fiscal_numero,
     this.id = id
   }
 }

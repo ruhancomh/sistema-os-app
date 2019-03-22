@@ -14,7 +14,7 @@
           <v-icon dark>mdi-library-plus</v-icon>
         </v-btn>
       </template>
-      <span>Adicionar novo bairro</span>
+      <span>{{tooltipText}}</span>
     </v-tooltip>
     <v-dialog
       v-if="!requiredDataEmpty"
@@ -99,6 +99,9 @@ export default {
     title: {
       default: ""
     },
+    tooltipText: {
+      default: ""
+    },
     fields: {
       type: Object,
       default: () => {}
@@ -164,6 +167,11 @@ export default {
           this.closeDialog();
       }
     }
+  },
+
+  created () {
+    if (this.fields)
+      this.formFields = this.fields
   }
 };
 </script>
