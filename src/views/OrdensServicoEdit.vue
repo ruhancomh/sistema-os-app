@@ -37,7 +37,7 @@
                       v-model="formFields.ordem_servico_tipos_id"
                       :items="tiposOSOptions"
                       :loading="tiposOSOptionsLoad"
-                      label="Tipo de OS"
+                      label="Tipo de O.S"
                       item-text="descricao"
                       item-value="id"
                       :rules="[formRules.default.required]"
@@ -50,7 +50,7 @@
                   >
                     <v-text-field
                       v-model="formFields.codigo_os"
-                      label="Código"
+                      label="O.S Manual"
                     ></v-text-field>
                   </v-flex>
                   <v-flex
