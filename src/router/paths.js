@@ -649,5 +649,58 @@ export default [
         },
       }
     ]
+  },
+
+  // Faturamentos
+  {
+    path: '/faturamentos',
+    view: 'FaturamentosList',
+    meta: {
+      title: 'Faturamentos',
+    },
+  },
+  {
+    path: '/faturamentos/adicionar',
+    view: 'FaturamentosAdd',
+    meta: {
+      title: 'Adicionar novo faturamento',
+    },
+  },
+  {
+    path: '/faturamentos/editar/:id',
+    name: '',
+    view: 'FaturamentosTabview',
+    
+    children: [
+      // Detalhes
+      {
+        path: '',
+        view: 'FaturamentosEdit',
+        meta: {
+          title: 'Detalhes do faturamento',
+        },
+      },
+      {
+        path: 'detalhes',
+        view: 'FaturamentosEdit',
+        meta: {
+          title: 'Detalhes do faturamento',
+        },
+      },
+      {
+        path: 'servicos',
+        view: 'FaturamentoServicosList',
+        meta: {
+          title: 'Serviços',
+        },
+      },
+      {
+        path: 'servicos/editar/:faturamento_servicos_id',
+        view: 'FaturamentoServicosEdit',
+        meta: {
+          title: 'Detalhes do serviço',
+        },
+      },
+    ]
   }
 ]

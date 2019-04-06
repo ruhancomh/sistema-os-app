@@ -79,6 +79,26 @@ export default {
           ]
         },
         {
+          group: true,
+          icon: 'mdi-clipboard-text',
+          title: 'Faturamentos',
+
+          links: [
+            {
+              group: false,
+              icon: "add",
+              title: "Adicionar novo",
+              to: "/faturamentos/adicionar"
+            },
+            {
+              group: false,
+              icon: "mdi-view-list",
+              title: "Listar todos",
+              to: "/faturamentos"
+            },
+          ]
+        },
+        {
           group:true,
           icon: 'mdi-account-multiple',
           title: 'Clientes',

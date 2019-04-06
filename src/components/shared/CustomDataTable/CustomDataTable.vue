@@ -18,6 +18,7 @@
       </v-container>
     </v-form>
     <v-data-table
+      v-model="selected"
       :headers="tableHeaders"
       :items="desserts"
       :pagination.sync="pagination"
@@ -25,13 +26,49 @@
       :loading="loading"
       :rows-per-page-text="config.rowsPerPageTex"
       :rows-per-page-items="config.rowsPerPageItems"
+      :select-all="selectAll"
+      :item-key="itemKey"
       class="elevation-1"
     >
+      <template v-if="selectAll" v-slot:headers="props">
+        <tr>
+          <th>
+            <v-checkbox
+              :input-value="props.all"
+              :indeterminate="props.indeterminate"
+              primary
+              hide-details
+              @click.stop="toggleAll"
+            ></v-checkbox>
+          </th>
+          <th
+            v-for="header in props.headers"
+            :key="header.text"
+            :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+            @click="changeSort(header.value)"
+          >
+            <v-icon small>arrow_upward</v-icon>
+            {{ header.text }}
+          </th>
+        </tr>
+      </template>
       <template
         slot="items"
         slot-scope="props"
       >
-        <slot name="items" v-bind:item="props.item"></slot>
+        <tr v-if="selectAll" :active="props.selected" @click="props.selected = !props.selected">
+          <td>
+            <v-checkbox
+              :input-value="props.selected"
+              primary
+              hide-details
+            ></v-checkbox>
+          </td>
+          <slot name="items" v-bind:item="props.item"></slot>
+        </tr>
+
+        <slot v-else name="items" v-bind:item="props.item"></slot>
+
         <slot name="actions" v-bind:item="props.item">
           <td v-if="actions" class="justify-center layout px-0">
             <template
@@ -135,6 +172,12 @@ export default {
     returnItem: {
       type: Boolean,
       default: false
+    },
+    selectAll:{
+      default:false
+    },
+    itemKey: {
+      default: ''
     }
   },
   
@@ -153,7 +196,8 @@ export default {
         rowsPerPageItems: [10, 20, 40, 100]
       },
       deleteDialog: false,
-      itemToDelete:null
+      itemToDelete:null,
+      selected: []
     }
   },
 
@@ -177,6 +221,10 @@ export default {
         this.proccessTableData()
       },
       depp: true
+    },
+
+    selected: function (nv) {
+      this.$emit('onSelected',nv)
     }
   },
 
@@ -250,6 +298,19 @@ export default {
         item = id
       }
       this.$emit('onEditItem',item)
+    },
+
+    toggleAll () {
+      if (this.selected.length) this.selected = []
+      else this.selected = this.desserts.slice()
+    },
+    changeSort (column) {
+      if (this.pagination.sortBy === column) {
+        this.pagination.descending = !this.pagination.descending
+      } else {
+        this.pagination.sortBy = column
+        this.pagination.descending = false
+      }
     }
   },
 
