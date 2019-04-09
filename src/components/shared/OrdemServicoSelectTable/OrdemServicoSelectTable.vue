@@ -176,6 +176,7 @@ export default {
     async getData() {
       let filters = this.tableIpunt.filters;
       filters.cliente_id = this.clientesId
+      filters.nao_faturada = true
       let pagination = this.tableIpunt.pagination;
 
       let ordensServicoController = new OrdensServicoController();

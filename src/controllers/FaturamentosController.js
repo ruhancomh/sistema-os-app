@@ -1,5 +1,5 @@
 'use strict'
-import { Faturamentos } from '../models/Faturamentos';
+import { Faturamentos, FaturamentosNotaFiscal } from '../models/Faturamentos';
 import { BaseController } from './BaseController';
 
 export class FaturamentosController extends BaseController {
@@ -13,16 +13,9 @@ export class FaturamentosController extends BaseController {
   async create(params) {
     try {
       let ordemServico = new Faturamentos(
-        params.clientes_id,
         params.data_faturamento,
-        params.data_vencimento,
-        params.observacoes,
+        params.clientes_id,
         params.funcionarios_id,
-        params.numero_nota,
-        params.data_emissao_nota,
-        params.valor,
-        params.valor_pago,
-        params.numero_documento,
         params.observacoes_compra,
         params.observacoes_servicos,
       )
@@ -36,16 +29,9 @@ export class FaturamentosController extends BaseController {
   async update(params) {
     try {
       let ordemServico = new Faturamentos(
-        params.clientes_id,
         params.data_faturamento,
-        params.data_vencimento,
-        params.observacoes,
+        params.clientes_id,
         params.funcionarios_id,
-        params.numero_nota,
-        params.data_emissao_nota,
-        params.valor,
-        params.valor_pago,
-        params.numero_documento,
         params.observacoes_compra,
         params.observacoes_servicos,
         params.id
@@ -92,6 +78,41 @@ export class FaturamentosController extends BaseController {
       return this.response('Faturamento apagado com sucesso.', result.data)
     } catch (error) {
       return this.response(false, false, error)
+    }
+  }
+
+  async updateNotaFiscal(params) {
+    try {
+      let ordemServico = new FaturamentosNotaFiscal(
+        params.data_vencimento,
+        params.data_emissao_nota,
+        params.numero_nota,
+        params.numero_documento,
+        params.valor,
+        params.valor_pago,
+        params.observacoes,
+        params.empresa_fatura,
+        params.id
+      )
+      let result = await this._request.put(`${this._baseApiUrl}/${ordemServico.id}`, ordemServico)
+      return this.response('Nota fiscal editada com sucesso.', result.data)
+    } catch (error) {
+      return this.response(false, false, error)
+    }
+  }
+
+  listEmpresasFaturamento () {
+    return {
+      data : [
+        {
+          id: 'CLEAN',
+          descricao: 'CLEAN'
+        },
+        {
+          id: 'CSA',
+          descricao: 'CSA'
+        }
+      ]
     }
   }
 

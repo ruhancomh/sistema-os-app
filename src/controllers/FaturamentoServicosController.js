@@ -31,19 +31,11 @@ export class FaturamentoServicosController extends BaseController {
 
   async update(params, faturamentos_id) {
     try {
-      let faturamentoServicos = new FaturamentoServicos(
-        params.data,
-        params.vencimento,
-        params.valor,
-        params.referencia,
-        params.porcentagem,
-        params.dia,
-        params.observacao,
-        params.servicos_id,
-        params.faturamentos_id,
-        params.id
-      )
-      let result = await this._request.put(`${this.getBaseApiUrl(faturamentos_id)}/${faturamentoServicos.id}`, faturamentoServicos)
+      let data = {
+        id: params.id,
+        observacao: params.observacao
+      }
+      let result = await this._request.put(`${this.getBaseApiUrl(faturamentos_id)}/${data.id}`, data)
       return this.response('Faturamento editado com sucesso.', result.data)
     } catch (error) {
       return this.response(false, false, error)

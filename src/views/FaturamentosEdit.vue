@@ -29,45 +29,9 @@
                       return-masked-value
                     ></v-text-field>
                   </v-flex>
-
                   <v-flex
                     xs12
-                    md3
-                  >
-                    <v-text-field
-                      v-model="formFields.data_vencimento"
-                      mask="##/##/####"
-                      placeholder="dd/mm/aaaa"
-                      label="Data vencimento"
-                      return-masked-value
-                    ></v-text-field>
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md3
-                  >
-                    <v-text-field
-                      v-model="formFields.numero_nota"
-                      label="Numero da nota"
-                    ></v-text-field>
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md3
-                  >
-                    <v-text-field
-                      v-model="formFields.data_emissao_nota"
-                      mask="##/##/####"
-                      placeholder="dd/mm/aaaa"
-                      label="Data de emissão da nota"
-                      return-masked-value
-                    ></v-text-field>
-                  </v-flex>
-                </v-layout>
-                <v-layout row wrap>
-                  <v-flex
-                    xs12
-                    md8
+                    md6
                   >
                     <v-autocomplete
                       v-model="formFields.clientes_id"
@@ -90,7 +54,7 @@
                   </v-flex>
                   <v-flex
                       xs12
-                      md4
+                      md3
                     >
                     <v-select
                       v-model="formFields.funcionarios_id"
@@ -105,46 +69,17 @@
                   </v-flex>
                   <v-flex
                     xs12
-                    md3
-                  >
-                    <custom-decimal-field
-                      v-model="formFields.valor"
-                      label="Valor"
-                      prefix="R$"
-                    />                    
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md3
-                  >
-                    <custom-decimal-field
-                      v-model="formFields.valor_pago"
-                      label="Valor Pago"
-                      prefix="R$"
-                    />                    
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md3
+                    md2
                   >
                     <v-text-field
-                      v-model="formFields.numero_documento"
-                      label="Numero do Documento"
-                    ></v-text-field>
-                  </v-flex>               
-                </v-layout>
-                <v-layout row wrap>
-                  <v-flex
-                    xs12
-                    md12
-                  >
-                    <v-textarea
-                      v-model="formFields.observacoes"
-                      label="Observações"
-                      rows="1"
-                      auto-grow
+                      :value="valorTotal"
+                      label="Valor Total"
+                      prefix="R$"
+                      disabled
                     />
                   </v-flex>
+                </v-layout>
+                <v-layout row wrap>
                   <v-flex
                     xs12
                     md6
@@ -194,16 +129,10 @@
 import { FaturamentosController } from "../controllers/FaturamentosController";
 import { ClientesController } from "../controllers/ClientesController";
 import { FuncionariosController } from "../controllers/FuncionariosController";
-
-import CustomDecimalField from '../components/shared/CustomDecimalField/CustomDecimalField'
 import { mapMutations } from "vuex";
 import { debounce } from "debounce";
-import ClienteEnderecosSelect from "../components/shared/ClienteEnderecosSelect/ClienteEnderecosSelect"
 
 export default {
-  components: {
-    CustomDecimalField,
-  },
   data() {
     return {
       loading: false,
@@ -223,6 +152,23 @@ export default {
       clientesOptionsSearch: '',
 
     };
+  },
+
+  computed: {
+    valorTotal () {
+      if (Array.isArray(this.formFields.servicos) && this.formFields.servicos.length > 0) {
+        let valorTotal = this.formFields.servicos.map(item => item.ordem_servico_servicos_valor_total).reduce((v1,v2) => v1 + v2)
+
+        return this.$options.filters.currency(valorTotal,{
+          symbol:'',
+          thousandsSeparator: '.',
+          fractionCount: 2,
+          fractionSeparator: ','
+        })
+      } else {
+        return 0
+      }
+    }
   },
 
   methods: {

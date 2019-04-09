@@ -175,9 +175,37 @@
                   </v-flex>
                 </v-layout>
               </v-container>
+
+              <v-container>
+                <v-layout row wrap>
+                  <v-flex
+                    xs12
+                    md12
+                  >
+                    <v-textarea
+                      v-model="formFields.observacao"
+                      label="Observações do serviço faturado"
+                      rows="1"
+                      auto-grow
+                    />
+                  </v-flex>
+                </v-layout>
+              </v-container>
             </v-form>
           </v-card-text>
           <v-divider />
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="primary"
+              flat
+              large
+              :loading="loading"
+              @click="save"
+            >
+              Salvar
+            </v-btn>
+          </v-card-actions>
         </v-card>
       </v-flex>
     </v-layout>
@@ -227,6 +255,24 @@ export default {
         });
 
         this.$router.push({ path: `/faturamentos/editar/${this.getFaturamentoId()}/servicos` });
+      }
+    },
+
+    async save() {
+      if (this.valid) {
+        this.loading = true;
+
+        let faturamentoServicosController = new FaturamentoServicosController();
+        let result = await faturamentoServicosController.update(this.formFields,this.getID());
+
+        this.SHOW_ALERT({
+          type: result.error ? "error" : "success",
+          message: result.message
+        });
+
+        this.loading = false
+      }else {
+        this.$refs.form.validate()
       }
     },
 

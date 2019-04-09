@@ -688,6 +688,13 @@ export default [
         },
       },
       {
+        path: 'nota-fiscal',
+        view: 'FaturamentosNotaFiscalEdit',
+        meta: {
+          title: 'Detalhes da Nota Fiscal',
+        },
+      },
+      {
         path: 'servicos',
         view: 'FaturamentoServicosList',
         meta: {
