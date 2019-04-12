@@ -80,9 +80,9 @@ export default {
         },
         {
           group: true,
-          icon: 'mdi-clipboard-text',
+          icon: 'mdi-currency-usd',
           title: 'Faturamentos',
-
+ 
           links: [
             {
               group: false,

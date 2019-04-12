@@ -56,7 +56,7 @@
                   >
                     <custom-decimal-field
                       v-model="formFields.valor_pago"
-                      label="Valor Pago"
+                      label="Valor Nota Fiscal"
                       prefix="R$"
                     />                    
                   </v-flex>

@@ -182,6 +182,16 @@
                     xs12
                     md12
                   >
+                  <v-flex
+                    xs12
+                    md3
+                  >
+                    <custom-decimal-field
+                      v-model="formFields.desconto"
+                      label="Valor do desconto"
+                      prefix="R$"
+                    />                    
+                  </v-flex>
                     <v-textarea
                       v-model="formFields.observacao"
                       label="Observações do serviço faturado"

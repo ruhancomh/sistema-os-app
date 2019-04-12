@@ -156,18 +156,12 @@ export default {
 
   computed: {
     valorTotal () {
-      if (Array.isArray(this.formFields.servicos) && this.formFields.servicos.length > 0) {
-        let valorTotal = this.formFields.servicos.map(item => item.ordem_servico_servicos_valor_total).reduce((v1,v2) => v1 + v2)
-
-        return this.$options.filters.currency(valorTotal,{
+      return this.$options.filters.currency(this.formFields.valor_total,{
           symbol:'',
           thousandsSeparator: '.',
           fractionCount: 2,
           fractionSeparator: ','
         })
-      } else {
-        return 0
-      }
     }
   },
 

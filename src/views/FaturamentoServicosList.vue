@@ -67,7 +67,7 @@
                 <td>{{ props.item.ordem_servico ? props.item.ordem_servico.codigo_os : '' }}</td>
                 <td>{{ props.item.ordem_servico ? props.item.ordem_servico.data_criacao : '' }}</td>
                 <td>{{ props.item.servico ? props.item.servico.descricao : '' }}</td>
-                <td>{{ props.item.ordem_servico_servicos_valor_total | currency('R$', '.', 2 ,',') }}</td>
+                <td>{{ props.item.valor_total | currency('R$', '.', 2 ,',') }}</td>
               </template>
             </custom-data-table>
             <ordem-servico-select-table
@@ -126,7 +126,7 @@ export default {
         {
           text: "Valor Total",
           align: "left",
-          sortable: true,
+          sortable: false,
           value: "valor_total"
         }
       ],

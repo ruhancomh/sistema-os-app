@@ -33,6 +33,7 @@ export class FaturamentoServicosController extends BaseController {
     try {
       let data = {
         id: params.id,
+        desconto: params.desconto,
         observacao: params.observacao
       }
       let result = await this._request.put(`${this.getBaseApiUrl(faturamentos_id)}/${data.id}`, data)

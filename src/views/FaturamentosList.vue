@@ -68,7 +68,7 @@
                 <td>{{ props.item.data_faturamento }}</td>
                 <td>{{ props.item.cliente ? props.item.cliente.razao_social : '' }}</td>
                 <td>{{ props.item.data_vencimento}}</td>
-                <td>{{ props.item.valor | currency('R$ ','.',2,',')}}</td>
+                <td>{{ props.item.valor_total | currency('R$ ','.',2,',')}}</td>
                 <td>{{ props.item.valor_pago | currency('R$ ','.',2,',')}}</td>
               </template>
             </custom-data-table>
@@ -126,15 +126,15 @@ export default {
           value: "data_vencimento"
         },
         {
-          text: "Valor",
+          text: "Valor Total",
           align: "left",
-          sortable: true,
+          sortable: false,
           value: "valor"
         },
         {
-          text: "Valor Pago",
+          text: "Valor Nota Fiscal",
           align: "left",
-          sortable: true,
+          sortable: false,
           value: "valor_pago"
         },
       ],

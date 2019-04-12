@@ -53,14 +53,14 @@ export default {
           icon: 'mdi-checkbook'
         },
         {
-          text: 'Nota Fiscal',
-          to: `/faturamentos/editar/${this.getId()}/nota-fiscal`,
-          icon: 'mdi-checkbook'
-        },
-        {
           text: 'Serviços',
           to: `/faturamentos/editar/${this.getId()}/servicos`,
           icon: 'mdi-ballot'
+        },
+        {
+          text: 'Nota Fiscal',
+          to: `/faturamentos/editar/${this.getId()}/nota-fiscal`,
+          icon: 'mdi-file-check'
         },
       ],
     };
