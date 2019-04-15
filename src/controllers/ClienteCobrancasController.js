@@ -21,11 +21,8 @@ export class ClienteCobrancasController extends BaseController {
     try {
       let clienteCobranca = new ClienteCobrancas(
         params.data,
-        params.vencimento,
         params.valor,
         params.referencia,
-        params.porcentagem,
-        params.dia,
         params.observacao,
         params.servicos_id,
         params.clientes_id,
@@ -41,11 +38,8 @@ export class ClienteCobrancasController extends BaseController {
     try {
       let clienteCobranca = new ClienteCobrancas(
         params.data,
-        params.vencimento,
         params.valor,
         params.referencia,
-        params.porcentagem,
-        params.dia,
         params.observacao,
         params.servicos_id,
         params.clientes_id,

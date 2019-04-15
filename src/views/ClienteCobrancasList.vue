@@ -78,7 +78,6 @@
                 <td>{{ props.item.servico ? props.item.servico.descricao : '' }}</td>
                 <td>{{ props.item.valor }}</td>
                 <td>{{ props.item.referencia }}</td>
-                <td>{{ props.item.vencimento }}</td>
               </template>
             </custom-data-table>
           </v-card-text>
@@ -132,12 +131,6 @@ export default {
           align: "left",
           sortable: true,
           value: "referencia"
-        },
-        {
-          text: "Vencimento",
-          align: "left",
-          sortable: true,
-          value: "vencimento"
         }
       ],
       tableData: null,

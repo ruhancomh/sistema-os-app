@@ -58,22 +58,23 @@
                     md2
                   >
                     <v-text-field
+                      v-model="formFields.vencimento"
+                      label="Vencimento"
+                      :rules="[formRules.default.required]"
+                      required
+                      return-masked-value
+                      mask="##/##/####"
+                      placeholder="dd/mm/aaaa"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md2
+                  >
+                    <v-text-field
                       v-model="formFields.numero"
                       label="Numero"
                     ></v-text-field>                    
-                  </v-flex>
-                  <v-flex
-                    xs6
-                    md4
-                  >
-                    <v-select
-                      v-model="formFields.servicos_id"
-                      :items="servicosOptions"
-                      :loading="servicosOptionsLoad"
-                      label="Serviço"
-                      item-text="descricao"
-                      item-value="id"
-                    />
                   </v-flex>
                   <v-flex
                     xs6
@@ -87,6 +88,24 @@
                       item-text="nome"
                       item-value="id"
                     />
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md12
+                  >
+                    <v-layout>
+                      <v-select
+                        v-model="formFields.servicos_id"
+                        :items="servicosOptions"
+                        :loading="servicosOptionsLoad"
+                        label="Serviço"
+                        item-text="descricao"
+                        item-value="id"
+                      />
+                      <servico-light-form 
+                        @success="servicoAddSuccess($event)"
+                      />
+                    </v-layout>
                   </v-flex>
                   <v-flex
                     xs12
@@ -149,12 +168,16 @@
 
 <script>
 import { ClientePropostasController } from "../controllers/ClientePropostasController"
+import ServicoLightForm from "../components/shared/ServicoLightForm/ServicoLightForm"
 
 import { mapMutations } from "vuex"
 import { ServicosController } from '../controllers/ServicosController';
 import { FuncionariosController } from '../controllers/FuncionariosController';
 
 export default {
+  components: {
+    ServicoLightForm
+  },
   data() {
     return {
       loading: false,
@@ -228,7 +251,12 @@ export default {
 
     getClienteID() {
       return this.$route.params.id
-    }
+    },
+
+    async servicoAddSuccess(servico) {
+      await this.loadServicos()
+      this.formFields.servicos_id = servico.id
+    },
   },
 
   created() {

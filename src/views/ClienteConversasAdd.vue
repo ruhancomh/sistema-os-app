@@ -34,8 +34,6 @@
                       placeholder="dd/mm/aaaa hh:mm"
                       label="Data"
                       return-masked-value
-                      :rules="[formRules.default.required]"
-                      required
                     ></v-text-field>
                   </v-flex>
                   <v-flex
@@ -54,16 +52,21 @@
                   </v-flex>
                   <v-flex
                     xs6
-                    md3
+                    md4
                   >
-                    <v-select
-                      v-model="formFields.conversa_acoes_id"
-                      :items="acaoOptions"
-                      :loading="acaoOptionsLoad"
-                      label="Ação"
-                      item-text="descricao"
-                      item-value="id"
-                    />
+                    <v-layout>
+                      <v-select
+                        v-model="formFields.conversa_acoes_id"
+                        :items="acaoOptions"
+                        :loading="acaoOptionsLoad"
+                        label="Ação"
+                        item-text="descricao"
+                        item-value="id"
+                      />
+                      <conversa-acao-light-form 
+                        @success="conversaAcaoAddSuccess($event)"
+                      />
+                    </v-layout>
                   </v-flex>
                   <v-flex
                     xs12
@@ -105,8 +108,12 @@ import { FuncionariosController } from "../controllers/FuncionariosController"
 import { ConversaAcoesController } from '../controllers/ConversaAcoesController'
 
 import { mapMutations } from "vuex"
+import ConversaAcaoLightForm from "../components/shared/ConversaAcaoLightForm/ConversaAcaoLightForm"
 
 export default {
+  components: {
+    ConversaAcaoLightForm
+  },
   data() {
     return {
       loading: false,
@@ -181,7 +188,12 @@ export default {
 
     getClienteID() {
       return this.$route.params.id
-    }
+    },
+
+    async conversaAcaoAddSuccess(conversaAcao) {
+      await this.loadAcoes()
+      this.formFields.conversa_acoes_id = conversaAcao.id
+    },
   },
 
   async created() {

@@ -21,6 +21,7 @@ export class ClientePropostasController extends BaseController {
     try {
       let clienteProposta = new ClientePropostas(
         params.data,
+        params.vencimento,
         params.numero,
         params.aprovado,
         params.referencia_1,
@@ -42,6 +43,7 @@ export class ClientePropostasController extends BaseController {
     try {
       let clienteProposta = new ClientePropostas(
         params.data,
+        params.vencimento,
         params.numero,
         params.aprovado,
         params.referencia_1,

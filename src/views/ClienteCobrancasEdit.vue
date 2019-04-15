@@ -52,67 +52,32 @@
                   </v-flex>
                   <v-flex
                     xs12
-                    md2
-                  >
-                    <custom-decimal-field
-                      v-model="formFields.porcentagem"
-                      label="Porcentagem"
-                      :rules="[formRules.default.required]"
-                      required
-                      suffix="%"
-                    />                    
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md2
-                  >
-                    <v-text-field
-                      v-model="formFields.dia"
-                      label="Dia"
-                      :rules="[formRules.default.required]"
-                      required
-                      type="number"
-                    ></v-text-field>                    
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md2
-                  >
-                    <v-text-field
-                      v-model="formFields.vencimento"
-                      label="Vencimento"
-                      :rules="[formRules.default.required]"
-                      required
-                      return-masked-value
-                      mask="##/##/####"
-                      placeholder="dd/mm/aaaa"
-                    ></v-text-field>
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md2
+                    md3
                   >
                     <v-text-field
                       v-model="formFields.referencia"
-                      label="Referência"
+                      label="Referência Proposta"
                       :rules="[formRules.default.required]"
                       required
                     ></v-text-field>                    
                   </v-flex>
                   <v-flex
-                    xs6
-                    md4
+                    xs12
+                    md12
                   >
-                    <v-select
-                      v-model="formFields.servicos_id"
-                      :items="servicosOptions"
-                      :loading="servicosOptionsLoad"
-                      label="Serviço"
-                      item-text="descricao"
-                      item-value="id"
-                      :rules="[formRules.default.required]"
-                      required
-                    />
+                    <v-layout>
+                      <v-select
+                        v-model="formFields.servicos_id"
+                        :items="servicosOptions"
+                        :loading="servicosOptionsLoad"
+                        label="Serviço"
+                        item-text="descricao"
+                        item-value="id"
+                      />
+                      <servico-light-form 
+                        @success="servicoAddSuccess($event)"
+                      />
+                    </v-layout>
                   </v-flex>
                   <v-flex
                     xs12
@@ -148,6 +113,7 @@
 
 <script>
 import { ClienteCobrancasController } from "../controllers/ClienteCobrancasController"
+import ServicoLightForm from "../components/shared/ServicoLightForm/ServicoLightForm"
 
 import { mapMutations } from "vuex"
 import { ServicosController } from '../controllers/ServicosController';
@@ -155,7 +121,8 @@ import CustomDecimalField from '../components/shared/CustomDecimalField/CustomDe
 
 export default {
   components: {
-    CustomDecimalField
+    CustomDecimalField,
+    ServicoLightForm
   },
   data() {
     return {
@@ -235,7 +202,12 @@ export default {
 
     getEntityID() {
       return this.$route.params.cliente_cobrancas_id
-    }
+    },
+
+    async servicoAddSuccess(servico) {
+      await this.loadServicos()
+      this.formFields.servicos_id = servico.id
+    },
   },
 
   async created() {

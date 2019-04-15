@@ -59,16 +59,21 @@
                   </v-flex>
                   <v-flex
                     xs6
-                    md3
+                    md4
                   >
-                    <v-select
-                      v-model="formFields.endereco_tipos_id"
-                      :items="enderecoTiposOptions"
-                      :loading="enderecoTiposOptionsLoad"
-                      label="Tipo"
-                      item-text="descricao"
-                      item-value="id"                    
-                    />
+                    <v-layout>
+                      <v-select
+                        v-model="formFields.endereco_tipos_id"
+                        :items="enderecoTiposOptions"
+                        :loading="enderecoTiposOptionsLoad"
+                        label="Tipo"
+                        item-text="descricao"
+                        item-value="id"                    
+                      />
+                      <endereco-tipo-light-form 
+                        @success="enderecoTipoAddSuccess($event)"
+                      />
+                    </v-layout>
                   </v-flex> 
                   <v-flex
                     xs12
@@ -85,7 +90,7 @@
                   </v-flex>
                   <v-flex
                     xs12
-                    md7
+                    md6
                   >
                     <v-text-field
                       v-model="formFields.logradouro"
@@ -191,6 +196,7 @@
 <script>
 import { mapMutations } from "vuex"
 import BairroLightForm from "../components/shared/BairroLightForm/BairroLightForm"
+import EnderecoTipoLightForm from "../components/shared/EnderecoTipoLightForm/EnderecoTipoLightForm"
 
 import { ClienteEnderecosController } from "../controllers/ClienteEnderecosController"
 
@@ -198,10 +204,12 @@ import { EnderecoTiposController } from '../controllers/EnderecoTiposController'
 import { EstadosController } from '../controllers/EstadosController';
 import { CidadesController } from '../controllers/CidadesController';
 import { ClienteContatosController } from '../controllers/ClienteContatosController';
+import { ClientesController } from '../controllers/ClientesController';
 
 export default {
   components: {
-    BairroLightForm
+    BairroLightForm,
+    EnderecoTipoLightForm
   },
   data(){
     return {
@@ -229,6 +237,8 @@ export default {
 
       bairrosOptions:[],
       bairrosOptionsLoad: false,
+
+      cliente: false
     }
   },
 
@@ -261,6 +271,13 @@ export default {
       } else {
         this.$refs.form.validate()
       }
+    },
+
+    async loadCliente() {
+      let clientesController = new ClientesController()
+      let result = await clientesController.get(this.getClienteID())
+
+      this.cliente = result.error ? false : result.data
     },
 
     async loadEnderecoTipos() {
@@ -321,6 +338,11 @@ export default {
       this.formFields.bairros_id = bairro.id
     },
 
+    async enderecoTipoAddSuccess(enderecoTipo) {
+      await this.loadEnderecoTipos()
+      this.formFields.endereco_tipos_id = enderecoTipo.id
+    },
+
     async loadContatos() {
       this.clienteContatosOptionsLoad = true
 
@@ -352,12 +374,20 @@ export default {
   },
 
   async created() {
+    this.SHOW_LOADER()
+
     this.SET_TOOLBAR_BACK_URL(`/clientes/editar/${this.getClienteID()}/enderecos`)
     this.formFields = new ClienteEnderecosController().getModel()
     this.formFields.clientes_id = this.getClienteID()
     this.loadEnderecoTipos()
     this.loadEstados()
     this.loadContatos()
+    await this.loadCliente()
+    
+    this.formFields.cnpj = this.cliente.cnpj
+    this.formFields.telefone = this.cliente.telefone_principal
+
+    this.CLOSE_LOADER()
   }
 }
 </script>

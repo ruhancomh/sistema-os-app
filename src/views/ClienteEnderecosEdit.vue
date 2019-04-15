@@ -59,16 +59,21 @@
                   </v-flex>
                   <v-flex
                     xs6
-                    md3
+                    md4
                   >
-                    <v-select
-                      v-model="formFields.endereco_tipos_id"
-                      :items="enderecoTiposOptions"
-                      :loading="enderecoTiposOptionsLoad"
-                      label="Tipo"
-                      item-text="descricao"
-                      item-value="id"                    
-                    />
+                    <v-layout>
+                      <v-select
+                        v-model="formFields.endereco_tipos_id"
+                        :items="enderecoTiposOptions"
+                        :loading="enderecoTiposOptionsLoad"
+                        label="Tipo"
+                        item-text="descricao"
+                        item-value="id"                    
+                      />
+                      <endereco-tipo-light-form 
+                        @success="enderecoTipoAddSuccess($event)"
+                      />
+                    </v-layout>
                   </v-flex> 
                   <v-flex
                     xs12
@@ -85,7 +90,7 @@
                   </v-flex>
                   <v-flex
                     xs12
-                    md7
+                    md6
                   >
                     <v-text-field
                       v-model="formFields.logradouro"
@@ -190,6 +195,7 @@
 
 <script>
 import BairroLightForm from "../components/shared/BairroLightForm/BairroLightForm"
+import EnderecoTipoLightForm from "../components/shared/EnderecoTipoLightForm/EnderecoTipoLightForm"
 import { mapMutations } from "vuex"
 
 import { ClienteEnderecosController } from "../controllers/ClienteEnderecosController"
@@ -200,7 +206,8 @@ import { ClienteContatosController } from '../controllers/ClienteContatosControl
 
 export default {
   components: {
-    BairroLightForm
+    BairroLightForm,
+    EnderecoTipoLightForm
   },
   data() {
     return {
@@ -271,11 +278,6 @@ export default {
           type: result.error ? "error" : "success",
           message: result.message
         })
-
-        if (!result.error)
-          this.$router.push({
-            path: `/clientes/editar/${this.getClienteID()}/enderecos`
-          })
 
         this.loading = false
       }else {
@@ -360,6 +362,11 @@ export default {
     async bairroAddSuccess(bairro) {
       await this.loadBairros(this.formFields.cidades_id)
       this.formFields.bairros_id = bairro.id
+    },
+    
+    async enderecoTipoAddSuccess(enderecoTipo) {
+      await this.loadEnderecoTipos()
+      this.formFields.endereco_tipos_id = enderecoTipo.id
     },
   },
 

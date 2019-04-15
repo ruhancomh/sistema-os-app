@@ -110,16 +110,21 @@
                   </v-flex>
                   <v-flex
                     xs6
-                    md3
+                    md4
                   >
-                    <v-select
-                      v-model="formFields.cliente_atividades_id"
-                      :items="atividadesOptions"
-                      :loading="atividadesOptionsLoad"
-                      label="Atividade"
-                      item-text="descricao"
-                      item-value="id"                    
-                    />
+                    <v-layout>
+                      <v-select
+                        v-model="formFields.cliente_atividades_id"
+                        :items="atividadesOptions"
+                        :loading="atividadesOptionsLoad"
+                        label="Atividade"
+                        item-text="descricao"
+                        item-value="id"                    
+                      />
+                      <cliente-atividade-light-form 
+                        @success="atividadeAddSuccess($event)"
+                      />
+                    </v-layout>
                   </v-flex> 
                 </v-layout>
                 <v-layout row wrap>
@@ -246,12 +251,14 @@ import { ClienteAtividadesController } from '../controllers/ClienteAtividadesCon
 
 import {VMoney} from 'v-money'
 import CustomDecimalField from '../components/shared/CustomDecimalField/CustomDecimalField'
+import ClienteAtividadeLightForm from "../components/shared/ClienteAtividadeLightForm/ClienteAtividadeLightForm"
 import { mapMutations } from "vuex";
 
 export default {
   directives: {money: VMoney},
   components: {
-    CustomDecimalField
+    CustomDecimalField,
+    ClienteAtividadeLightForm
   },
   data() {
     return {
@@ -316,7 +323,12 @@ export default {
       this.atividadesOptions = result.data.data
 
       this.atividadesOptionsLoad = false
-    }
+    },
+
+    async atividadeAddSuccess(atividade) {
+      await this.loadAtividades()
+      this.formFields.cliente_atividades_id = atividade.id
+    },
   },
 
   created() {

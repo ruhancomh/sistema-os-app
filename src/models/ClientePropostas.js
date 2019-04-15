@@ -3,6 +3,7 @@
 export class ClientePropostas {
   constructor(
     data = null,
+    vencimento = null,
     numero = null,
     aprovado = false,
     referencia_1 = null,
@@ -16,6 +17,7 @@ export class ClientePropostas {
   ) {
 
     this.data = data
+    this.vencimento = vencimento
     this.numero = numero
     this.aprovado = aprovado
     this.referencia_1 = referencia_1
