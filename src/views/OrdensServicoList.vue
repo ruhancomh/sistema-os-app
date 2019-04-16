@@ -30,6 +30,7 @@
               :table-data="tableData"
               :filters="filters"
               :default-sort="defaultSort"
+              :default-descending="defaultDescending"
               @onDeleteItem="onDeleteItem($event)"
               @onEditItem="onEditItem($event)"
             >
@@ -65,7 +66,7 @@
                 slot-scope="props"
               >
                 <td>{{ props.item.data_criacao }}</td>
-                <td>{{ props.item.id }}</td>
+                <td>{{ props.item.codigo_os }}</td>
                 <td>{{ props.item.tipo ? props.item.tipo.descricao : '' }}</td>
                 <td>{{ props.item.cliente ? props.item.cliente.razao_social : '' }}</td>
                 <td>{{ props.item.gerador ? props.item.gerador.cliente.razao_social : '' }}</td>
@@ -100,7 +101,8 @@ export default {
         cnpj:""
       },
 
-      defaultSort: "id",
+      defaultSort: "numero",
+      defaultDescending: true,
       defaultDescending: true,
       headers: [
         {

@@ -30,6 +30,7 @@
               :table-data="tableData"
               :filters="filters"
               :default-sort="defaultSort"
+              :default-descending="defaultDescending"
               @onDeleteItem="onDeleteItem($event)"
               @onEditItem="onEditItem($event)"
             >
@@ -98,7 +99,7 @@ export default {
         cnpj:""
       },
 
-      defaultSort: "id",
+      defaultSort: "numero",
       defaultDescending: true,
       headers: [
         {
