@@ -48,6 +48,18 @@
                 return-masked-value
               ></v-text-field>
             </v-flex>
+            <v-flex
+              xs6
+              md2
+            >
+              <v-select
+                v-model="props.filters.faturada"
+                :items="[{value:false, text: 'Não'},{value: true, text: 'Sim'}]"
+                label="Faturada"
+                item-text="text"
+                item-value="value"
+              />
+            </v-flex>
           </template>
           <template
             slot="items"
@@ -104,6 +116,7 @@ export default {
   data() {
     return {
       filters: {
+        faturada: false
       },
 
       defaultSort: "id",
@@ -174,9 +187,9 @@ export default {
     },
 
     async getData() {
+      this.selected = false
       let filters = this.tableIpunt.filters;
       filters.cliente_id = this.clientesId
-      filters.nao_faturada = true
       let pagination = this.tableIpunt.pagination;
 
       let ordensServicoController = new OrdensServicoController();
@@ -205,6 +218,9 @@ export default {
 
   watch: {
     dialogActive: function(nv) {
+      if(nv){
+        this.getData()
+      }
       if(nv !== this.value) {
         this.$emit("input", nv)
       }

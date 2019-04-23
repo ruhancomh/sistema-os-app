@@ -103,7 +103,6 @@ export default {
 
       defaultSort: "numero",
       defaultDescending: true,
-      defaultDescending: true,
       headers: [
         {
           text: "Data",
