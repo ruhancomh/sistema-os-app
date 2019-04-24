@@ -56,50 +56,83 @@
         slot="items"
         slot-scope="props"
       >
-        <tr v-if="selectAll" :active="props.selected" @click="props.selected = !props.selected">
+        <tr v-if="selectAll" :active="props.selected" >
           <td>
             <v-checkbox
               :input-value="props.selected"
               primary
               hide-details
+              @change="props.selected = !props.selected"
             ></v-checkbox>
           </td>
           <slot name="items" v-bind:item="props.item"></slot>
+          <slot name="actions" v-bind:item="props.item">
+            <td v-if="actions" class="justify-center layout px-0">
+              <template
+                v-for="(action, index) of actions"
+              >
+                <v-btn
+                  v-if="action == 'edit'"
+                  :key="index"
+                  small
+                  flat
+                  fab
+                  title="Editar item"
+                  @click="onEditItem(props.item.id)"
+                >
+                  <v-icon>edit</v-icon>
+                </v-btn>
+
+                <v-btn
+                  v-if="action == 'del'"
+                  :key="index"
+                  small
+                  flat
+                  fab
+                  title="Excluir item"
+                  @click="onDeleteBtnClick(props.item.id)"
+                >
+                  <v-icon>delete</v-icon>
+                </v-btn>
+              </template>
+            </td>
+          </slot> 
         </tr>
-
-        <slot v-else name="items" v-bind:item="props.item"></slot>
-
-        <slot name="actions" v-bind:item="props.item">
-          <td v-if="actions" class="justify-center layout px-0">
-            <template
-              v-for="(action, index) of actions"
-            >
-              <v-btn
-                v-if="action == 'edit'"
-                :key="index"
-                small
-                flat
-                fab
-                title="Editar item"
-                @click="onEditItem(props.item.id)"
+        <template v-else>
+          <slot name="items" v-bind:item="props.item"></slot>
+          <slot name="actions" v-bind:item="props.item">
+            <td v-if="actions" class="justify-center layout px-0">
+              <template
+                v-for="(action, index) of actions"
               >
-                <v-icon>edit</v-icon>
-              </v-btn>
+                <v-btn
+                  v-if="action == 'edit'"
+                  :key="index"
+                  small
+                  flat
+                  fab
+                  title="Editar item"
+                  @click="onEditItem(props.item.id)"
+                >
+                  <v-icon>edit</v-icon>
+                </v-btn>
 
-              <v-btn
-                v-if="action == 'del'"
-                :key="index"
-                small
-                flat
-                fab
-                title="Excluir item"
-                @click="onDeleteBtnClick(props.item.id)"
-              >
-                <v-icon>delete</v-icon>
-              </v-btn>
-            </template>
-          </td>
-        </slot>        
+                <v-btn
+                  v-if="action == 'del'"
+                  :key="index"
+                  small
+                  flat
+                  fab
+                  title="Excluir item"
+                  @click="onDeleteBtnClick(props.item.id)"
+                >
+                  <v-icon>delete</v-icon>
+                </v-btn>
+              </template>
+            </td>
+          </slot>        
+        </template>
+
       </template>
       <template slot="pageText" slot-scope="props">
         Itens {{ props.pageStart }} - {{ props.pageStop }} de {{ props.itemsLength }}

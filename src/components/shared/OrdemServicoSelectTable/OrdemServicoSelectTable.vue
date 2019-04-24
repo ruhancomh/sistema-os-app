@@ -14,10 +14,11 @@
           :table-data="tableData"
           :filters="filters"
           :default-sort="defaultSort"
-          :actions="false"
+          :actions="['edit']"
           :select-all="true"
           item-key="id"
           @onSelected="onSelected($event)"
+          @onEditItem="onEditItem($event)"
         >
           <template
             slot="filter"
@@ -213,6 +214,10 @@ export default {
 
     onSelected(items) {
       this.selected = items
+    },
+
+    onEditItem(item){
+      window.open(`/ordens-servico/editar/${item}/servicos`,'_blank')
     }
   },
 

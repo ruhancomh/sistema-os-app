@@ -10,12 +10,13 @@ export class ConversasController extends BaseController {
   }
 
   getBaseApiUrl (clientes_id) {
-    return `clientes/${clientes_id}/conversas`
+    return clientes_id ? `clientes/${clientes_id}/conversas` : `clientes/conversas`
   }
 
   async create(params, clientes_id) {
     try {
-      let conversa = new Conversas(params.data, params.descricao, params.clientes_id, params.funcionarios_id, params.conversa_acoes_id)
+      window.console.log(clientes_id)
+      let conversa = new Conversas(params.data, params.descricao, params.clientes_id, params.funcionarios_id, params.conversa_acoes_id, params.data_agendamento)
       let result = await this._request.post(this.getBaseApiUrl(clientes_id), conversa)
       return this.response('Conversa adicionada com sucesso.', result.data)
     } catch (error) {
@@ -25,7 +26,7 @@ export class ConversasController extends BaseController {
 
   async update(params, clientes_id) {
     try {
-      let conversa = new Conversas(params.data, params.descricao, params.clientes_id, params.funcionarios_id, params.conversa_acoes_id, params.id)
+      let conversa = new Conversas(params.data, params.descricao, params.clientes_id, params.funcionarios_id, params.conversa_acoes_id, params.data_agendamento, params.id)
       let result = await this._request.put(`${this.getBaseApiUrl(clientes_id)}/${conversa.id}`, conversa)
       return this.response('Conversa editada com sucesso.', result.data)
     } catch (error) {
@@ -46,6 +47,19 @@ export class ConversasController extends BaseController {
     try {
       let queryParams = this.buildQueryParams(filter, page, limit, sortBy, descending)
       let result = await this._request.get(`${this.getBaseApiUrl(clientes_id)}${queryParams}`)
+      return this.response(false, result.data)
+    } catch (error) {
+      return this.response(false, false, error)
+    }
+  }
+
+  async listAgendamento(filter, page, limit, sortBy, descending) {
+    try {
+      
+      filter.is_agendamento = true
+
+      let queryParams = this.buildQueryParams(filter, page, limit, sortBy, descending)
+      let result = await this._request.get(`${this.getBaseApiUrl()}${queryParams}`)
       return this.response(false, result.data)
     } catch (error) {
       return this.response(false, false, error)

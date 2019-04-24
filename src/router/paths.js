@@ -10,7 +10,7 @@ export default [
   {
     path: '/',
     name: 'Dashboard',
-    view: 'ClientesList',
+    view: 'Dashboard',
     meta: {
       title: 'Dashboard',
     },
@@ -634,6 +634,7 @@ export default [
       },
       // Serviços
       {
+        name: 'OrdensServicoServicosEdit',
         path: 'servicos',
         view: 'OrdensServicoServicosEdit',
         meta: {

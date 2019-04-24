@@ -72,6 +72,18 @@
                   </v-flex>
                   <v-flex
                     xs12
+                    md3
+                  >
+                    <v-text-field
+                      v-model="formFields.data_agendamento"
+                      mask="##/##/#### ##:##"
+                      placeholder="dd/mm/aaaa hh:mm"
+                      label="Agendar Próxima Conversa"
+                      return-masked-value
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex
+                    xs12
                     md12
                   >
                     <v-textarea

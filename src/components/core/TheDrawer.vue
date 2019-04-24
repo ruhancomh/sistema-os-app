@@ -59,6 +59,12 @@ export default {
     return {
       links: [
         {
+          group: false,
+          icon: 'home',
+          title: 'Dashboard',
+          to: "/"
+        },
+        {
           group: true,
           icon: 'mdi-clipboard-text',
           title: 'Ordens de Serviço',

@@ -88,6 +88,7 @@
                 <td>{{ props.item.cliente ? props.item.cliente.razao_social : '' }}</td>
                 <td>{{ props.item.funcionario ? props.item.funcionario.nome : '' }}</td>
                 <td>{{ props.item.acao ? props.item.acao.descricao : '' }}</td>
+                <td>{{ props.item.data_agendamento }}</td>
               </template>
             </custom-data-table>
           </v-card-text>
@@ -145,6 +146,12 @@ export default {
           align: "left",
           sortable: true,
           value: "acao"
+        },
+        {
+          text: "Agendamento",
+          align: "left",
+          sortable: false,
+          value: "data_agendamento"
         }
       ],
       tableData: null,
