@@ -235,6 +235,12 @@ export default {
             {
               group: false,
               icon: "",
+              title: "Acondicionamento de residuo",
+              to: "/residuo-acondicionamentos"
+            },
+            {
+              group: false,
+              icon: "",
               title: "Atividades dos clientes",
               to: "/cliente-atividades"
             },

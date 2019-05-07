@@ -588,6 +588,29 @@ export default [
     },
   },
 
+  // ResiduoAcondicionamentos
+  {
+    path: '/residuo-acondicionamentos',
+    view: 'ResiduoAcondicionamentosList',
+    meta: {
+      title: 'Acondicionamento de residuos',
+    },
+  },
+  {
+    path: '/residuo-acondicionamentos/adicionar',
+    view: 'ResiduoAcondicionamentosAdd',
+    meta: {
+      title: 'Adicionar novo acondicionamento de residuo',
+    },
+  },
+  {
+    path: '/residuo-acondicionamentos/editar/:id',
+    view: 'ResiduoAcondicionamentosEdit',
+    meta: {
+      title: 'Editar acondicionamento de residuo',
+    },
+  },
+
   // Ordens de Serviço
   {
     path: '/ordens-servico',
