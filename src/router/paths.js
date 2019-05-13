@@ -733,5 +733,51 @@ export default [
         },
       },
     ]
+  },
+  // Manifestos
+  {
+    path: '/manifestos',
+    view: 'ManifestosList',
+    meta: {
+      title: 'Manifestos',
+    },
+  },
+  {
+    path: '/manifestos/adicionar',
+    view: 'ManifestosAdd',
+    meta: {
+      title: 'Adicionar novo manifesto',
+    },
+  },
+  {
+    path: '/manifestos/editar/:id',
+    name: '',
+    view: 'ManifestosTabview',
+    
+    children: [
+      // Detalhes
+      {
+        path: '',
+        view: 'ManifestosEdit',
+        meta: {
+          title: 'Detalhes do manifesto',
+        },
+      },
+      {
+        path: 'detalhes',
+        view: 'ManifestosEdit',
+        meta: {
+          title: 'Detalhes do manifesto',
+        },
+      },
+      // Balança
+      {
+        path: 'balanca',
+        view: 'ManifestosBalancaEdit',
+        meta: {
+          title: 'Dados do manifesto',
+        },
+      },
+    ]
   }
 ]

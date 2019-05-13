@@ -1,5 +1,5 @@
 'use strict'
-import { Manifestos } from '../models/Manifestos';
+import { Manifestos, ManifestosBalanca } from '../models/Manifestos';
 import { BaseController } from './BaseController';
 
 export class ManifestosController extends BaseController {
@@ -31,14 +31,6 @@ export class ManifestosController extends BaseController {
         params.transportadores_id,
         params.data_geracao,
         params.data_recebimento,
-        params.balanca_data_entrada,
-        params.balanca_data_saida,
-        params.balanca_hora_entrada,
-        params.balanca_hora_saida,
-        params.balanca_peso_entrada,
-        params.balanca_peso_saida,
-        params.balanca_unidade,
-        params.balanca_peso_calculado
       )
       let result = await this._request.post(this._baseApiUrl, manifesto)
       return this.response('Manifesto adicionado com sucesso.', result.data)
@@ -68,6 +60,18 @@ export class ManifestosController extends BaseController {
         params.transportadores_id,
         params.data_geracao,
         params.data_recebimento,
+        params.id
+      )
+      let result = await this._request.put(`${this._baseApiUrl}/${manifesto.id}`, manifesto)
+      return this.response('Manifesto editado com sucesso.', result.data)
+    } catch (error) {
+      return this.response(false, false, error)
+    }
+  }
+
+  async updateBlanca(params) {
+    try {
+      let manifesto = new ManifestosBalanca(
         params.balanca_data_entrada,
         params.balanca_data_saida,
         params.balanca_hora_entrada,
@@ -85,44 +89,6 @@ export class ManifestosController extends BaseController {
     }
   }
 
-  // async updateBlanca(params) {
-  //   try {
-  //     let manifesto = new ManifestosBalanca(
-  //       params.balanca_data_entrada,
-  //       params.balanca_data_saida,
-  //       params.balanca_hora_entrada,
-  //       params.balanca_hora_saida,
-  //       params.balanca_peso_entrada,
-  //       params.balanca_peso_saida,
-  //       params.balanca_unidade,
-  //       params.balanca_peso_calculado,
-  //       params.id
-  //     )
-  //     let result = await this._request.put(`${this._baseApiUrl}/${manifesto.id}`, manifesto)
-  //     return this.response('Manifesto editado com sucesso.', result.data)
-  //   } catch (error) {
-  //     return this.response(false, false, error)
-  //   }
-  // }
-
-  // async updatePosExecucao(params) {
-  //   try {
-  //     let manifesto = new ManifestosPosExecucao(
-  //       params.km_inicial,
-  //       params.km_final,
-  //       params.hora_inicio,
-  //       params.hora_fim,
-  //       params.comentarios,
-  //       params.nota_fiscal_numero,
-  //       params.id
-  //     )
-  //     let result = await this._request.put(`${this._baseApiUrl}/${manifesto.id}`, manifesto)
-  //     return this.response('Manifesto editado com sucesso.', result.data)
-  //   } catch (error) {
-  //     return this.response(false, false, error)
-  //   }
-  // }
-
   async get(id) {
     try {
       let result = await this._request.get(`${this._baseApiUrl}/${id}`)
@@ -132,23 +98,14 @@ export class ManifestosController extends BaseController {
     }
   }
 
-  // async getBalanca(id) {
-  //   try {
-  //     let result = await this._request.get(`${this._baseApiUrl}/${id}`)
-  //     return this.response('Manifesto carregado com sucesso.', result.data)
-  //   } catch (error) {
-  //     return this.response(false, false, error)
-  //   }
-  // }
-
-  // async getPosExecucao(id) {
-  //   try {
-  //     let result = await this._request.get(`${this._baseApiUrl}/${id}`)
-  //     return this.response('Manifesto carregado com sucesso.', result.data)
-  //   } catch (error) {
-  //     return this.response(false, false, error)
-  //   }
-  // }
+  async getBalanca(id) {
+    try {
+      let result = await this._request.get(`${this._baseApiUrl}/${id}`)
+      return this.response('Manifesto carregado com sucesso.', result.data)
+    } catch (error) {
+      return this.response(false, false, error)
+    }
+  }
 
   async list(filter, page, limit, sortBy, descending) {
     try {

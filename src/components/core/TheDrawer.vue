@@ -105,6 +105,26 @@ export default {
           ]
         },
         {
+          group: true,
+          icon: 'mdi-clipboard-text',
+          title: 'Manifestos',
+
+          links: [
+            {
+              group: false,
+              icon: "add",
+              title: "Adicionar novo",
+              to: "/manifestos/adicionar"
+            },
+            {
+              group: false,
+              icon: "mdi-view-list",
+              title: "Listar todos",
+              to: "/manifestos"
+            },
+          ]
+        },
+        {
           group:true,
           icon: 'mdi-account-multiple',
           title: 'Clientes',

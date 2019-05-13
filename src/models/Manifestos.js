@@ -20,14 +20,6 @@ export class Manifestos {
     transportadores_id = null,
     data_geracao = null,
     data_recebimento = null,
-    balanca_data_entrada = null,
-    balanca_data_saida = null,
-    balanca_hora_entrada = null,
-    balanca_hora_saida = null,
-    balanca_peso_entrada = null,
-    balanca_peso_saida = null,
-    balanca_unidade = null,
-    balanca_peso_calculado = null,
     id = null
   ) {
     this.ordens_servico_id = ordens_servico_id
@@ -48,14 +40,30 @@ export class Manifestos {
     this.transportadores_id = transportadores_id
     this.data_geracao = data_geracao
     this.data_recebimento = data_recebimento
-    this.balanca_data_entrada = balanca_data_entrada
-    this.balanca_data_saida = balanca_data_saida
-    this.balanca_hora_entrada = balanca_hora_entrada
-    this.balanca_hora_saida = balanca_hora_saida
-    this.balanca_peso_entrada = balanca_peso_entrada
-    this.balanca_peso_saida = balanca_peso_saida
-    this.balanca_unidade = balanca_unidade
-    this.balanca_peso_calculado = balanca_peso_calculado
+    this.id = id
+  }
+}
+
+export class ManifestosBalanca {
+  constructor (
+    balanca_data_entrada = null,
+    balanca_data_saida = null,
+    balanca_hora_entrada = null,
+    balanca_hora_saida = null,
+    balanca_peso_entrada = null,
+    balanca_peso_saida = null,
+    balanca_unidade = null,
+    balanca_peso_calculado = null,
+    id = null
+  ){
+    this.balanca_data_entrada = balanca_data_entrada,
+    this.balanca_data_saida = balanca_data_saida,
+    this.balanca_hora_entrada = balanca_hora_entrada,
+    this.balanca_hora_saida = balanca_hora_saida,
+    this.balanca_peso_entrada = balanca_peso_entrada,
+    this.balanca_peso_saida = balanca_peso_saida,
+    this.balanca_unidade = balanca_unidade,
+    this.balanca_peso_calculado = balanca_peso_calculado,
     this.id = id
   }
 }
