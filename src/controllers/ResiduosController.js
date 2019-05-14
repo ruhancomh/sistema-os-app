@@ -18,6 +18,7 @@ export class ResiduosController extends BaseController {
         params.onu,
         params.residuo_tratamentos_id,
         params.residuo_classes_id,
+        params.codigo_ibama
       )
       let result = await this._request.post(this._baseApiUrl, residuo)
       return this.response('Residuo adicionado com sucesso.', result.data)
@@ -35,6 +36,7 @@ export class ResiduosController extends BaseController {
         params.onu,
         params.residuo_tratamentos_id,
         params.residuo_classes_id,
+        params.codigo_ibama,
         params.id
       )
       

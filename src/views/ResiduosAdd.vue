@@ -38,7 +38,7 @@
                   </v-flex>
                   <v-flex
                     xs12
-                    md3
+                    md2
                   >
                     <v-text-field
                       v-model="formFields.codigo"
@@ -47,11 +47,20 @@
                   </v-flex>
                   <v-flex
                     xs12
-                    md3
+                    md2
                   >
                     <v-text-field
                       v-model="formFields.onu"
                       label="ONU"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md2
+                  >
+                    <v-text-field
+                      v-model="formFields.codigo_ibama"
+                      label="Cod. IBAMA"
                     ></v-text-field>
                   </v-flex>
                   <v-flex

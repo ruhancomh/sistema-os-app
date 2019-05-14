@@ -8,6 +8,7 @@ export class Residuos {
     onu = null,
     residuo_tratamentos_id = null,
     residuo_classes_id = null,
+    codigo_ibama = null,
     id = null
   ) {
     this.grupo = grupo
@@ -16,6 +17,7 @@ export class Residuos {
     this.onu = onu
     this.residuo_tratamentos_id = residuo_tratamentos_id
     this.residuo_classes_id = residuo_classes_id
+    this.codigo_ibama = codigo_ibama
     this.id = id
   }
 }
