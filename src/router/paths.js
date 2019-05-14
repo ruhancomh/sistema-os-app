@@ -775,7 +775,15 @@ export default [
         path: 'balanca',
         view: 'ManifestosBalancaEdit',
         meta: {
-          title: 'Dados do manifesto',
+          title: 'Dados do balança',
+        },
+      },
+      // Lote
+      {
+        path: 'lote',
+        view: 'ManifestosLotesList',
+        meta: {
+          title: 'Lote do manifesto',
         },
       },
     ]

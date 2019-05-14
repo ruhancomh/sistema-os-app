@@ -18,7 +18,7 @@
                 <v-layout row wrap>
                   <v-flex
                     xs12
-                    md3
+                    md2
                   >
                     <v-text-field
                       v-model="formFields.data_geracao"
@@ -30,7 +30,7 @@
                   </v-flex>
                   <v-flex
                     xs12
-                    md3
+                    md2
                   >
                     <v-text-field
                       v-model="formFields.data_recebimento"
@@ -63,6 +63,21 @@
                       v-model="formFields.numero_manifesto"
                       label="Numero Manifesto"
                     ></v-text-field>
+                  </v-flex>
+                  <v-flex
+                      xs12
+                      md2
+                    >
+                    <v-select
+                      v-model="formFields.manifesto_tipo"
+                      :items="manifestoTiposOptions"
+                      :loading="manifestoTiposOptionsLoad"
+                      label="Tipo Manifesto"
+                      item-text="descricao"
+                      item-value="descricao"   
+                      :rules="[formRules.default.required]"
+                      required                  
+                    />
                   </v-flex>
                   <v-flex
                     xs12
@@ -326,6 +341,7 @@ import { ReceptoresController } from "../controllers/ReceptoresController";
 import { TransportadoresController } from "../controllers/TransportadoresController";
 import { FuncionariosController } from "../controllers/FuncionariosController";
 import { ManifestoTiposOperacaoController } from "../controllers/ManifestoTiposOperacaoController";
+import { ManifestoTiposController } from "../controllers/ManifestoTiposController";
 import { ResiduoAcondicionamentosController } from "../controllers/ResiduoAcondicionamentosController";
 
 import CustomDecimalField from '../components/shared/CustomDecimalField/CustomDecimalField'
@@ -371,6 +387,9 @@ export default {
 
       residuoUnidadesOptions:null,
       residuoUnidadesOptionsLoad: false,
+
+      manifestoTiposOptions:null,
+      manifestoTiposOptionsLoad: false,
 
       residuoEstadoFisicoOptions:null,
       residuoEstadoFisicoOptionsLoad: false,
@@ -528,6 +547,17 @@ export default {
       this.residuoUnidadesOptionsLoad = false
     },
 
+    async loadManifestoTipos() {
+      this.manifestoTiposOptionsLoad = true
+
+      let manifestoTiposController = new ManifestoTiposController()
+      let result = await manifestoTiposController.all()
+
+      this.manifestoTiposOptions = result.data
+
+      this.manifestoTiposOptionsLoad = false
+    },
+
     async loadResiduoEstadoFisico() {
       this.residuoEstadoFisicoOptionsLoad = true
 
@@ -637,6 +667,7 @@ export default {
     this.loadVeiculos()
     this.loadMotoristas()
     this.loadResiduoUnidades()
+    this.loadManifestoTipos()
     this.loadResiduoEstadoFisico()
   }
 };

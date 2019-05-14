@@ -66,6 +66,7 @@
                 slot-scope="props"
               >
                 <td>{{ props.item.data_geracao }}</td>
+                <td>{{ props.item.manifesto_tipo }}</td>
                 <td>{{ props.item.numero_manifesto }}</td>
                 <td>{{ props.item.tipo_operacao ? props.item.tipo_operacao.descricao : '' }}</td>
                 <td>{{ props.item.cliente ? props.item.cliente.razao_social : '' }}</td>
@@ -97,8 +98,7 @@ export default {
   data() {
     return {
       filters: {
-        cliente_nome: "",
-        cnpj:""
+        cliente_nome: ""
       },
 
       defaultSort: "data_geracao",
@@ -111,16 +111,22 @@ export default {
           value: "data_criacao"
         },
         {
+          text: "Tipo",
+          align: "left",
+          sortable: false,
+          value: "manifesto_tipo"
+        },
+        {
           text: "Numero",
           align: "left",
           sortable: true,
-          value: "numero"
+          value: "numero_manifesto"
         },
         {
-          text: "Tipo",
+          text: "Operação",
           align: "left",
           sortable: true,
-          value: "tipo"
+          value: "tipo_operacao"
         },
         {
           text: "Cliente",
@@ -131,7 +137,7 @@ export default {
         {
           text: "Gerador",
           align: "left",
-          sortable: true,
+          sortable: false,
           value: "gerador_nome"
         },
         {

@@ -3,6 +3,7 @@
 export class Manifestos {
   constructor(
     ordens_servico_id = null,
+    manifesto_tipo = null,
     manifesto_tipos_operacao_id = null,
     gerador_id = null,
     gerador_observacao = null,
@@ -23,6 +24,7 @@ export class Manifestos {
     id = null
   ) {
     this.ordens_servico_id = ordens_servico_id
+    this.manifesto_tipo = manifesto_tipo
     this.manifesto_tipos_operacao_id = manifesto_tipos_operacao_id
     this.gerador_id = gerador_id
     this.gerador_observacao = gerador_observacao

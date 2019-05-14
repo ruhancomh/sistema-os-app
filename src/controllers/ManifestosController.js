@@ -14,6 +14,7 @@ export class ManifestosController extends BaseController {
     try {
       let manifesto = new Manifestos(
         params.ordens_servico_id,
+        params.manifesto_tipo,
         params.manifesto_tipos_operacao_id,
         params.gerador_id,
         params.gerador_observacao,
@@ -43,6 +44,7 @@ export class ManifestosController extends BaseController {
     try {
       let manifesto = new Manifestos(
         params.ordens_servico_id,
+        params.manifesto_tipo,
         params.manifesto_tipos_operacao_id,
         params.gerador_id,
         params.gerador_observacao,

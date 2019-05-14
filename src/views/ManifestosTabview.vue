@@ -57,6 +57,11 @@ export default {
           to: `/manifestos/editar/${this.getId()}/balanca`,
           icon: 'mdi-scale-balance'
         },
+        {
+          text: 'Lote',
+          to: `/manifestos/editar/${this.getId()}/lote`,
+          icon: 'mdi-ballot'
+        },
       ],
     };
   },

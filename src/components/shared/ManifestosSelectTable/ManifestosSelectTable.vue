@@ -6,7 +6,7 @@
     <v-card>
       <v-card-title
         class="headline"
-      >Ordens de Serviço</v-card-title>
+      >Manifestos</v-card-title>
       <v-card-text>
         <custom-data-table
           v-model="tableIpunt"
@@ -14,12 +14,10 @@
           :table-data="tableData"
           :filters="filters"
           :default-sort="defaultSort"
-          :default-descending="defaultDescending"
-          :actions="['edit']"
+          :actions="false"
           :select-all="true"
           item-key="id"
           @onSelected="onSelected($event)"
-          @onEditItem="onEditItem($event)"
         >
           <template
             slot="filter"
@@ -27,34 +25,38 @@
           >
             <v-flex
               xs12
-              md4
+              md2
             >
               <v-text-field
-                label="Cliente"
-                clearable
-                v-model="props.filters.cliente_nome"
+                v-model="props.filters.data_geracao"
+                mask="##/##/####"
+                placeholder="dd/mm/aaaa"
+                label="Data Geracao"
+                return-masked-value
               ></v-text-field>
             </v-flex>
             <v-flex
               xs12
-              md3
+              md2
             >
-              <v-text-field
-                label="CNPJ"
-                clearable
-                v-model="props.filters.cliente_cnpj"
-                mask="##.###.###/####-##"
-                return-masked-value
-              ></v-text-field>
-            </v-flex>
+            <v-select
+              v-model="props.filters.manifesto_tipo"
+              :items="manifestoTiposOptions"
+              :loading="manifestoTiposOptionsLoad"
+              label="Tipo Manifesto"
+              item-text="descricao"               
+            />
+          </v-flex>
           </template>
           <template
             slot="items"
             slot-scope="props"
           >
-            <td>{{ props.item.data_criacao }}</td>
-            <td>{{ props.item.codigo_os }}</td>
-            <td>{{ props.item.tipo ? props.item.tipo.descricao : '' }}</td>
+            <td>{{ props.item.data_geracao }}</td>
+            <td>{{ props.item.manifesto_tipo }}</td>
+            <td>{{ props.item.numero_manifesto }}</td>
+            <td>{{ props.item.tipo_operacao ? props.item.tipo_operacao.descricao : '' }}</td>
+            <td>{{ props.item.cliente ? props.item.cliente.razao_social : '' }}</td>
             <td>{{ props.item.gerador ? props.item.gerador.cliente.razao_social : '' }}</td>
             <td>{{ props.item.receptor ? props.item.receptor.razao_social : '' }}</td>
             <td>{{ props.item.residuo ? props.item.residuo.grupo : '' }}</td>
@@ -85,7 +87,8 @@
 
 <script>
 import CustomDataTable from "./../CustomDataTable/CustomDataTable";
-import { OrdensServicoController } from "../../../controllers/OrdensServicoController";
+import { ManifestosController } from "../../../controllers/ManifestosController";
+import { ManifestoTiposController } from "../../../controllers/ManifestoTiposController";
 
 export default {
   components: {
@@ -95,39 +98,55 @@ export default {
     value: {
       default: false
     },
+
+    manifesto: {
+      default: false
+    }
   },
   data() {
     return {
       filters: {
-        cliente_nome: "",
-        cnpj:""
+        data_geracao: '',
+        manifesto_tipo: ''
       },
 
-      defaultSort: "numero",
+      defaultSort: "data_geracao",
       defaultDescending: true,
       headers: [
         {
-          text: "Data",
+          text: "Data Geração",
           align: "left",
           sortable: true,
           value: "data_criacao"
         },
         {
+          text: "Tipo",
+          align: "left",
+          sortable: false,
+          value: "manifesto_tipo"
+        },
+        {
           text: "Numero",
           align: "left",
           sortable: true,
-          value: "numero"
+          value: "numero_manifesto"
         },
         {
-          text: "Tipo",
+          text: "Operação",
           align: "left",
           sortable: true,
-          value: "tipo"
+          value: "tipo_operacao"
+        },
+        {
+          text: "Cliente",
+          align: "left",
+          sortable: false,
+          value: "cliente_nome"
         },
         {
           text: "Gerador",
           align: "left",
-          sortable: true,
+          sortable: false,
           value: "gerador_nome"
         },
         {
@@ -166,17 +185,17 @@ export default {
     },
 
     confirm() {  
-      this.$emit("confirm", this.selected ? this.selected[0] : false );
+      this.$emit("confirm", this.selected);
       this.closeDialog();
     },
 
     async getData() {
       this.selected = false
-      let filters = this.tableIpunt.filters;
+      let filters = this.tableIpunt.filters
       let pagination = this.tableIpunt.pagination;
 
-      let ordensServicoController = new OrdensServicoController();
-      let result = await ordensServicoController.list(
+      let manifestosController = new ManifestosController();
+      let result = await manifestosController.list(
         filters,
         pagination.page,
         pagination.rowsPerPage,
@@ -194,13 +213,33 @@ export default {
       }
     },
 
+    async loadManifestoTipos() {
+      this.manifestoTiposOptionsLoad = true
+
+      let manifestoTiposController = new ManifestoTiposController()
+      let result = await manifestoTiposController.all()
+
+      this.manifestoTiposOptions = result.data
+
+      this.manifestoTiposOptionsLoad = false
+    },
+
+    setManifesto() {
+      this.filters.not_in = this.manifesto.id
+
+      switch(this.manifesto.manifesto_tipo) {
+        case 'MTR2':          
+          this.filters.manifesto_tipo = 'MTR1'
+          break;
+        case 'MTR3':          
+          this.filters.manifesto_tipo = 'MTR2'
+          break;
+      }
+    },
+
     onSelected(items) {
       this.selected = items
     },
-
-    onEditItem(item){
-      window.open(`/ordens-servico/editar/${item}/servicos`,'_blank')
-    }
   },
 
   watch: {
@@ -224,7 +263,16 @@ export default {
         this.getData()
       },
       deep: true
+    },
+
+    manifesto: function () {
+      this.setManifesto()
     }
+  },
+
+
+  created () {
+    this.loadManifestoTipos()
   }
 }
 </script>

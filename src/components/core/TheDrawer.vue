@@ -66,7 +66,7 @@ export default {
         },
         {
           group: true,
-          icon: 'mdi-clipboard-text',
+          icon: 'mdi-clipboard-check',
           title: 'Ordens de Serviço',
 
           links: [
@@ -106,7 +106,7 @@ export default {
         },
         {
           group: true,
-          icon: 'mdi-clipboard-text',
+          icon: 'class',
           title: 'Manifestos',
 
           links: [
